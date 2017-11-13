@@ -311,17 +311,21 @@ public class Unit : MonoBehaviour
     *   HealthUpdate
     *   
     *   runs each update to show the health of the unit in a bar & text
-    *   
+    *   manages armour points for the HP bar as well
     *   @returns void
     */  
     public virtual void HealthUpdate()
     {
-
+        if (armour > 5)
+        {
+            armour = 5;
+        }
 
         Vector2 shield1 = new Vector2(2.44f, 2.5f);
         Vector2 shield2 = new Vector2(4.89f, 2.5f);
         Vector2 shield3 = new Vector2(7.3f, 2.5f);
         Vector2 shield4 = new Vector2(9.78f, 2.5f);
+        Vector2 shield5 = new Vector2(12.2f, 2.5f);
 
         switch(armour)
         {
@@ -343,6 +347,10 @@ public class Unit : MonoBehaviour
 
             case 4:
                 armourBar.size = shield4;
+                break;
+
+            case 5:
+                armourBar.size = shield5;
                 break;
         }
 

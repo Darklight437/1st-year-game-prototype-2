@@ -161,7 +161,7 @@ public class GameManagment : MonoBehaviour
         if (selectedUnit != null)
         {
             //turn off the unit selection glow
-           // selectedUnit.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+            selectedUnit.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
         }
 		 
         //deselect the unit
@@ -260,7 +260,7 @@ public class GameManagment : MonoBehaviour
             {
                 //not intended
                 UIManager.ButtonState(UIManager.eCommandState.OFF);
-                UIManager.MenuPosition.SetActive(false);
+                
             }
 
             //stop showing walkable tiles if thy where showing
@@ -517,9 +517,7 @@ public class GameManagment : MonoBehaviour
 
                 //reset the buttons
                
-                // worldUI.AttButton.SetActive(false);
-                // worldUI.MoveButton.SetActive(false);
-                // worldUI.SpcButton.SetActive(false);
+                
 
                 //because A* will consider this not passable
                 startTile.unit = null;
@@ -682,7 +680,7 @@ public class GameManagment : MonoBehaviour
         //stop showing walkable and attackable tiles tiles
         ToggleTileModifiersFalse();
 
-        selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+        //selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
 
         //deselect the unit
         selectedUnit = null;

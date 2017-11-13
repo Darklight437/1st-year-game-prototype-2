@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
 {
 
     //enum of states for the UI
-    public enum eUIState { BASE, ENDGAME, PAUSEMENU }
+    public enum eUIState { BASE, ENDGAME, PAUSEMENU, TURNCHANGE}
     public eUIState currUIState;
 
     public enum eCommandState { MSC, ASC, MC, AC, SC, C, OFF }
@@ -15,11 +15,12 @@ public class UIManager : MonoBehaviour
     //all the UI elements in a play scene
     public GameObject PauseM = null;
     public GameObject EndM = null;
-    //public GameObject UnitM = null;
+    public GameObject TurnScr = null;
+    
 
     //the spare rectTransforms that the buttons will sit at
     public RectTransform[] ButtonPos = new RectTransform[5];
-    //the core position that the buttons move to
+    //the core position that the buttons are childed to
     public GameObject MenuPosition;
 
     //the button Gameobjects
@@ -74,6 +75,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
+
     }
 
     //will check which UI elements should be active
@@ -94,6 +96,12 @@ public class UIManager : MonoBehaviour
                 resetUI();
                 EndM.SetActive(true);
                 break;
+
+            case eUIState.TURNCHANGE:
+                resetUI();
+                //TurnScr.setActive(true);
+                break;
+
 
         }
     }
@@ -158,15 +166,17 @@ public class UIManager : MonoBehaviour
                 Buttons[2].SetActive(true);
                 Buttons[3].SetActive(true);
                 moveButton();
+                moveButton();
                 break;
 
             case eCommandState.C:
                 turnOffButtons();
                 Buttons[3].SetActive(true);
-                moveButton();
+                moveButton();                
                 break;
 
             case eCommandState.OFF:
+                moveButton();
                 turnOffButtons();
                 break;
         }
