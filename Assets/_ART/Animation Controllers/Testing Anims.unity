@@ -190,13 +190,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 116468649}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.16, z: 0}
+  m_LocalRotation: {x: -0, y: 0.99515826, z: -0.09828569, w: 0}
+  m_LocalPosition: {x: 0, y: 2.61, z: 10.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.281, y: 180.00002, z: 0}
 --- !u!1001 &312165825
 Prefab:
   m_ObjectHideFlags: 0
@@ -260,6 +260,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 77a9bb1f10e25994c958a27cb8a746fd, type: 2}
+    - target: {fileID: 9500000, guid: abe5f1e8675908248a470754b6e21866, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9316db1cf254db240bac6c6c8196ac12, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: abe5f1e8675908248a470754b6e21866, type: 3}
   m_IsPrefabParent: 0
@@ -306,6 +310,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2c2dceae24c220e41ac42443247739cc, type: 2}
+    - target: {fileID: 9500000, guid: 3d6bfa9cb07e1c645a27773ce3b76eeb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a6b02b095b0bb014ea6b85b03f9f06e4, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d6bfa9cb07e1c645a27773ce3b76eeb, type: 3}
   m_IsPrefabParent: 0
@@ -360,6 +368,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 160a809a15954c5479f9ed7d553da6a3, type: 2}
+    - target: {fileID: 9500000, guid: a9f01cad76945a24e910ec1c7460d053, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5bec8c15e02cbad48bde5418614d7a4c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a9f01cad76945a24e910ec1c7460d053, type: 3}
   m_IsPrefabParent: 0
@@ -418,6 +430,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: a9244897db7808f4db000c60dae2a8b8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7e8328e9a7e211042b881bded93bf224, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a9244897db7808f4db000c60dae2a8b8, type: 3}
   m_IsPrefabParent: 0
@@ -709,6 +725,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 18859b124f9824644bcb3a8a9ab77741, type: 2}
+    - target: {fileID: 9500000, guid: 481474821dea19a4d9c174ecd9f2f9bb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cebb90ee12d63614b981d7aaa6d40d9b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 481474821dea19a4d9c174ecd9f2f9bb, type: 3}
   m_IsPrefabParent: 0
