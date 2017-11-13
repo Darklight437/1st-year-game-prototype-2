@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: abe5f1e8675908248a470754b6e21866
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Backpack
+    100002: Heaed
+    100004: Left_Ankle
+    100006: Left_Clavicle
+    100008: Left_Elbow
+    100010: Left_Foot
+    100012: Left_Knee
+    100014: Left_Pelvis
+    100016: Left_Shoulder
+    100018: Left_Wrist
+    100020: polySurface1
+    100022: polySurface10
+    100024: polySurface11
+    100026: polySurface12
+    100028: polySurface13
+    100030: polySurface14
+    100032: polySurface15
+    100034: polySurface16
+    100036: polySurface17
+    100038: polySurface18
+    100040: polySurface19
+    100042: polySurface2
+    100044: polySurface20
+    100046: polySurface21
+    100048: polySurface22
+    100050: polySurface23
+    100052: polySurface24
+    100054: polySurface25
+    100056: polySurface26
+    100058: polySurface27
+    100060: polySurface28
+    100062: polySurface29
+    100064: polySurface3
+    100066: polySurface30
+    100068: polySurface31
+    100070: polySurface32
+    100072: polySurface33
+    100074: polySurface34
+    100076: polySurface35
+    100078: polySurface36
+    100080: polySurface37
+    100082: polySurface38
+    100084: polySurface39
+    100086: polySurface4
+    100088: polySurface40
+    100090: polySurface41
+    100092: polySurface42
+    100094: polySurface43
+    100096: polySurface44
+    100098: polySurface45
+    100100: polySurface46
+    100102: polySurface47
+    100104: polySurface48
+    100106: polySurface49
+    100108: polySurface5
+    100110: polySurface50
+    100112: polySurface51
+    100114: polySurface6
+    100116: polySurface7
+    100118: polySurface8
+    100120: polySurface9
+    100122: Right_Ankle
+    100124: Right_Clavicle
+    100126: Right_Elbow
+    100128: Right_Foot
+    100130: Right_Knee
+    100132: Right_Pelvis
+    100134: Right_Shoulder
+    100136: Right_Wrist
+    100138: Spine_01
+    100140: Spine_02
+    100142: Tank
+    100144: //RootNode
+    100146: Tank_Complete
+    100148: Tank_Core
+    100150: transform1
+    100152: transform10
+    100154: transform11
+    100156: transform12
+    100158: transform13
+    100160: transform14
+    100162: transform15
+    100164: transform16
+    100166: transform17
+    100168: transform18
+    100170: transform19
+    100172: transform2
+    100174: transform20
+    100176: transform21
+    100178: transform22
+    100180: transform23
+    100182: transform24
+    100184: transform25
+    100186: transform26
+    100188: transform27
+    100190: transform28
+    100192: transform29
+    100194: transform3
+    100196: transform30
+    100198: transform31
+    100200: transform32
+    100202: transform33
+    100204: transform34
+    100206: transform35
+    100208: transform36
+    100210: transform37
+    100212: transform38
+    100214: transform39
+    100216: transform4
+    100218: transform40
+    100220: transform41
+    100222: transform42
+    100224: transform43
+    100226: transform44
+    100228: transform45
+    100230: transform46
+    100232: transform47
+    100234: transform48
+    100236: transform49
+    100238: transform5
+    100240: transform50
+    100242: transform51
+    100244: transform52
+    100246: transform6
+    100248: transform7
+    100250: transform8
+    100252: transform9
+    400000: Backpack
+    400002: Heaed
+    400004: Left_Ankle
+    400006: Left_Clavicle
+    400008: Left_Elbow
+    400010: Left_Foot
+    400012: Left_Knee
+    400014: Left_Pelvis
+    400016: Left_Shoulder
+    400018: Left_Wrist
+    400020: polySurface1
+    400022: polySurface10
+    400024: polySurface11
+    400026: polySurface12
+    400028: polySurface13
+    400030: polySurface14
+    400032: polySurface15
+    400034: polySurface16
+    400036: polySurface17
+    400038: polySurface18
+    400040: polySurface19
+    400042: polySurface2
+    400044: polySurface20
+    400046: polySurface21
+    400048: polySurface22
+    400050: polySurface23
+    400052: polySurface24
+    400054: polySurface25
+    400056: polySurface26
+    400058: polySurface27
+    400060: polySurface28
+    400062: polySurface29
+    400064: polySurface3
+    400066: polySurface30
+    400068: polySurface31
+    400070: polySurface32
+    400072: polySurface33
+    400074: polySurface34
+    400076: polySurface35
+    400078: polySurface36
+    400080: polySurface37
+    400082: polySurface38
+    400084: polySurface39
+    400086: polySurface4
+    400088: polySurface40
+    400090: polySurface41
+    400092: polySurface42
+    400094: polySurface43
+    400096: polySurface44
+    400098: polySurface45
+    400100: polySurface46
+    400102: polySurface47
+    400104: polySurface48
+    400106: polySurface49
+    400108: polySurface5
+    400110: polySurface50
+    400112: polySurface51
+    400114: polySurface6
+    400116: polySurface7
+    400118: polySurface8
+    400120: polySurface9
+    400122: Right_Ankle
+    400124: Right_Clavicle
+    400126: Right_Elbow
+    400128: Right_Foot
+    400130: Right_Knee
+    400132: Right_Pelvis
+    400134: Right_Shoulder
+    400136: Right_Wrist
+    400138: Spine_01
+    400140: Spine_02
+    400142: //RootNode
+    400144: Tank
+    400146: Tank_Complete
+    400148: Tank_Core
+    400150: transform1
+    400152: transform10
+    400154: transform11
+    400156: transform12
+    400158: transform13
+    400160: transform14
+    400162: transform15
+    400164: transform16
+    400166: transform17
+    400168: transform18
+    400170: transform19
+    400172: transform2
+    400174: transform20
+    400176: transform21
+    400178: transform22
+    400180: transform23
+    400182: transform24
+    400184: transform25
+    400186: transform26
+    400188: transform27
+    400190: transform28
+    400192: transform29
+    400194: transform3
+    400196: transform30
+    400198: transform31
+    400200: transform32
+    400202: transform33
+    400204: transform34
+    400206: transform35
+    400208: transform36
+    400210: transform37
+    400212: transform38
+    400214: transform39
+    400216: transform4
+    400218: transform40
+    400220: transform41
+    400222: transform42
+    400224: transform43
+    400226: transform44
+    400228: transform45
+    400230: transform46
+    400232: transform47
+    400234: transform48
+    400236: transform49
+    400238: transform5
+    400240: transform50
+    400242: transform51
+    400244: transform52
+    400246: transform6
+    400248: transform7
+    400250: transform8
+    400252: transform9
+    4300000: Tank_Complete
+    7400000: Un-Used Idle
+    7400002: Used Idle
+    7400004: Recieve Damage
+    7400006: Special
+    7400008: Attack Animation
+    7400010: Death Animation
+    7400012: Walk
+    9500000: //RootNode
+    13700000: Tank_Complete
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Un-Used Idle
+      takeName: Take 001
+      firstFrame: 26
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Used Idle
+      takeName: Take 001
+      firstFrame: 50
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Recieve Damage
+      takeName: Take 001
+      firstFrame: 389
+      lastFrame: 521
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Special
+      takeName: Take 001
+      firstFrame: 521
+      lastFrame: 696
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack Animation
+      takeName: Take 001
+      firstFrame: 75
+      lastFrame: 202
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Death Animation
+      takeName: Take 001
+      firstFrame: 205
+      lastFrame: 386
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1485266572742464}
+  m_IsPrefabParent: 1
+--- !u!1 &1485266572742464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4456066335056252}
+  - component: {fileID: 114180348593068756}
+  - component: {fileID: 65695606988542782}
+  m_Layer: 11
+  m_Name: Tile
+  m_TagString: Tile
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &4456066335056252
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1485266572742464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65695606988542782
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1485266572742464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.25, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114180348593068756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1485266572742464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288b0f185d0c4984ca880ab3427a6877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileType: 0
+  tileEdges: []
+  normalTile:
+    tileTypes:
+    - {fileID: 1415928301777368, guid: 16f49af4d7307e64696a335419400dbc, type: 2}
+    - {fileID: 1705137692282850, guid: 04d69f771464d17498c15bbdb0ee236f, type: 2}
+    - {fileID: 1826290007994720, guid: 0fd675f61cdc32945a99b3df2198f3af, type: 2}
+  damageTile:
+    tileTypes:
+    - {fileID: 1922732236373118, guid: 75489a03c7897a14ba8911a3c4f2a3f0, type: 2}
+    - {fileID: 1747927216514654, guid: 09238b6e5259a564183ec9c9ca534064, type: 2}
+    - {fileID: 1844306347898726, guid: c7ac3d4f8f72bc448b1236a9058c4350, type: 2}
+    - {fileID: 1518675224887760, guid: afbf8108b97caed41bc88db88df7cc87, type: 2}
+  defenseTile:
+    tileTypes:
+    - {fileID: 1981028100624294, guid: 93a6f2b39e43da849b6d7e1a8cb13d64, type: 2}
+    - {fileID: 1297788478036782, guid: e31d0d6d5ad821a489fadfbcc80f9726, type: 2}
+  impassableTile:
+    tileTypes:
+    - {fileID: 1161811184037556, guid: d40ce2015dc32734ca783ea00f81872b, type: 2}
+    - {fileID: 1133832019694836, guid: 8580a5eb129690044abc5e6c2b4be03e, type: 2}
+    - {fileID: 1175739495204556, guid: c2d829ab97367644187f833c34044d73, type: 2}
+    - {fileID: 1393859139886130, guid: a3b7eb0788b23e44897ab8c04e3cf1e6, type: 2}
+    - {fileID: 1397630594358856, guid: dcad46540bdb24b47af7f2cb651b28cb, type: 2}
+    - {fileID: 1439860716536590, guid: df5ccf898391d9d48a5f525ab276b725, type: 2}
+    - {fileID: 1910377667533672, guid: 1027587de3aca4347945e82549b79460, type: 2}
+    - {fileID: 1705049526472892, guid: 564b05a512dc3ce4f94e82b61aaca33a, type: 2}
+  debuggingTile:
+    tileTypes:
+    - {fileID: 0}
+  useTileSet:
+    tileTypes: []
+  walkablePrefab: {fileID: 1604266773287276, guid: addc9d6aaa62332489a1597f31c3cb83,
+    type: 2}
+  walkableHighLight: {fileID: 0}
+  attackRangePrefab: {fileID: 1231367070330346, guid: f3bdafb20eff6a745a4db28b8f0dc911,
+    type: 2}
+  attackRangeHighLight: {fileID: 0}
+  dangerZoneRangePrefab: {fileID: 1860215358487846, guid: d75f418e2dfa8ca44aadd10608bdd9d8,
+    type: 2}
+  dangerZoneRangeHighLight: {fileID: 0}
+  statistics: {fileID: 11400000, guid: a6a2d0191422fe4478fda186bbba7e3e, type: 2}
+  unit: {fileID: 0}
+  indexPos: 0
+  parent: {fileID: 0}
+  pos: {x: 0, y: 0, z: 0}
