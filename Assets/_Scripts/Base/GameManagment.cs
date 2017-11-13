@@ -559,15 +559,15 @@ public class GameManagment : MonoBehaviour
                 bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
                 bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
 
-                if (pathDistanceSqr < selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
+                if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
                 {
                     move = true;
                 }
 
                 if (    
                         !(selectedUnit is Medic) && 
-                        ((!(selectedUnit is Ranger) && enemyTile) || 
-                        (selectedUnit is Ranger && manhattanDistanceSqr < selectedUnit.attackRange))
+                        ((!(selectedUnit is Ranger) && enemyTile && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange) || 
+                        (selectedUnit is Ranger && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange))
                    )
                 {
                     attack = true;
