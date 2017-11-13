@@ -104,7 +104,7 @@ public class SpreadAttackCommand : UnitCommand
         }
         if (unit.ArtLink != null)
         {
-            unit.ArtLink.SetBool("ActionAvailable", false);
+            unit.ArtLink.SetBool("ActionsAvailable", false);
         }
         successCallback();
     }

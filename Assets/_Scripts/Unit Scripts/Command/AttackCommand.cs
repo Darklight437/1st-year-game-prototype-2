@@ -85,7 +85,7 @@ public class AttackCommand : UnitCommand
         }
         if (unit.ArtLink != null)
         {
-            unit.ArtLink.SetBool("ActionAvailable", false);
+            unit.ArtLink.SetBool("ActionsAvailable", false);
         }
     }
 }

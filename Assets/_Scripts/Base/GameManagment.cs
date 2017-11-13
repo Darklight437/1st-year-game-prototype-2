@@ -105,6 +105,8 @@ public class GameManagment : MonoBehaviour
             for (int j = 0; j < unitCount; j++)
             {
                 player.units[j].Initialise();
+
+                player.units[j].ArtLink.SetBool("ActionsAvailable", false);
             }
         }
 
@@ -163,6 +165,14 @@ public class GameManagment : MonoBehaviour
                     //reset the real-time turn tracking
                     unit.movementPoints = unit.movementRange;
                     unit.hasAttacked = false;
+                    //// Animations if not nulll set to used idle
+                    if (p != activePlayer)
+                    {
+                        if (unit.ArtLink != null)
+                        {
+                            unit.ArtLink.SetBool("ActionsAvailable", true);
+                        }
+                    }
                 }
             }
         }
