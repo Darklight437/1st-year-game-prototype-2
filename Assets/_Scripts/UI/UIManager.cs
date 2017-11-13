@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public enum eUIState { BASE, ENDGAME, PAUSEMENU, TURNCHANGE}
     public eUIState currUIState;
 
-    public enum eCommandState { MSC, ASC, AMC, MC, AC, SC, C, OFF }
+    public enum eCommandState { MSAC, MSC, ASC, MAC, MC, AC, SC, C, OFF }
     private eCommandState CurrentCommand = eCommandState.OFF;
 
     //all the UI elements in a play scene
@@ -40,42 +40,35 @@ public class UIManager : MonoBehaviour
     void Update()
     {
 
+        Canvas.ForceUpdateCanvases();
         //switch on enum
         //enable / disable elements of ui & manage UI anims
 
         //clear ui to base state
         if (currUIState == eUIState.BASE)
         {
-
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 currUIState = eUIState.PAUSEMENU;
                 stateSwitch();
-                return;
             }
         }
-        if (currUIState == eUIState.PAUSEMENU)
+       else if (currUIState == eUIState.PAUSEMENU)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 currUIState = eUIState.BASE;
                 stateSwitch();
-                return;
             }
-
         }
-        if (currUIState == eUIState.ENDGAME)
+       else if (currUIState == eUIState.ENDGAME)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 currUIState = eUIState.BASE;
                 stateSwitch();
-                return;
             }
         }
-
-
     }
 
     //will check which UI elements should be active
@@ -143,6 +136,14 @@ public class UIManager : MonoBehaviour
                 turnOffButtons();
                 Buttons[1].SetActive(true);
                 Buttons[2].SetActive(true);
+                Buttons[3].SetActive(true);
+                moveButton();
+                break;
+
+            case eCommandState.MAC:
+                turnOffButtons();
+                Buttons[0].SetActive(true);
+                Buttons[1].SetActive(true);
                 Buttons[3].SetActive(true);
                 moveButton();
                 break;

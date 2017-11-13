@@ -71,7 +71,7 @@ public class GameManagment : MonoBehaviour
   * 
   */
     public UIManager UIManager = null;
-
+    
  
     //type of action from the world space manager
     public eActionType actionEvent = eActionType.NULL;
@@ -106,7 +106,7 @@ public class GameManagment : MonoBehaviour
             {
                 player.units[j].Initialise();
 
-                player.units[j].ArtLink.SetBool("ActionsAvailable", false);
+                //player.units[j].ArtLink.SetBool("ActionsAvailable", false);
             }
         }
 
@@ -513,12 +513,12 @@ public class GameManagment : MonoBehaviour
                 //turn on UI
                 UIManager.MenuPosition.SetActive(true);
 
-                //set UI to mouse position
+                //set UI to mouse position (really agressivley)
                 UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
-                UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + (Vector3.one*3);
+                UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one*3);
                 UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
 
-
+                Canvas.ForceUpdateCanvases();
 
                 //get the tile position of the unit
                 Vector3 unitTilePos = selectedUnit.transform.position - Vector3.up * selectedUnit.transform.position.y;
@@ -579,6 +579,7 @@ public class GameManagment : MonoBehaviour
                         (selectedUnit is Medic && friendlyTile) ||
                         (selectedUnit is Melee && (enemyTile || defaultTile)) ||
                         (selectedUnit is Tank && (endTile.unit == null && defaultTile))
+                        
                    )
                 {
                     special = true;
@@ -662,7 +663,11 @@ public class GameManagment : MonoBehaviour
         //attack & move
         if (mov && att && !spec)
         {
-            return UIManager.eCommandState.AMC;
+            return UIManager.eCommandState.MAC;
+        }
+        if (mov && spec && att)
+        {
+            return UIManager.eCommandState.MSAC;
         }
 
         //special & mov
