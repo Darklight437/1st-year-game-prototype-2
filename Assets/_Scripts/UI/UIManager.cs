@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public enum eUIState { BASE, ENDGAME, PAUSEMENU, TURNCHANGE}
     public eUIState currUIState;
 
-    public enum eCommandState { MSC, ASC, MC, AC, SC, C, OFF }
+    public enum eCommandState { MSC, ASC, AMC, MC, AC, SC, C, OFF }
     private eCommandState CurrentCommand = eCommandState.OFF;
 
     //all the UI elements in a play scene
@@ -184,7 +184,7 @@ public class UIManager : MonoBehaviour
 
     private void turnOffButtons()
     {
-        //Buttons[0].GetComponent<RectTransform>().
+        //set buttons to a position off scren?
         Buttons[0].SetActive(false);
         Buttons[1].SetActive(false);
         Buttons[2].SetActive(false);

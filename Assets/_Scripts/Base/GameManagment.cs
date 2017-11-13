@@ -113,7 +113,7 @@ public class GameManagment : MonoBehaviour
         TurnUnitsOff();
 
         UIManager = GetComponent<UIManager>();
-
+        
     }
 
     // Update is called once per frame
@@ -139,7 +139,7 @@ public class GameManagment : MonoBehaviour
     */
     public void OnNextTurn()
     {
-
+        Canvas.ForceUpdateCanvases();
         if (transitioning || activePlayer.IsBusy())
         {
             return;
@@ -178,7 +178,7 @@ public class GameManagment : MonoBehaviour
         }
 
         //turn off the action menu
-        
+       
         UIManager.ButtonState(UIManager.eCommandState.OFF);
         if (selectedUnit != null)
         {
@@ -514,10 +514,12 @@ public class GameManagment : MonoBehaviour
                 UIManager.MenuPosition.SetActive(true);
 
                 //set UI to mouse position
+                UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
+                UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + (Vector3.one*3);
                 UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
-                
 
-                
+
+
                 //get the tile position of the unit
                 Vector3 unitTilePos = selectedUnit.transform.position - Vector3.up * selectedUnit.transform.position.y;
 
@@ -633,34 +635,50 @@ public class GameManagment : MonoBehaviour
      */
    private UIManager.eCommandState getvalidButtons(bool mov, bool att, bool spec)
     {
-        if (mov && spec)
-        {
-            return UIManager.eCommandState.MSC;
-        }
-        if (att && spec)
-        {
-            return UIManager.eCommandState.ASC;
-        }
-        if (mov)
+
+        //only move is true
+        if (mov && !att && !spec) 
         {
             return UIManager.eCommandState.MC;
         }
-        if (att)
-        {
-            return UIManager.eCommandState.AC;
-        }
-        if (spec)
+
+        //only special is true
+        if (spec && !mov && !att)
         {
             return UIManager.eCommandState.SC;
         }
+
+        //only att is true
+        if (att && !mov && !spec)
+        {
+            return UIManager.eCommandState.AC;
+        }
+
+        //att and special
+        if (att && spec && !mov)
+        {
+            return UIManager.eCommandState.ASC;
+        }
+        //attack & move
+        if (mov && att && !spec)
+        {
+            return UIManager.eCommandState.AMC;
+        }
+
+        //special & mov
+        if (spec && mov && !att)
+        {
+            return UIManager.eCommandState.MSC;
+        }
+
+        //cancel only
         if (!mov && !spec && !att)
         {
             return UIManager.eCommandState.C;
         }
-        if (mov && att)
-        {
-            return UIManager.eCommandState.AC;
-        }
+
+
+        
 
 
         return UIManager.eCommandState.C;
