@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if (UNITY_EDITOR) 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class RandomMap : Map
     public eChunkTypes[] chunkLayout;
     public int recusionAmount;
 
-    public override void SetUp()
+    public override void SetUp(Statistics stats)
     {
 
         for (int x = 0; x < width; x++)
@@ -56,7 +57,7 @@ public class RandomMap : Map
             }
         }
 
-        base.SetUp();
+        base.SetUp(stats);
     }
 
     #region perlinNoise
@@ -160,3 +161,5 @@ public class RandomMap : Map
 
 #endregion
 }
+
+#endif

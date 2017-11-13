@@ -69,7 +69,7 @@ public class Tiles : MonoBehaviour
     public GameObject dangerZoneRangeHighLight;
 
     //the statistics used for random number logic
-    public Statistics statistics;
+	private static Statistics statistics;
 
     //unit that is on the tile
     public Unit unit = null;
@@ -189,14 +189,21 @@ public class Tiles : MonoBehaviour
     */
     private void Start()
     {
-        GenerateRandomTileVariant();
-        pos = gameObject.transform.position;
-
-        GenerateTileModifiers();
-
-        originalY = pos.y;
-        originalHeight = GetComponent<BoxCollider>().size.y;
+		
     }
+
+	public void TileInit(Statistics stats)
+	{
+		statistics = stats;
+
+		GenerateRandomTileVariant();
+		pos = gameObject.transform.position;
+
+		GenerateTileModifiers();
+
+		originalY = pos.y;
+		originalHeight = GetComponent<BoxCollider>().size.y;
+	}
 
     /*
     * Update 
@@ -300,7 +307,7 @@ public class Tiles : MonoBehaviour
         //first delete our current child
         foreach (Transform child in transform)
         {
-            if (child.tag != "Walkable")
+            if (child.tag != "TileModifier")
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -313,7 +320,8 @@ public class Tiles : MonoBehaviour
         //and make sure the tile is positioned in the right position
         if (useTileSet.tileTypes.Length > 1)
         {
-            GameObject tileSpawn = Instantiate(useTileSet.tileTypes[statistics.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
+            //GameObject tileSpawn = Instantiate(useTileSet.tileTypes[statistics.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
+			GameObject tileSpawn = Instantiate(useTileSet.tileTypes[GameManagment.g_GM.statsReference.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
             tileSpawn.transform.SetParent(gameObject.transform);
 
             tileSpawn.transform.localPosition = new Vector3(0, 0, 0);

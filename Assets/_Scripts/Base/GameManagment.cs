@@ -79,12 +79,30 @@ public class GameManagment : MonoBehaviour
     //flag for the camera selection to respond to
     public bool uiPressed = false;
 
+	//static refrence to its self
+	public static GameManagment g_GM = null;
+
 	// Use this for initialization
 	void Start ()
     {
+		if (g_GM == null) 
+		{
+			g_GM = this;		
+		}
+
         //set the reference
         GameManagment.stats = statsReference;
- 
+ 		
+		map.SetUp (stats);
+
+		for (int i = 0; i < players.Count; i++) 
+		{
+			for (int u = 0; u < players[i].units.Count; u++) 
+			{
+				players [i].units [u].UnitInit ();	
+			}	
+		}
+
         activePlayer = players[0];
 
         //get the size of the players array once
@@ -114,6 +132,8 @@ public class GameManagment : MonoBehaviour
 
         UIManager = GetComponent<UIManager>();
         
+
+
     }
 
     // Update is called once per frame
@@ -434,8 +454,6 @@ public class GameManagment : MonoBehaviour
 
         if (dangerTiles.Count > 0)
         {
-            Debug.Log(dangerTiles.Count);
-
             for (int i = 0; i < dangerTiles.Count; i++)
             {
                 dangerTiles[i].dangerZoneRangeHighLight.gameObject.SetActive(true);

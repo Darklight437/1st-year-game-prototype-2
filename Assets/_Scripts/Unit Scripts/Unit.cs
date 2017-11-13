@@ -71,21 +71,27 @@ public class Unit : MonoBehaviour
     */
     public void Initialise()
     {
-        //get the tile that the unit is standing on
-        Tiles currentTile = GameObject.FindObjectOfType<Map>().GetTileAtPos(transform.position);
-
-        //set the unit space to this
-        currentTile.unit = this;
-
-        //create the gameobjs that make up the units area of vision
-        CreateAOVOBJ();
-
-        baseArmour = armour;
-
-        //reset the real-time turn tracking
-        movementPoints = movementRange;
-        hasAttacked = false;
     }
+
+	public void UnitInit()
+	{
+		Debug.Log ("Unit Run");
+
+		//get the tile that the unit is standing on
+		Tiles currentTile = GameObject.FindObjectOfType<Map>().GetTileAtPos(transform.position);
+
+		//set the unit space to this
+		currentTile.unit = this;
+
+		//create the gameobjs that make up the units area of vision
+		CreateAOVOBJ();
+
+		baseArmour = armour;
+
+		//reset the real-time turn tracking
+		movementPoints = movementRange;
+		hasAttacked = false;
+	}
 
     // Update is called once per frame
     void Update()

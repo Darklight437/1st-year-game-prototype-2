@@ -21,17 +21,28 @@ public class Map : MonoBehaviour
 
     protected bool setUp = false;
 
+	private void Start()
+	{
+		//SetUp ();
+		//Debug.Log ("Ran map start up");
+	}
+
     private void Update()
     {
-        if (setUp == false)
-        {
-            SetUp();
-            setUp = true;
-        }
+        //if (setUp == false)
+        //{
+        //    SetUp();
+        //    setUp = true;
+        //}
     }
 
-    public virtual void SetUp()
+	public virtual void SetUp(Statistics stats)
     {
+		for (int i = 0; i < mapTiles.Count; i++) 
+		{
+			mapTiles [i].TileInit (stats);	
+		}
+
         SetTileEdges();
 
         for (int i = 0; i < mapTiles.Count; i++)
