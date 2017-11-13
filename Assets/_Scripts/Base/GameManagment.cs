@@ -203,7 +203,7 @@ public class GameManagment : MonoBehaviour
         if (selectedUnit != null)
         {
             //turn off the unit selection glow
-            selectedUnit.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+            //selectedUnit.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
         }
 		 
         //deselect the unit
@@ -309,7 +309,7 @@ public class GameManagment : MonoBehaviour
             ToggleTileModifiersFalse();
 
             selectedUnit = unit;
-            // selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/WallThrough");
+             //selectedUnit.gameObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/WallThrough");
 
             ToggleTileModifiersActive();
         }
