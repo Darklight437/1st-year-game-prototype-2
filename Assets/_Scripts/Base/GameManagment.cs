@@ -93,7 +93,19 @@ public class GameManagment : MonoBehaviour
         //iterate through the players array, invoking the ID setter
         for (int i = 0; i < playerCount; i++)
         {
-            players[i].LinkIDs(i);
+            //store in a temp variable for readability
+            BasePlayer player = players[i];
+
+            player.LinkIDs(i);
+
+            //get the size of the units array once
+            int unitCount = player.units.Count;
+
+            //iterate through the units array, invoking the Initialisation function
+            for (int j = 0; j < unitCount; j++)
+            {
+                player.units[j].Initialise();
+            }
         }
 
         TurnUnitsOff();
@@ -474,13 +486,6 @@ public class GameManagment : MonoBehaviour
     public void OnTileSelected(Tiles tile)
     {
 
-        //don't do anything if the UI was pressed
-        if (uiPressed)
-        {
-            uiPressed = false;
-            return;
-        }
-
         //if a unit was already selected and an empty tile was selected
         if (selectedUnit != null)
         {
@@ -534,45 +539,40 @@ public class GameManagment : MonoBehaviour
 
                 //Buttonshow Block 
 
-                bool move;
-                bool attack;
-                bool special;
+                bool move = false;
+                bool attack = false;
+                bool special = false;
 
-                //can the unit attack the tile
-                if (manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange && !selectedUnit.hasAttacked)
-                {
-                    //worldUI.AttButton.SetActive(true);
-                    attack = true;
-                }
-                else
-                {
-                    //worldUI.AttButton.SetActive(false);
-                    attack = false;
-                }
+                //shorthand alias for readability
+                bool emptyTile = endTile.unit == null;
+                bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
+                bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
+                bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
 
-                //can the unit move to the tile, also a movement range of 0 means the path couldn't be found
-                if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && pathDistanceSqr > 0.0f)
+                if (pathDistanceSqr < selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
                 {
-                    //worldUI.MoveButton.SetActive(true);
                     move = true;
                 }
-                else
+
+                if (    
+                        !(selectedUnit is Medic) && 
+                        ((!(selectedUnit is Ranger) && enemyTile) || 
+                        (selectedUnit is Ranger && manhattanDistanceSqr < selectedUnit.attackRange))
+                   )
                 {
-                    //worldUI.MoveButton.SetActive(false);
-                    move = false;
+                    attack = true;
                 }
 
-                //can the unit apply a special move to the tile
-                if (manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange && !selectedUnit.hasAttacked)
+                if (
+                        (selectedUnit is Medic && friendlyTile) ||
+                        (selectedUnit is Melee && (enemyTile || defaultTile)) ||
+                        (selectedUnit is Tank && (endTile.unit == null && defaultTile))
+                   )
                 {
-                    //worldUI.SpcButton.SetActive(true);
                     special = true;
                 }
-                else
-                {
-                    //worldUI.SpcButton.SetActive(false);
-                    special = true;
-                }
+
+
                 //sets the button state in the UI manager to show the appropriate buttons
                 UIManager.ButtonState(getvalidButtons(move, attack, special));
                 

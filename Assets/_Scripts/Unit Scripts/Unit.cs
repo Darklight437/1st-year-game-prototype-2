@@ -61,8 +61,15 @@ public class Unit : MonoBehaviour
     public Animator ArtLink;
 
 
-    // Use this for initialization
-    void Start()
+    /*
+    * Initialise 
+    * 
+    * called once at the start of the object's existence
+    * called by the game manager
+    * 
+    * @returns void
+    */
+    public void Initialise()
     {
         //get the tile that the unit is standing on
         Tiles currentTile = GameObject.FindObjectOfType<Map>().GetTileAtPos(transform.position);
