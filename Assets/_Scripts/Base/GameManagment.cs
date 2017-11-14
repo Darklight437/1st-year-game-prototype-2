@@ -577,10 +577,13 @@ public class GameManagment : MonoBehaviour
                 pathDistanceSqr *= pathDistanceSqr;
 
                 //Buttonshow Block 
-
+                //**********************
+                //bools for determining appropriate actions
                 bool move = false;
                 bool attack = false;
                 bool special = false;
+                //**********************
+
 
                 //shorthand alias for readability
                 bool emptyTile = endTile.unit == null;
@@ -739,7 +742,7 @@ public class GameManagment : MonoBehaviour
 
         //stop showing walkable and attackable tiles tiles
         ToggleTileModifiersFalse();
-
+        //turn off the glow (new method in the works)
         //selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
 
         //deselect the unit
