@@ -684,8 +684,7 @@ GameObject:
   - component: {fileID: 4073386606429666}
   - component: {fileID: 114707028028582382}
   - component: {fileID: 135288652688251394}
-  - component: {fileID: 54993886323053734}
-  - component: {fileID: 135194234071522862}
+  - component: {fileID: 54357871576006314}
   m_Layer: 10
   m_Name: Melee
   m_TagString: Unit
@@ -727,7 +726,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991271546020698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.96768, y: 0.625, z: 1.0772653}
+  m_LocalPosition: {x: 12, y: 0.625, z: 1.036}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224732992298741538}
@@ -1257,7 +1256,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!54 &54993886323053734
+--- !u!54 &54357871576006314
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1507,18 +1506,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!135 &135194234071522862
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1991271546020698}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135288652688251394
 SphereCollider:
   m_ObjectHideFlags: 1

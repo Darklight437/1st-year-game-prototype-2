@@ -800,7 +800,6 @@ GameObject:
   - component: {fileID: 114872421475661040}
   - component: {fileID: 135753782719968238}
   - component: {fileID: 54558636939118824}
-  - component: {fileID: 135004824785584856}
   m_Layer: 10
   m_Name: King
   m_TagString: Unit
@@ -1585,7 +1584,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819990178570322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.910294, y: 0.625, z: 0.059907436}
+  m_LocalPosition: {x: 13, y: 0.625, z: -0.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224131603429487532}
@@ -2064,18 +2063,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!135 &135004824785584856
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1819990178570322}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135753782719968238
 SphereCollider:
   m_ObjectHideFlags: 1
