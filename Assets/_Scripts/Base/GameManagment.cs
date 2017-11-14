@@ -57,6 +57,8 @@ public class GameManagment : MonoBehaviour
     //bool indicating if the game is in-between turns
     public bool transitioning = false;
 
+    public LayerMask tileLayer;
+
     //David's
     //reference to Main UI manager script
     /*
@@ -173,6 +175,71 @@ public class GameManagment : MonoBehaviour
         }
        
 
+
+        if (selectedUnit != null)
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                if (uiPressed)
+                {
+                    uiPressed = false;
+                }
+                else
+                {
+                    //get a ray originating from the mouse pointing forwards
+                    Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                    //data from the raycast
+                    RaycastHit hitInfo;
+                    //check if the raycast hit anything
+                    if (Physics.Raycast(mouseRay.origin, mouseRay.direction, out hitInfo, float.MaxValue, tileLayer.value))
+                    {
+                        //get the object that the raycast hit
+                        GameObject hitObject = hitInfo.collider.gameObject;
+
+                        //get the tiles component (null if there isn't one)
+                        Tiles tiles = hitObject.GetComponent<Tiles>();
+
+                        if (tiles != null && activePlayer.isHuman)
+                        {
+                            OnTileSelectedRightClick(tiles);
+                        }
+                    }
+                }
+            }
+        }
+
+            //detect mouse clicks
+            if (Input.GetMouseButtonUp(0))
+        {
+
+            if (uiPressed)
+            {
+                uiPressed = false;
+            }
+            else
+            {
+                //get a ray originating from the mouse pointing forwards
+                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                //data from the raycast
+                RaycastHit hitInfo;
+                //check if the raycast hit anything
+                if (Physics.Raycast(mouseRay.origin, mouseRay.direction, out hitInfo, float.MaxValue, tileLayer.value))
+                {
+                    //get the object that the raycast hit
+                    GameObject hitObject = hitInfo.collider.gameObject;
+
+                    //get the tiles component (null if there isn't one)
+                    Tiles tiles = hitObject.GetComponent<Tiles>();
+
+                    if (tiles != null && activePlayer.isHuman)
+                    {
+                        OnTileSelectedLeftClick(tiles);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -382,7 +449,7 @@ public class GameManagment : MonoBehaviour
             {
                 if (CheckIfStillActive(unit))
                 {
-                    OnTileSelected(map.GetTileAtPos(unit.transform.position));
+                    OnTileSelectedLeftClick(map.GetTileAtPos(unit.transform.position));
                     Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
                     cam.Goto(holder, cam.transform.eulerAngles, null);
                     return;
@@ -401,7 +468,7 @@ public class GameManagment : MonoBehaviour
 
             if (CheckIfStillActive(unit))
             {
-                OnTileSelected(map.GetTileAtPos(unit.transform.position));
+                OnTileSelectedLeftClick(map.GetTileAtPos(unit.transform.position));
                 Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
                 cam.Goto(holder, cam.transform.eulerAngles, OnCameraFinished);
                 return;
@@ -542,7 +609,37 @@ public class GameManagment : MonoBehaviour
     * @param Tiles tile - the tile that was selected
     * @returns void
     */
-    public void OnTileSelected(Tiles tile)
+    public void OnTileSelectedLeftClick(Tiles tile)
+    {
+        //call the unit handling function if a unit was found on the tile
+        if (selectedUnit == null && tile.unit != null)
+        {
+            startTile = tile;
+            OnUnitSelected(tile.unit);
+        }
+        //call the unit handling function if a unit was found on the tile
+        else if (!(tile.unit == null || selectedUnit.playerID != tile.unit.playerID) &&
+            (tile.unit != null))
+        {
+            startTile = tile;
+            endTile = null;
+            OnUnitSelected(tile.unit);
+        }
+
+        if (tile.unit != null && tile.unit.playerID != activePlayer.playerID)
+        {
+            ToggleTileModifiersFalse();
+
+            List<Tiles> holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+
+            for (int i = 0; i < holder.Count; i++)
+            {
+                dangerTiles.Add(holder[i]);
+            }
+            ToggleTileModifiersActive();
+        }
+    }
+    public void OnTileSelectedRightClick(Tiles tile)
     {
 
         //if a unit was already selected and an empty tile was selected
@@ -656,16 +753,16 @@ public class GameManagment : MonoBehaviour
                 
 
             }
-
+            /*
             //call the unit handling function if a unit was found on the tile
             else if (tile.unit != null)
             {
                 startTile = tile;
                 endTile = null;
                 OnUnitSelected(tile.unit);
-            }
+            }*/
         }
-        else
+       /* else
         {
             //call the unit handling function if a unit was found on the tile
             if (tile.unit != null)
@@ -687,8 +784,7 @@ public class GameManagment : MonoBehaviour
             }
 
             ToggleTileModifiersActive();
-
-        }
+        }*/
     }
     
 
