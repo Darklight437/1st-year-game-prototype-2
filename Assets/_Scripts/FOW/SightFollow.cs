@@ -18,9 +18,9 @@ public class SightFollow : MonoBehaviour
 	
 	void Update ()
     {
-        tempVec.x = (int)toFollow.position.x;
-        tempVec.y = (int)toFollow.position.y;
-        tempVec.z = (int)toFollow.position.z;
+        tempVec.x = (int)(toFollow.position.x + 0.5f);
+        tempVec.y = (int)(toFollow.position.y + 0.5f);
+        tempVec.z = (int)(toFollow.position.z + 0.5f);
 
         bool check = ((tempVec.x % distanceToUpdate) + ( tempVec.z % distanceToUpdate)) != 0 ? true : false;
 
