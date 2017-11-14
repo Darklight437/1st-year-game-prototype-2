@@ -17,7 +17,9 @@ public enum eTileType
     DEFENSE,
     IMPASSABLE,
     NULL,
-    DEBUGGING
+    DEBUGGING,
+    PLACABLEDEFENSE,
+    PLACABLETRAP
 }
 
 /*
@@ -44,6 +46,8 @@ public class Tiles : MonoBehaviour
     public DamageTile damageTile;
     public DefenseTile defenseTile;
     public ImpassableTile impassableTile;
+    public PlacableDefenceTile placableDefenceTile;
+    public PlacableTrapTile placableTrapTile;
 
     //these tile set is used for debbuging purposes
     public DebuggingTile debuggingTile;
@@ -145,6 +149,10 @@ public class Tiles : MonoBehaviour
                 case eTileType.NULL:
                     return false;
                 case eTileType.DEBUGGING:
+                    return true;
+                case eTileType.PLACABLEDEFENSE:
+                    return true;
+                case eTileType.PLACABLETRAP:
                     return true;
             }
 
@@ -291,6 +299,14 @@ public class Tiles : MonoBehaviour
 
             case eTileType.DEBUGGING:
                 useTileSet = debuggingTile;
+                break;
+
+            case eTileType.PLACABLEDEFENSE:
+                useTileSet = placableDefenceTile;
+                break;
+
+            case eTileType.PLACABLETRAP:
+                useTileSet = placableTrapTile;
                 break;
         }
     }
@@ -443,5 +459,31 @@ public class ImpassableTile : TileTypes
 */
 [System.Serializable]
 public class DebuggingTile : TileTypes
+{
+}
+
+/*
+* class PlacableDefenceTile
+* inherits TileTypes
+* 
+* this class tile set is used for debugging purposes
+* 
+* author: Callum Dunstone, Academy of Interactive Entertainment, 2017
+*/
+[System.Serializable]
+public class PlacableDefenceTile : TileTypes
+{
+}
+
+/*
+* class PlacableTrapTile
+* inherits TileTypes
+* 
+* this class tile set is used for debugging purposes
+* 
+* author: Callum Dunstone, Academy of Interactive Entertainment, 2017
+*/
+[System.Serializable]
+public class PlacableTrapTile : TileTypes
 {
 }

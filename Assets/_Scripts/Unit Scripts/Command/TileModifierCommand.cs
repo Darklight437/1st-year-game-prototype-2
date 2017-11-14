@@ -64,11 +64,13 @@ public class TileModifierCommand : UnitCommand
         switch (modifyType)
         {
             case eModifyType.HEALING: endTile.IsHealing = true; break;
-            case eModifyType.TRAP: endTile.tileType = eTileType.DAMAGE; endTile.GenerateRandomTileVariant(); break;
-            case eModifyType.DEFENSE: endTile.tileType = eTileType.DEFENSE; endTile.GenerateRandomTileVariant(); break;
+            case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
+            case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
         }
 
         unit.hasAttacked = true;
+        unit.movementPoints = 0;
+
         if (unit.ArtLink != null)
         {
             unit.ArtLink.SetBool("ActionsAvailable", false);

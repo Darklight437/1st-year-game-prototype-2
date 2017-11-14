@@ -798,7 +798,7 @@ public class GameManagment : MonoBehaviour
         {
             Tiles currentTile = map.GetTileAtPos(u.transform.position);
             
-            if (currentTile.tileType == eTileType.DAMAGE)
+            if (currentTile.tileType == eTileType.DAMAGE || currentTile.tileType == eTileType.PLACABLETRAP)
             {
                 u.Defend(GameManagment.stats.trapTileDamage);
             }

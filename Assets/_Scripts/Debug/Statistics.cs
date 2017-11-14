@@ -30,6 +30,14 @@ public class Statistics : ScriptableObject
     public int defenseTileTypeAmount;
     private List<int> m_defenseTileVariantUnused = new List<int>();
 
+    //the amount of placable defense tiles
+    public int placableDefenseTileAmount;
+    private List<int> m_placabaleDefenseTileVariantUnsed = new List<int>();
+
+    //the amount of placable trap Tiles
+    public int placableTrapTileAmount;
+    private List<int> m_placableTrapTileVariantUnsed = new List<int>();
+
     /*
     * RandomTileNum 
     * int function
@@ -76,10 +84,21 @@ public class Statistics : ScriptableObject
             case eTileType.DEBUGGING:
                 return 0;
 
-            default:
-                return 0;
+            case eTileType.PLACABLEDEFENSE:
+                num = Random.Range(0, m_placabaleDefenseTileVariantUnsed.Count);
+                num = m_placabaleDefenseTileVariantUnsed[num];
+                m_placabaleDefenseTileVariantUnsed.Remove(num);
+                return num;
+
+            case eTileType.PLACABLETRAP:
+                num = Random.Range(0, m_placableTrapTileVariantUnsed.Count);
+                num = m_placableTrapTileVariantUnsed[num];
+                m_placableTrapTileVariantUnsed.Remove(num);
+                return num;
+
         }
 
+        Debug.LogError("INVALID TILE TYPE PASSED INTO STATISTICS RANDOMTILENUM");
         return 0;
     }
 
@@ -123,6 +142,22 @@ public class Statistics : ScriptableObject
             for (int i = 0; i < impassableTileTypeAmount; i++)
             {
                 m_impassableTileVariantUnused.Add(i);
+            }
+        }
+
+        if (m_placabaleDefenseTileVariantUnsed.Count == 0)
+        {
+            for (int i = 0; i < placableDefenseTileAmount; i++)
+            {
+                m_placabaleDefenseTileVariantUnsed.Add(i);
+            }
+        }
+
+        if (m_placableTrapTileVariantUnsed.Count == 0)
+        {
+            for (int i = 0; i < placableTrapTileAmount; i++)
+            {
+                m_placableTrapTileVariantUnsed.Add(i);
             }
         }
     }
@@ -174,11 +209,9 @@ public class Statistics : ScriptableObject
                 num = m_impassableChunkVariantUnused[num];
                 m_impassableChunkVariantUnused.Remove(num);
                 return num;
-
-            default:
-                return num;
         }
-        
+
+        Debug.LogError("INVALID TILE TYPE PASSED INTO STATISTICS RANDOMCHUNKNUM");
         return num;
     }
 
