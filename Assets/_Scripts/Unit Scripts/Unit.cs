@@ -74,6 +74,7 @@ public class Unit : MonoBehaviour
     */
     public void Initialise()
     {
+        MeshLink = ArtLink.GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
 
@@ -82,7 +83,18 @@ public class Unit : MonoBehaviour
         MeshLink = ArtLink.GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
-	public void UnitInit()
+    public void TurnOffRender()
+    {
+        MeshLink.enabled = false;
+        hpBar.transform.parent.gameObject.SetActive(false);
+    }
+    public void TurnOnRender()
+    {
+        MeshLink.enabled = true;
+        hpBar.transform.parent.gameObject.SetActive(true);
+    }
+
+    public void UnitInit()
 	{
 		Debug.Log ("Unit Run");
 

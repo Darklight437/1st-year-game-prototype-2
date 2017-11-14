@@ -177,8 +177,7 @@ public class GameManagment : MonoBehaviour
             {
                 //get the unit
                 Unit unit = p.units[i];
-
-                print("DDD");
+                
                 //check that the unit isn't a missing reference
                 if (unit == null)
                 { 
@@ -189,16 +188,7 @@ public class GameManagment : MonoBehaviour
                 {
                     //reset the real-time turn tracking
                     unit.movementPoints = unit.movementRange;
-                    unit.hasAttacked = false;
-                    //// Animations if not null set to used idle
-                    if (p != activePlayer)
-                    {
-                        if (unit.ArtLink != null)
-                        {
-                            print("FGD");
-                            unit.ArtLink.SetBool("ActionsAvailable", true);
-                        }
-                    }
+                    unit.hasAttacked = false;                   
                 }
             }
         }
@@ -235,7 +225,7 @@ public class GameManagment : MonoBehaviour
 
        transitioning = true;
 
-        TurnUnitsOff();
+       TurnUnitsOff();
     }
 
     /*
@@ -263,7 +253,15 @@ public class GameManagment : MonoBehaviour
                     players[i].units[u].GetComponent<Unit>().sightHolder.SetActive(false);
                     foreach (Transform tran in players[i].units[u].transform)
                     {
-                        tran.gameObject.SetActive(false);
+                        //tran.gameObject.SetActive(false);
+
+                        players[i].units[u].TurnOffRender();
+                        players[i].units[u].sightHolder.SetActive(false);
+
+                        if (players[i].units[u].ArtLink != null)
+                        {
+                            players[i].units[u].ArtLink.SetBool("ActionsAvailable", false);
+                        }
                     }
                 }
             }
@@ -272,8 +270,13 @@ public class GameManagment : MonoBehaviour
         //go through all active player units and make sure they are active
         foreach (Unit unit in activePlayer.units)
         {
-           // unit.GetComponent<Renderer>().enabled = true;
-            unit.sightHolder.gameObject.SetActive(true);
+            if (unit.ArtLink != null)
+            {
+                unit.ArtLink.SetBool("ActionsAvailable", true);
+            }
+            
+            unit.sightHolder.SetActive(true);
+            unit.TurnOnRender();
 
             foreach (Transform tran in unit.transform)
             {

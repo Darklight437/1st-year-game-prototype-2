@@ -9,32 +9,19 @@ public class Sight : MonoBehaviour
     
     public void OnTriggerStay(Collider other)
     {
-       /* if (other.GetComponent<Renderer>().enabled == false)
+        Unit U = other.GetComponent<Unit>();
+        if (U != null)
         {
-            other.GetComponent<Renderer>().enabled = true;
-
-            foreach (Transform tran in other.transform)
-            {
-                if (tran.tag == "HPBar")
-                {
-                    tran.gameObject.SetActive(true);
-                }
-            }
-        }*/
+            U.TurnOnRender();           
+        }
     }
 
     public void OnTriggerExit(Collider other)
     {
-       /* if (other.GetComponent<Unit>().playerID != myUnit.playerID)
+        Unit U = other.GetComponent<Unit>();
+        if (U != null)
         {
-            other.GetComponent<Renderer>().enabled = false;
-            foreach (Transform tran in other.transform)
-            {
-                if (tran.gameObject.activeSelf == true)
-                {
-                    tran.gameObject.SetActive(false);
-                }
-            }
-        }*/
+            U.TurnOffRender();
+        }
     }
 }
