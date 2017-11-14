@@ -151,15 +151,18 @@ public class GameManagment : MonoBehaviour
             ToggleBetweenActiveUnits();
         }
 
+        if (UIManager.currUIState == UIManager.eUIState.PAUSEMENU)
+        {
+            uiPressed = true;
+        }
+
         //Ui blackout for camera
+        //this is broke'd
         if (transitioning)
         {
             UIManager.currUIState = UIManager.eUIState.TURNCHANGE;
         }
-        else
-        {
-            UIManager.currUIState = UIManager.eUIState.BASE;
-        }
+
     }
 
 

@@ -21,6 +21,7 @@ public class CameraSelection : MonoBehaviour
         //detect mouse clicks
 		if (Input.GetMouseButtonUp(0))
         {
+
             if (manager.uiPressed)
             {
                 manager.uiPressed = false;

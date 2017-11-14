@@ -109,6 +109,10 @@ public class UIManager : MonoBehaviour
         {
             EndM.SetActive(false);
         }
+        if (TurnScr)
+        {
+            TurnScr.SetActive(false);
+        }
 
         //currUIState = eUIState.BASE;
     }
