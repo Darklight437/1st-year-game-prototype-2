@@ -591,6 +591,7 @@ public class GameManagment : MonoBehaviour
                 bool move = false;
                 bool attack = false;
                 bool special = false;
+                bool inrange = false;
                 //**********************
 
 
@@ -599,6 +600,17 @@ public class GameManagment : MonoBehaviour
                 bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
                 bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
                 bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
+                List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+
+                for (int i = 0; i < AttackRadiusTiles.Count; i++)
+                {
+                    if (AttackRadiusTiles[i] == endTile)
+                    {
+                        inrange = true;
+                    }
+
+                }
+
 
                 if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
                 {
@@ -615,9 +627,10 @@ public class GameManagment : MonoBehaviour
                 }
 
                 if (
-                        (selectedUnit is Medic && friendlyTile) ||
-                        (selectedUnit is Melee && (enemyTile || defaultTile)) ||
-                        (selectedUnit is Tank && (endTile.unit == null && defaultTile))
+                        (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
+                        (selectedUnit is Melee && (enemyTile  && inrange || defaultTile && inrange)) ||
+                        (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
+
                         
                    )
                 {
