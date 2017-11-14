@@ -82,6 +82,12 @@ public class GameManagment : MonoBehaviour
 	//static refrence to its self
 	public static GameManagment g_GM = null;
 
+
+    void Awake()
+    {
+        //set the reference
+        GameManagment.stats = statsReference;
+    }
 	// Use this for initialization
 	void Start ()
     {
@@ -90,8 +96,6 @@ public class GameManagment : MonoBehaviour
 			g_GM = this;		
 		}
 
-        //set the reference
-        GameManagment.stats = statsReference;
  		
 		map.SetUp (stats);
 
@@ -124,7 +128,7 @@ public class GameManagment : MonoBehaviour
             {
                 player.units[j].Initialise();
 
-                //player.units[j].ArtLink.SetBool("ActionsAvailable", false);
+                player.units[j].ArtLink.SetBool("ActionsAvailable", false);
             }
         }
 
@@ -174,6 +178,7 @@ public class GameManagment : MonoBehaviour
                 //get the unit
                 Unit unit = p.units[i];
 
+                print("DDD");
                 //check that the unit isn't a missing reference
                 if (unit == null)
                 { 
@@ -185,11 +190,12 @@ public class GameManagment : MonoBehaviour
                     //reset the real-time turn tracking
                     unit.movementPoints = unit.movementRange;
                     unit.hasAttacked = false;
-                    //// Animations if not nulll set to used idle
+                    //// Animations if not null set to used idle
                     if (p != activePlayer)
                     {
                         if (unit.ArtLink != null)
                         {
+                            print("FGD");
                             unit.ArtLink.SetBool("ActionsAvailable", true);
                         }
                     }
@@ -227,7 +233,7 @@ public class GameManagment : MonoBehaviour
 
         cam.Goto(activePlayer.kingPosition, cam.transform.eulerAngles + new Vector3(0.0f, 180.0f, 0.0f), OnCameraFinished);
 
-        transitioning = true;
+       transitioning = true;
 
         TurnUnitsOff();
     }

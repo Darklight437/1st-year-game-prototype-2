@@ -185,8 +185,8 @@ public class CameraMovement : MonoBehaviour
             float y = transitionCurve.Evaluate(x);
 
             //apply a simple lerp to the position
-            transform.position = Vector3.Lerp(m_start, m_target, y);
-            transform.eulerAngles = Vector3.Lerp(m_eulerStart, m_eulerEnd, y);
+           // transform.position = Vector3.Lerp(m_start, m_target, y);
+           // transform.eulerAngles = Vector3.Lerp(m_eulerStart, m_eulerEnd, y);
         }
 
         //check if the movement has finished

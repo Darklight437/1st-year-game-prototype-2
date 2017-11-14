@@ -60,6 +60,9 @@ public class Unit : MonoBehaviour
     //Animator 
     public Animator ArtLink;
 
+    [HideInInspector]
+    public SkinnedMeshRenderer MeshLink;
+
 
     /*
     * Initialise 
@@ -71,6 +74,12 @@ public class Unit : MonoBehaviour
     */
     public void Initialise()
     {
+    }
+
+
+    void Start()
+    {
+        MeshLink = ArtLink.GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
 	public void UnitInit()
