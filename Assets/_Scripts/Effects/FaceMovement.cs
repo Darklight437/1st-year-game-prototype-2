@@ -11,20 +11,20 @@ public class FaceMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         DefaultForward = transform.forward;
-        transform = myTransform;
+        myTransform = transform;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (m_prevPos != transform.position)
+        if (m_prevPos != myTransform.position)
         {
-            transform.forward = transform.position - m_prevPos;
+            myTransform.forward = myTransform.position - m_prevPos;
         }
         else
         {
-            transform.forward = DefaultForward;
+            myTransform.forward = DefaultForward;
         }
-        m_prevPos = transform.position;
+        m_prevPos = myTransform.position;
     }
 }
