@@ -71,12 +71,6 @@ public class MoveCommand : UnitCommand
 
                 startingTile.unit = null;
                 endTile.unit = unit;
-
-                                                                        //testing                                           //Stop walking Anim
-                                                                                                                          if (unit.ArtLink != null)
-                                                                                                                          {
-                                                                                                                              unit.ArtLink.SetBool("IsWalking", false);
-                                                                                                                          }
             }
             else
             {
