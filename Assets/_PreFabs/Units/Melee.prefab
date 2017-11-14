@@ -362,6 +362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4363076345497352}
   - component: {fileID: 95192226406323676}
+  - component: {fileID: 114031246620222576}
   m_Layer: 0
   m_Name: Infantry
   m_TagString: Untagged
@@ -1309,6 +1310,17 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
+--- !u!114 &114031246620222576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669057918326148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92182b9371039e647b96b5625a545366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114250491906549090
 MonoBehaviour:
   m_ObjectHideFlags: 1
