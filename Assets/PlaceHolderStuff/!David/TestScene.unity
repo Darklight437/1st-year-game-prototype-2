@@ -370,9 +370,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currUIState: 0
-  CurrentCommand: 0
-  PauseM: {fileID: 1119795726}
+  PauseM: {fileID: 1955777265}
   EndM: {fileID: 607061528}
+  TurnScr: {fileID: 0}
   ButtonPos:
   - {fileID: 0}
   - {fileID: 0}
@@ -668,11 +668,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87fb6cbcd1217d64d8d6345f16b795e6, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1119795726 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1602296384384910, guid: 87fb6cbcd1217d64d8d6345f16b795e6,
-    type: 2}
-  m_PrefabInternal: {fileID: 1028325799}
 --- !u!1 &1143506073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,6 +1097,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 56.567, y: 362.928, z: 347.098}
+--- !u!1 &1955777265 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1894046963606554, guid: 8aad3d6cf55e96540867216870b23bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2144851143}
 --- !u!1001 &1958293452
 Prefab:
   m_ObjectHideFlags: 0
@@ -1314,22 +1314,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1584263879183052, guid: 8aad3d6cf55e96540867216870b23bd6, type: 2}
-      propertyPath: m_Name
-      value: MainUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 114987812177809552, guid: 8aad3d6cf55e96540867216870b23bd6,
+    - target: {fileID: 114428356559459922, guid: 8aad3d6cf55e96540867216870b23bd6,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114987812177809552, guid: 8aad3d6cf55e96540867216870b23bd6,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnActionSelected
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114868958474548270, guid: 8aad3d6cf55e96540867216870b23bd6, type: 2}
+      objectReference: {fileID: 241574185}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8aad3d6cf55e96540867216870b23bd6, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &2144851144 stripped

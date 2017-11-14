@@ -149,7 +149,16 @@ public class GameManagment : MonoBehaviour
         {
             Debug.Log("pressed unit toggle");
             ToggleBetweenActiveUnits();
+        }
 
+        //Ui blackout for camera
+        if (transitioning)
+        {
+            UIManager.currUIState = UIManager.eUIState.TURNCHANGE;
+        }
+        else
+        {
+            UIManager.currUIState = UIManager.eUIState.BASE;
         }
     }
 
