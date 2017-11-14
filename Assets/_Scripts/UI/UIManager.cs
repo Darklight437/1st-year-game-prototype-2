@@ -72,7 +72,8 @@ public class UIManager : MonoBehaviour
     }
 
     //will check which UI elements should be active
-    void stateSwitch()
+    [HideInInspector]
+   public void stateSwitch()
     {
         switch (currUIState)
         {
@@ -92,7 +93,7 @@ public class UIManager : MonoBehaviour
 
             case eUIState.TURNCHANGE:
                 resetUI();
-                //TurnScr.setActive(true);
+                TurnScr.SetActive(true);
                 break;
 
 

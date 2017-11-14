@@ -157,11 +157,21 @@ public class GameManagment : MonoBehaviour
         }
 
         //Ui blackout for camera
-        //this is broke'd
+
+        UIManager.eUIState oldUI = UIManager.currUIState;
+        
         if (transitioning)
         {
             UIManager.currUIState = UIManager.eUIState.TURNCHANGE;
+            UIManager.stateSwitch();
+
         }
+        if (!transitioning && UIManager.currUIState == UIManager.eUIState.TURNCHANGE)
+        {
+            UIManager.currUIState = UIManager.eUIState.BASE;
+            UIManager.stateSwitch();
+        }
+       
 
     }
 

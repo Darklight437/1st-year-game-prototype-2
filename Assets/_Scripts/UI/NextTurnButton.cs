@@ -55,9 +55,10 @@ public class NextTurnButton : MonoBehaviour
             return;
         }
 
+        
         //toggle bool turn
         manager.OnNextTurn();
-
+        manager.UIManager.stateSwitch();
     }
 	
 }
