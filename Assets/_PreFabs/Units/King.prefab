@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 135004824785584856}
   m_Layer: 10
   m_Name: King
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1996,6 +1996,7 @@ MonoBehaviour:
   hpNum: {fileID: 114931841216289506}
   armourBar: {fileID: 212476729375020390}
   ArtLink: {fileID: 95191215273830466}
+  MeshLink: {fileID: 0}
   adjacentUnitRange: 3
   flatDamageRatio: 0.1
   kingDamageRatios:

@@ -18,8 +18,7 @@ public class MoveCommand : UnitCommand
     //list of tiles to follow
     private List<Tiles> m_tilePath = null;
 
-    private Vector3 m_prevPos = Vector3.zero;
-    private Vector3 DefaultForward;
+   
 
     /*
     * MoveCommand()
@@ -40,7 +39,7 @@ public class MoveCommand : UnitCommand
         }
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
-        DefaultForward = unit.transform.forward;
+     
     }
 
 
@@ -152,17 +151,6 @@ public class MoveCommand : UnitCommand
             {
                 unit.ArtLink.SetBool("IsWalking", false);
             }
-
-
-            if (m_prevPos != unit.transform.position)
-            {
-                unit.ArtLink.transform.forward = unit.transform.position - m_prevPos;
-            }
-            else
-            {
-                unit.ArtLink.transform.forward = DefaultForward;
-            }
-            m_prevPos = unit.ArtLink.transform.position;
 
             return;
         }

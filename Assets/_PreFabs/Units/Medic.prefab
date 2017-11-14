@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 135863022653734388}
   m_Layer: 10
   m_Name: Medic
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -965,6 +965,7 @@ MonoBehaviour:
   hpNum: {fileID: 114074288445494440}
   armourBar: {fileID: 212902354374226216}
   ArtLink: {fileID: 95338315762193714}
+  MeshLink: {fileID: 0}
 --- !u!114 &114074288445494440
 MonoBehaviour:
   m_ObjectHideFlags: 1

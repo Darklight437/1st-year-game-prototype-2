@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 135866144548948202}
   m_Layer: 10
   m_Name: Ranger
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1013,6 +1013,7 @@ MonoBehaviour:
   hpNum: {fileID: 114650063571952544}
   armourBar: {fileID: 212911930645241830}
   ArtLink: {fileID: 95753140934344920}
+  MeshLink: {fileID: 0}
   splashRange: 3
 --- !u!114 &114650063571952544
 MonoBehaviour:
