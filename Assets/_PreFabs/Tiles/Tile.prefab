@@ -80,9 +80,17 @@ MonoBehaviour:
   defenseTile:
     tileTypes:
     - {fileID: 1981028100624294, guid: 93a6f2b39e43da849b6d7e1a8cb13d64, type: 2}
+    - {fileID: 1297788478036782, guid: e31d0d6d5ad821a489fadfbcc80f9726, type: 2}
   impassableTile:
     tileTypes:
     - {fileID: 1161811184037556, guid: d40ce2015dc32734ca783ea00f81872b, type: 2}
+    - {fileID: 1133832019694836, guid: 8580a5eb129690044abc5e6c2b4be03e, type: 2}
+    - {fileID: 1175739495204556, guid: c2d829ab97367644187f833c34044d73, type: 2}
+    - {fileID: 1393859139886130, guid: a3b7eb0788b23e44897ab8c04e3cf1e6, type: 2}
+    - {fileID: 1397630594358856, guid: dcad46540bdb24b47af7f2cb651b28cb, type: 2}
+    - {fileID: 1439860716536590, guid: df5ccf898391d9d48a5f525ab276b725, type: 2}
+    - {fileID: 1910377667533672, guid: 1027587de3aca4347945e82549b79460, type: 2}
+    - {fileID: 1705049526472892, guid: 564b05a512dc3ce4f94e82b61aaca33a, type: 2}
   debuggingTile:
     tileTypes:
     - {fileID: 1609902547974002, guid: 48f9f495b6f63064ba0038739a63629e, type: 2}
@@ -97,6 +105,7 @@ MonoBehaviour:
   dangerZoneRangePrefab: {fileID: 1860215358487846, guid: d75f418e2dfa8ca44aadd10608bdd9d8,
     type: 2}
   dangerZoneRangeHighLight: {fileID: 0}
+  statistics: {fileID: 11400000, guid: 8b4b09e9b10efc04da6487f05b6c780b, type: 2}
   unit: {fileID: 0}
   indexPos: 0
   parent: {fileID: 0}

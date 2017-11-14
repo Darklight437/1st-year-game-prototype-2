@@ -16,19 +16,19 @@ public class Statistics : ScriptableObject
 
     //the amount and list of normal tiles that are still useable for random logic
     public int normalTileTypeAmount;
-    private List<int> m_normalTileVariantUnused;
+    private List<int> m_normalTileVariantUnused = new List<int>();
 
     //the amount and list of damage tiles that are still useable for random logic
     public int damageTileTypeAmount;
-    private List<int> m_damageTileVariantUnused;
+    private List<int> m_damageTileVariantUnused = new List<int>();
 
     //the amount and list of impassable tiles that are still useable for random logic
     public int impassableTileTypeAmount;
-    private List<int> m_impassableTileVariantUnused;
+    private List<int> m_impassableTileVariantUnused = new List<int>();
 
     //the amount and list of defense tiles that are still useable for random logic
     public int defenseTileTypeAmount;
-    private List<int> m_defenseTileVariantUnused;
+    private List<int> m_defenseTileVariantUnused = new List<int>();
 
     /*
     * RandomTileNum 
@@ -129,19 +129,19 @@ public class Statistics : ScriptableObject
 
     //the amount and list of normal tiles that are still useable for random logic
     public int normalChunkTypeAmount;
-    private List<int> m_normalChunkVariantUnused;
+    private List<int> m_normalChunkVariantUnused = new List<int>();
 
     //the amount and list of damage tiles that are still useable for random logic
     public int damageChunkTypeAmount;
-    private List<int> m_damageChunkVariantUnused;
+    private List<int> m_damageChunkVariantUnused = new List<int>();
 
     //the amount and list of impassable tiles that are still useable for random logic
     public int impassableChunkTypeAmount;
-    private List<int> m_impassableChunkVariantUnused;
+    private List<int> m_impassableChunkVariantUnused = new List<int>();
 
     //the amount and list of defense tiles that are still useable for random logic
     public int defenseChunkTypeAmount;
-    private List<int> m_defenseChunkVariantUnused;
+    private List<int> m_defenseChunkVariantUnused = new List<int>();
 
     public int RandomChunkNum(eChunkTypes type)
     {

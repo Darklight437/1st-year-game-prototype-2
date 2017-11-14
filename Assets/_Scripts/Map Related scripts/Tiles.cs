@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /*
 * eTileType
@@ -69,7 +68,7 @@ public class Tiles : MonoBehaviour
     public GameObject dangerZoneRangeHighLight;
 
     //the statistics used for random number logic
-	private static Statistics statistics;
+	public Statistics statistics;
 
     //unit that is on the tile
     public Unit unit = null;
@@ -84,6 +83,9 @@ public class Tiles : MonoBehaviour
 
     //this is the position in the list on the map script where this tile is
     public int indexPos;
+
+    //refrence to the map the tile is parented to
+    private Map m_myMap;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -192,9 +194,9 @@ public class Tiles : MonoBehaviour
 		
     }
 
-	public void TileInit(Statistics stats)
+	public void TileInit(Map map)
 	{
-		statistics = stats;
+        m_myMap = map;
 
 		GenerateRandomTileVariant();
 		pos = gameObject.transform.position;
@@ -320,8 +322,8 @@ public class Tiles : MonoBehaviour
         //and make sure the tile is positioned in the right position
         if (useTileSet.tileTypes.Length > 1)
         {
-            //GameObject tileSpawn = Instantiate(useTileSet.tileTypes[statistics.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
-			GameObject tileSpawn = Instantiate(useTileSet.tileTypes[GameManagment.g_GM.statsReference.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
+            GameObject tileSpawn = Instantiate(useTileSet.tileTypes[statistics.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
+            //GameObject tileSpawn = Instantiate(useTileSet.tileTypes[m_myMap.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
             tileSpawn.transform.SetParent(gameObject.transform);
 
             tileSpawn.transform.localPosition = new Vector3(0, 0, 0);
