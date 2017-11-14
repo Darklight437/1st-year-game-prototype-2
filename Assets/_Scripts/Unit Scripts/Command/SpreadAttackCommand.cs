@@ -60,6 +60,7 @@ public class SpreadAttackCommand : UnitCommand
     public override void Update()
     {
         unit.hasAttacked = true;
+        unit.movementPoints = 0;
 
         //count-down the attack timer
         attackTimer -= Time.deltaTime;

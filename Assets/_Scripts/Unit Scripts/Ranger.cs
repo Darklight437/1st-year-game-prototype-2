@@ -43,12 +43,15 @@ public class Ranger : Unit
         //attack command
         else if (actionType == GameManagment.eActionType.ATTACK)
         {
-            SpreadAttackCommand ac = new SpreadAttackCommand(this, callstack, OnCommandFailed, st, et);
+            if (hasAttacked == false)
+            {
+                SpreadAttackCommand ac = new SpreadAttackCommand(this, callstack, OnCommandFailed, st, et);
 
-            ac.attackTimer = attackTime;
-            ac.attackRadius = splashRange;
+                ac.attackTimer = attackTime;
+                ac.attackRadius = splashRange;
 
-            commands.Add(ac);
+                commands.Add(ac);
+            }
         }
         //dying command
         else if (actionType == GameManagment.eActionType.DEATH)
