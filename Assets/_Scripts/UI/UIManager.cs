@@ -19,20 +19,35 @@ public class UIManager : MonoBehaviour
     
 
     //the spare rectTransforms that the buttons will sit at
-    public RectTransform[] ButtonPos = new RectTransform[5];
+    private Vector3[] ActivePos = new Vector3[5];
+    private Vector3 InactivePos;
     //the core position that the buttons are childed to
     public GameObject MenuPosition;
 
     //the button Gameobjects
     public GameObject[] Buttons = new GameObject[4];
-
-
+    private bool[] ButtonsStates = new bool[4];
+    
 
     // Use this for initialization
     void Start()
     {
         resetUI();
-        //make function that clears rect transforms of buttons
+        //set the array of Vector 3s to the correct relative positions for the menu
+        {
+            ActivePos[0] = new Vector3(53.4f, -11.16f, 0);
+            ActivePos[1] = new Vector3(53.4f, -36.7f, 0);
+            ActivePos[2] = new Vector3(53.4f, -62.3f, 0);
+            ActivePos[3] = new Vector3(53.4f, -88.3f, 0);
+        }
+        //set the inactive Vector 3s to the correct positions outside of any relative childing stuff
+        {
+            InactivePos = new Vector3(10000f, 10000f, 0f);
+           
+
+        }
+
+
 
     }
 
@@ -130,83 +145,93 @@ public class UIManager : MonoBehaviour
         {
 
             case eCommandState.MSC:
-                turnOffButtons();
-                Buttons[0].SetActive(true);
-                Buttons[2].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[0] = true;
+                ButtonsStates[2] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 break;
 
             case eCommandState.ASC:
-                turnOffButtons();
-                Buttons[1].SetActive(true);
-                Buttons[2].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[1] = true;
+                ButtonsStates[2] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 break;
 
             case eCommandState.MAC:
-                turnOffButtons();
-                Buttons[0].SetActive(true);
-                Buttons[1].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[0] = true;
+                ButtonsStates[1] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 break;
 
             case eCommandState.MC:
-                turnOffButtons();
-                Buttons[0].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[0] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 break;
 
             case eCommandState.AC:
-                turnOffButtons();
-                Buttons[1].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[1] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 break;
 
             case eCommandState.SC:
-                turnOffButtons();
-                Buttons[2].SetActive(true);
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[2] = true;
+                ButtonsStates[3] = true;
                 moveButton();
                 moveButton();
                 break;
 
             case eCommandState.C:
-                turnOffButtons();
-                Buttons[3].SetActive(true);
+                HideButtons();
+                ButtonsStates[3] = true;
                 moveButton();                
                 break;
 
             case eCommandState.OFF:
                 moveButton();
-                turnOffButtons();
+                HideButtons();
                 break;
         }
     }
 
-    private void turnOffButtons()
+    private void HideButtons()
     {
-        //set buttons to a position off scren?
-        Buttons[0].SetActive(false);
-        Buttons[1].SetActive(false);
-        Buttons[2].SetActive(false);
-        Buttons[3].SetActive(false);
+
+        for (int i = 0; i < ButtonsStates.Length; i++)
+        {
+            ButtonsStates[i] = false;
+        }
+        moveButton();
 
     }
     private void moveButton()
     {
         int ButtonPositionIndex = 0;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < ButtonsStates.Length; i++)
         {
-            if (Buttons[i].activeInHierarchy)
+            if (ButtonsStates[i] == true)
             {
-                Buttons[i].GetComponent<RectTransform>().position = ButtonPos[ButtonPositionIndex].position;
+                Buttons[i].GetComponent<RectTransform>().localPosition = ActivePos[ButtonPositionIndex];
+               
+
                 ButtonPositionIndex++;
+            }
+            else
+            {
+
+                Buttons[i].GetComponent<RectTransform>().anchoredPosition = InactivePos;
+                Debug.Log("button");
+                
             }
         }
     }
