@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
             {
 
                 Buttons[i].GetComponent<RectTransform>().anchoredPosition = InactivePos;
-                Debug.Log("button");
+                
                 
             }
         }
