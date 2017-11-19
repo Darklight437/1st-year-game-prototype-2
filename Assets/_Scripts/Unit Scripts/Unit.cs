@@ -121,6 +121,7 @@ public class Unit : MonoBehaviour
         {
             commands[0].Update();
         }
+        //find a anim sync to trigger this
         HealthUpdate();
 
         if (Input.GetKey(KeyCode.F3) && Input.GetKey(KeyCode.S))

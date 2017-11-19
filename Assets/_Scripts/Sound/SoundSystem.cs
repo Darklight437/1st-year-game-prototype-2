@@ -16,7 +16,7 @@ public class SoundSystem : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        playsound(idleAwake);
+        //playsound(idleAwake);
     }
 	
 	// Update is called once per frame
