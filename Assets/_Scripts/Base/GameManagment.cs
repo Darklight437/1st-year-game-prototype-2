@@ -674,6 +674,7 @@ public class GameManagment : MonoBehaviour
 
             float manhattanDistanceSqr = Mathf.Abs(relative.x) + Mathf.Abs(relative.z);
             manhattanDistanceSqr *= manhattanDistanceSqr;
+            manhattanDistanceSqr = Mathf.Round(manhattanDistanceSqr);
 
             //reset the buttons
 
