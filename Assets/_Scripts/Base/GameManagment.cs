@@ -707,7 +707,7 @@ public class GameManagment : MonoBehaviour
             bool emptyTile = endTile.unit == null;
             bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
             bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
-            bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
+            bool defaultTile = endTile.unit == null && endTile.tileType != eTileType.IMPASSABLE;
             List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
 
             for (int i = 0; i < AttackRadiusTiles.Count; i++)
