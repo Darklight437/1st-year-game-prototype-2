@@ -148,10 +148,15 @@ public class CameraMovement : MonoBehaviour
 
         //rotate the vector by the camera's y rotation
         Vector2 rotatedInput = new Vector2(cs * m_smoothInput.x - sn * m_smoothInput.y, sn * m_smoothInput.x + cs * m_smoothInput.y);
+        Vector2 rotatedMouseInput = new Vector2(cs * input.mouseInput.x - sn * input.mouseInput.y, input.mouseInput.x * sn + input.mouseInput.y * cs);
 
         //moves the camera if input is given and snaps the y to 0
         transform.position = new Vector3(transform.position.x + rotatedInput.x * cameraSpeed * Time.deltaTime, 0.0f,
             transform.position.z + rotatedInput.y * cameraSpeed * Time.deltaTime);
+
+        //moves the camera if input is given and snaps the y to 0
+        transform.position = new Vector3(transform.position.x + rotatedMouseInput.x * Time.deltaTime, 0.0f,
+            transform.position.z + rotatedMouseInput.y * Time.deltaTime);
 
         ClampPosition();
     }
