@@ -105,13 +105,15 @@ public class MoveCommand : UnitCommand
                 {
                     unit.Heal(GameManagment.stats.tileHealthGained);
                 }
+
                 //this is a trap tile, it could kill the unit
-                if (nextTile.tileType == eTileType.DAMAGE)
+                if (nextTile.tileType == eTileType.PLACABLETRAP)
                 {
                     if (unit.ArtLink != null)
                     {
                         unit.ArtLink.SetTrigger("TakeDamage");
                     }
+
                     unit.Defend(GameManagment.stats.trapTileDamage);
                 }
 
@@ -125,7 +127,7 @@ public class MoveCommand : UnitCommand
         }
         else
         {
-            if (endTile.tileType == eTileType.DEFENSE)
+            if (endTile.tileType == eTileType.PLACABLEDEFENSE)
             {
                 //defensive buff
                 unit.armour = unit.baseArmour + 1;

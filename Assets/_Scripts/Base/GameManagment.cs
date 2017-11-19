@@ -209,8 +209,8 @@ public class GameManagment : MonoBehaviour
             }
         }
 
-            //detect mouse clicks
-            if (Input.GetMouseButtonUp(0))
+        //detect mouse clicks
+        if (Input.GetMouseButtonUp(0))
         {
 
             if (uiPressed)
@@ -645,114 +645,111 @@ public class GameManagment : MonoBehaviour
         //if a unit was already selected and an empty tile was selected
         if (selectedUnit != null)
         {
-            //the unit cannot select another unit on the same team
-            if (tile.unit == null || selectedUnit.playerID != tile.unit.playerID)
+
+            endTile = tile;
+
+            //David 
+            //gonna change the Worldspace UI to screenspace set the position relative to the click
+            //set-up the world UI
+
+
+            //turn on UI
+            UIManager.MenuPosition.SetActive(true);
+
+            //set UI to mouse position (really agressivley)
+            UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
+            UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one * 3);
+            UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
+
+            Canvas.ForceUpdateCanvases();
+
+            //get the tile position of the unit
+            Vector3 unitTilePos = selectedUnit.transform.position - Vector3.up * selectedUnit.transform.position.y;
+
+            //get the position of the selected tile
+            Vector3 tilePos = tile.pos;
+
+            //relative vector to the tile
+            Vector3 relative = tilePos - unitTilePos;
+
+            float manhattanDistanceSqr = Mathf.Abs(relative.x) + Mathf.Abs(relative.z);
+            manhattanDistanceSqr *= manhattanDistanceSqr;
+
+            //reset the buttons
+
+
+
+            //because A* will consider this not passable
+            startTile.unit = null;
+
+            //get the path using A*
+            List<Tiles> path = AStar.GetAStarPath(startTile, endTile);
+
+            //reassign the unit reference
+            startTile.unit = selectedUnit;
+
+            //get the squared steps in the path
+            float pathDistanceSqr = path.Count;
+            pathDistanceSqr *= pathDistanceSqr;
+
+            //Buttonshow Block 
+            //**********************
+            //bools for determining appropriate actions
+            bool move = false;
+            bool attack = false;
+            bool special = false;
+            bool inrange = false;
+            //**********************
+
+
+            //shorthand alias for readability
+            bool emptyTile = endTile.unit == null;
+            bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
+            bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
+            bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
+            List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+
+            for (int i = 0; i < AttackRadiusTiles.Count; i++)
             {
-
-                endTile = tile;
-
-                //David 
-                //gonna change the Worldspace UI to screenspace set the position relative to the click
-                //set-up the world UI
-
-
-                //turn on UI
-                UIManager.MenuPosition.SetActive(true);
-
-                //set UI to mouse position (really agressivley)
-                UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
-                UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one*3);
-                UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
-
-                Canvas.ForceUpdateCanvases();
-
-                //get the tile position of the unit
-                Vector3 unitTilePos = selectedUnit.transform.position - Vector3.up * selectedUnit.transform.position.y;
-
-                //get the position of the selected tile
-                Vector3 tilePos = tile.pos;
-
-                //relative vector to the tile
-                Vector3 relative = tilePos - unitTilePos;
-
-                float manhattanDistanceSqr = Mathf.Abs(relative.x) + Mathf.Abs(relative.z);
-                manhattanDistanceSqr *= manhattanDistanceSqr;
-
-                //reset the buttons
-               
-                
-
-                //because A* will consider this not passable
-                startTile.unit = null;
-
-                //get the path using A*
-                List<Tiles> path = AStar.GetAStarPath(startTile, endTile);
-
-                //reassign the unit reference
-                startTile.unit = selectedUnit;
-
-                //get the squared steps in the path
-                float pathDistanceSqr = path.Count;
-                pathDistanceSqr *= pathDistanceSqr;
-
-                //Buttonshow Block 
-                //**********************
-                //bools for determining appropriate actions
-                bool move = false;
-                bool attack = false;
-                bool special = false;
-                bool inrange = false;
-                //**********************
-
-
-                //shorthand alias for readability
-                bool emptyTile = endTile.unit == null;
-                bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
-                bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
-                bool defaultTile = endTile.unit == null && endTile.tileType == eTileType.NORMAL;
-                List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
-
-                for (int i = 0; i < AttackRadiusTiles.Count; i++)
+                if (AttackRadiusTiles[i] == endTile)
                 {
-                    if (AttackRadiusTiles[i] == endTile)
-                    {
-                        inrange = true;
-                    }
-
+                    inrange = true;
                 }
-
-
-                if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
-                {
-                    move = true;
-                }
-
-                if (    
-                        !(selectedUnit is Medic) && 
-                        ((!(selectedUnit is Ranger) && enemyTile && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange) || 
-                        (selectedUnit is Ranger && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange))
-                   )
-                {
-                    attack = true;
-                }
-
-                if (
-                        (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
-                        (selectedUnit is Melee && (enemyTile  && inrange || defaultTile && inrange)) ||
-                        (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
-
-                        
-                   )
-                {
-                    special = true;
-                }
-
-
-                //sets the button state in the UI manager to show the appropriate buttons
-                UIManager.ButtonState(getvalidButtons(move, attack, special));
-                
 
             }
+
+
+            if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
+            {
+                move = true;
+            }
+
+            if (
+                    !(selectedUnit.hasAttacked) &&
+                    !(selectedUnit is Medic) &&
+                    ((!(selectedUnit is Ranger) && enemyTile && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange) ||
+                    (selectedUnit is Ranger && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange))
+               )
+            {
+                attack = true;
+            }
+
+            if (
+                    !(selectedUnit.hasAttacked) &&
+                    (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
+                    (selectedUnit is Melee && (enemyTile && inrange || defaultTile && inrange)) ||
+                    (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
+
+
+               )
+            {
+                special = true;
+            }
+
+
+            //sets the button state in the UI manager to show the appropriate buttons
+            UIManager.ButtonState(getvalidButtons(move, attack, special));
+
             /*
             //call the unit handling function if a unit was found on the tile
             else if (tile.unit != null)

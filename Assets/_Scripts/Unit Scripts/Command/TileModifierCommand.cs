@@ -54,7 +54,7 @@ public class TileModifierCommand : UnitCommand
     public override void Update()
     {
         //can't modify a wall or change a tile being stood on
-        if (endTile.tileType != eTileType.NORMAL|| endTile.unit != null)
+        if (endTile.tileType != eTileType.NORMAL)
         {
             failedCallback();
             return;
@@ -75,6 +75,39 @@ public class TileModifierCommand : UnitCommand
         {
             unit.ArtLink.SetBool("ActionsAvailable", false);
         }
+
+        if (endTile.unit != null)
+        {
+            //this is a healing tile
+            if (endTile.IsHealing)
+            {
+                endTile.unit.Heal(GameManagment.stats.tileHealthGained);
+            }
+
+            //this is a trap tile, it could kill the unit
+            if (endTile.tileType == eTileType.PLACABLETRAP)
+            {
+                if (unit.ArtLink != null)
+                {
+                    unit.ArtLink.SetTrigger("TakeDamage");
+                }
+
+                unit.Defend(GameManagment.stats.trapTileDamage);
+            }
+
+            //this is a defensive tile
+            if (endTile.tileType == eTileType.PLACABLEDEFENSE)
+            {
+                //defensive buff
+                unit.armour = unit.baseArmour + 1;
+            }
+            else
+            {
+                //remove the defensive buff
+                unit.armour = unit.baseArmour;
+            }
+        }
+
         successCallback();
     }
 }
