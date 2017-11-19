@@ -127,7 +127,7 @@ public class MoveCommand : UnitCommand
         }
         else
         {
-            if (endTile.tileType == eTileType.PLACABLEDEFENSE)
+            if (endTile.tileType == eTileType.PLACABLEDEFENSE || endTile.tileType == eTileType.DEFENSE)
             {
                 //defensive buff
                 unit.armour = unit.baseArmour + 1;
