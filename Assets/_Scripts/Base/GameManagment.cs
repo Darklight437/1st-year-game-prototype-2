@@ -59,6 +59,13 @@ public class GameManagment : MonoBehaviour
 
     public LayerMask tileLayer;
 
+    //scroll wheel value used to see if we scrolled up or down for unit toggle
+    private float m_scroll = 0;
+
+    //wait timmer used to put a delay on unit toggle
+    private float m_waitTimmer = 0;
+    public float unitToggleWait;
+
     //David's
     //reference to Main UI manager script
     /*
@@ -138,21 +145,23 @@ public class GameManagment : MonoBehaviour
 
         UIManager = GetComponent<UIManager>();
         
-
-
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         activePlayer.UpdateTurn();
+        
+        m_scroll = Input.GetAxis("Mouse ScrollWheel");
+        m_waitTimmer += Time.deltaTime;
+        Debug.Log(m_scroll);
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(2) || m_scroll != 0) && m_waitTimmer > unitToggleWait)
         {
-            Debug.Log("pressed unit toggle");
             ToggleBetweenActiveUnits();
+            m_waitTimmer = 0;
         }
-
+        
         if (UIManager.currUIState == UIManager.eUIState.PAUSEMENU)
         {
             uiPressed = true;
@@ -432,46 +441,92 @@ public class GameManagment : MonoBehaviour
             startSearch = true;
         }
 
-        //look throught the list of units in the active player until we get to the currently selected unit
-        //then begin our search for the next inactive unit
-        foreach (Unit unit in activePlayer.units)
+        //scrolls "up" the active players unit list
+        if (m_scroll >= 0)
         {
-            if (selectedUnit != null)
+            //look throught the list of units in the active player until we get to the currently selected unit
+            //then begin our search for the next inactive unit
+            foreach (Unit unit in activePlayer.units)
             {
-                if (unit == selectedUnit)
+                if (selectedUnit != null)
                 {
-                    startSearch = true;
-                    continue;
+                    if (unit == selectedUnit)
+                    {
+                        startSearch = true;
+                        continue;
+                    }
+                }
+
+                if (startSearch == true)
+                {
+                    if (CheckIfStillActive(unit))
+                    {
+                        OnTileSelectedLeftClick(map.GetTileAtPos(unit.transform.position));
+                        Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
+                        cam.Goto(holder, cam.transform.eulerAngles, null);
+                        return;
+                    }
                 }
             }
 
-            if (startSearch == true)
+            //if no unit was found check the first half of the list for an inactive unit but if we wrap back round to the currently selected unit
+            //break out as there are no non inactive units left
+            foreach (Unit unit in activePlayer.units)
             {
+                if (unit == selectedUnit)
+                {
+                    return;
+                }
+
                 if (CheckIfStillActive(unit))
                 {
                     OnTileSelectedLeftClick(map.GetTileAtPos(unit.transform.position));
                     Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
-                    cam.Goto(holder, cam.transform.eulerAngles, null);
+                    cam.Goto(holder, cam.transform.eulerAngles, OnCameraFinished);
                     return;
                 }
             }
         }
-
-        //if no unit was found check the first half of the list for an inactive unit but if we wrap back round to the currently selected unit
-        //break out as there are no non inactive units left
-        foreach (Unit unit in activePlayer.units)
+        //scrolls "Down" the active players unit list
+        else
         {
-            if(unit == selectedUnit)
+            for (int i = activePlayer.units.Count - 1; i >= 0; i--)
             {
-                return;
+                if (selectedUnit != null)
+                {
+                    if (activePlayer.units[i] == selectedUnit)
+                    {
+                        startSearch = true;
+                        continue;
+                    }
+                }
+
+                if (startSearch == true)
+                {
+                    if (CheckIfStillActive(activePlayer.units[i]))
+                    {
+                        OnTileSelectedLeftClick(map.GetTileAtPos(activePlayer.units[i].transform.position));
+                        Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
+                        cam.Goto(holder, cam.transform.eulerAngles, null);
+                        return;
+                    }
+                }
             }
 
-            if (CheckIfStillActive(unit))
+            for (int i = activePlayer.units.Count - 1; i >= 0; i++)
             {
-                OnTileSelectedLeftClick(map.GetTileAtPos(unit.transform.position));
-                Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
-                cam.Goto(holder, cam.transform.eulerAngles, OnCameraFinished);
-                return;
+                if (activePlayer.units[i] == selectedUnit)
+                {
+                    return;
+                }
+
+                if (CheckIfStillActive(activePlayer.units[i]))
+                {
+                    OnTileSelectedLeftClick(map.GetTileAtPos(activePlayer.units[i].transform.position));
+                    Vector3 holder = new Vector3(selectedUnit.transform.position.x, 0.0f, selectedUnit.transform.position.z);
+                    cam.Goto(holder, cam.transform.eulerAngles, OnCameraFinished);
+                    return;
+                }
             }
         }
     }
@@ -617,6 +672,7 @@ public class GameManagment : MonoBehaviour
             startTile = tile;
             OnUnitSelected(tile.unit);
         }
+
         //call the unit handling function if a unit was found on the tile
         else if (!(tile.unit == null || selectedUnit.playerID != tile.unit.playerID) &&
             (tile.unit != null))

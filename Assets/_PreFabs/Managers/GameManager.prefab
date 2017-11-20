@@ -67,6 +67,10 @@ MonoBehaviour:
   cam: {fileID: 0}
   turn: 0
   transitioning: 0
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  unitToggleWait: 0.2
   UIManager: {fileID: 0}
   actionEvent: 0
   uiPressed: 0
@@ -85,11 +89,6 @@ MonoBehaviour:
   PauseM: {fileID: 0}
   EndM: {fileID: 0}
   TurnScr: {fileID: 0}
-  ButtonPos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   MenuPosition: {fileID: 0}
   Buttons:
   - {fileID: 0}
