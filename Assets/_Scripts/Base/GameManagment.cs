@@ -66,6 +66,15 @@ public class GameManagment : MonoBehaviour
     private float m_waitTimmer = 0;
     public float unitToggleWait;
 
+    //a list of ties the unit will follow when commanded to walk from there current pos to selected pos
+    public List<Tiles> unitPathTiles;
+    //the game object with the line renderer that we will acces to show the unit movmeant path
+    public GameObject lineRendererOBJ;
+
+    public GameObject pathEndPrefab;
+    private GameObject m_pathEnd;
+
+
     //David's
     //reference to Main UI manager script
     /*
@@ -105,9 +114,8 @@ public class GameManagment : MonoBehaviour
 		{
 			g_GM = this;		
 		}
-
- 		
-		map.SetUp (stats);
+        
+        map.SetUp (stats);
 
 		for (int i = 0; i < players.Count; i++) 
 		{
@@ -145,7 +153,11 @@ public class GameManagment : MonoBehaviour
         TurnUnitsOff();
 
         UIManager = GetComponent<UIManager>();
-        
+
+
+        m_pathEnd = Instantiate(pathEndPrefab, new Vector3(0,0,0), Quaternion.identity);
+        m_pathEnd.SetActive(false);
+        lineRendererOBJ.SetActive(false);
     }
     
     // Update is called once per frame
@@ -614,9 +626,7 @@ public class GameManagment : MonoBehaviour
             }
         }
     }
-
-
-
+    
     /*
     * ToggleTileModifiersFalse 
     * 
@@ -652,9 +662,89 @@ public class GameManagment : MonoBehaviour
         movableTiles.Clear();
         attackableTiles.Clear();
         dangerTiles.Clear();
+
+        TurnOffLineRenderer();
     }
 
+    /*
+    * DrawLineRendere 
+    * 
+    * this gets the path the selected unit would take to the tile passed in
+    * and then displays it
+    * 
+    * @param Tiles endTile = the tile we are pathing to
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public void DrawLineRendere(Tiles endTile)
+    {
+        unitPathTiles.Add(map.GetTileAtPos(selectedUnit.transform.position));
 
+        foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile))
+        {
+            unitPathTiles.Add(tile);
+        }
+
+        unitPathTiles.Add(endTile);
+
+        lineRendererOBJ.SetActive(true);
+
+        Vector3 pos = new Vector3(0,0,0);
+
+        LineRenderer LR = lineRendererOBJ.GetComponent<LineRenderer>();
+        
+        LR.positionCount = unitPathTiles.Count - 1;
+
+        for (int i = 0; i < unitPathTiles.Count; i++)
+        {
+            LR.SetPosition(i, new Vector3(unitPathTiles[i].pos.x, 0.3f, unitPathTiles[i].pos.z));
+        }
+
+        m_pathEnd.SetActive(true);
+        m_pathEnd.transform.position = new Vector3(endTile.pos.x, 0, endTile.pos.z);
+
+        unitPathTiles.Clear();
+    }
+
+    /*
+    * TurnOffLineRenderer 
+    * 
+    * turns off the line renderer stuff
+    * 
+    * @param non
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public void TurnOffLineRenderer()
+    {
+        m_pathEnd.SetActive(false);
+        lineRendererOBJ.SetActive(false);
+        unitPathTiles.Clear();
+
+    }
+
+    /*
+    * IsWithinWalkable 
+    * 
+    * this checks to see it the tile is with in the walkable tiles list and
+    * returns true if it is
+    * 
+    * @param Tiles endTile = tile we are searching for in movableTiles
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public bool IsWithinWalkable(Tiles tile)
+    {
+        for (int i = 0; i < movableTiles.Count; i++)
+        {
+            if (movableTiles[i] == tile)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /*
     * OnTileSelected 
@@ -671,6 +761,8 @@ public class GameManagment : MonoBehaviour
         {
             startTile = tile;
             OnUnitSelected(tile.unit);
+
+
         }
 
         //call the unit handling function if a unit was found on the tile
@@ -705,8 +797,11 @@ public class GameManagment : MonoBehaviour
 
             endTile = tile;
 
-          
 
+            if (selectedUnit.movementPoints > 0 && IsWithinWalkable(endTile))
+            {
+                DrawLineRendere(endTile);
+            }
 
             //turn on UI
             UIManager.MenuPosition.SetActive(true);
@@ -803,8 +898,7 @@ public class GameManagment : MonoBehaviour
             {
                 special = true;
             }
-
-
+            
             //sets the button state in the UI manager to show the appropriate buttons
             UIManager.ButtonState(getvalidButtons(move, attack, special));
 

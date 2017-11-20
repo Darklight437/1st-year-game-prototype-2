@@ -23,7 +23,7 @@ public static class AStar
     public static List<Tiles> GetAStarPath(Tiles startTile, Tiles endTile)
     {
         //check to see if one of the tiles passed in does not exist or is not passible meaning they can not move to/from
-        if (startTile == null || endTile == null || startTile.IsPassible == false || endTile.IsPassible == false)
+        if (startTile == null || endTile == null || endTile.IsPassible == false)
         {
             return new List<Tiles>();
         }
