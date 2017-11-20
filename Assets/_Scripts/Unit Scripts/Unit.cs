@@ -49,6 +49,9 @@ public class Unit : MonoBehaviour
     public GameObject sightHolder;
 
     //David
+    //health bar transform
+    public RectTransform HpTransform = null;
+
     //the Health bar image reference
     public Image hpBar = null;
 
@@ -340,10 +343,24 @@ public class Unit : MonoBehaviour
         //remove all commands as they may depend on the one that just failed being successful
         commands.Clear();
     }
+    /* 
+     * Billboard
+     * called at the end of each turn
+     * rotates all health bars to face the camera
+     * 
+     * 
+     */
+    public void Billboard(Camera cam)
+    {
+        HpTransform.rotation = cam.transform.rotation;
+    }
+
 
    
     /*  
     *   HealthUpdate
+    *   
+    *    TODO change this to update in sync with the anims
     *   
     *   runs each update to show the health of the unit in a bar & text
     *   manages armour points for the HP bar as well

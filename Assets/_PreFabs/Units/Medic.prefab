@@ -316,8 +316,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4656417776403202}
   - component: {fileID: 114027832291448222}
-  - component: {fileID: 54251117156755658}
   - component: {fileID: 135863022653734388}
+  - component: {fileID: 54251117156755658}
   m_Layer: 10
   m_Name: Medic
   m_TagString: Unit
@@ -657,7 +657,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1539628356900846}
   m_LocalRotation: {x: -0, y: 0.0072695776, z: -0, w: 0.99997365}
-  m_LocalPosition: {x: -2.7165332, y: 0.489, z: -0.62407154}
+  m_LocalPosition: {x: 7.089601, y: -3.4726505e-17, z: 3.6909041}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224856860271748230}
@@ -973,6 +973,7 @@ MonoBehaviour:
   sightPrefab: {fileID: 1915189985047014, guid: e9d606d4ec06a2d49a22931b679b76cc,
     type: 2}
   sightHolder: {fileID: 0}
+  HpTransform: {fileID: 224856860271748230}
   hpBar: {fileID: 114451958031557162}
   hpNum: {fileID: 114074288445494440}
   armourBar: {fileID: 212902354374226216}
@@ -1359,7 +1360,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730829433129586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children: []
   m_Father: {fileID: 224856860271748230}

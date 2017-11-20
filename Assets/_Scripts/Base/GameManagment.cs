@@ -314,7 +314,7 @@ public class GameManagment : MonoBehaviour
         if (selectedUnit != null)
         {
             //turn off the unit selection glow
-            selectedUnit.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
+            selectedUnit.MeshLink.material.shader = Shader.Find("Standard");
         }
 		 
         //deselect the unit
@@ -414,7 +414,7 @@ public class GameManagment : MonoBehaviour
 
         if (selectedUnit != null)
         {
-            selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
+            selectedUnit.MeshLink.material.shader = Shader.Find("Standard");
         }
         
         //there are no units selected
@@ -435,7 +435,7 @@ public class GameManagment : MonoBehaviour
 
 
             selectedUnit = unit;
-             selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Custom/WallThrough");
+            selectedUnit.MeshLink.material.shader = Shader.Find("Custom/WallThrough");
 
             ToggleTileModifiersActive();
         }
@@ -1028,7 +1028,7 @@ public class GameManagment : MonoBehaviour
         //stop showing walkable and attackable tiles tiles
         ToggleTileModifiersFalse();
         //turn off the glow (new method in the works)
-        selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
+        selectedUnit.MeshLink.material.shader = Shader.Find("Standard");
 
         //deselect the unit
         selectedUnit = null;
@@ -1063,6 +1063,16 @@ public class GameManagment : MonoBehaviour
                 u.Defend(GameManagment.stats.trapTileDamage);
             }
         }
+        //do a foreach of all units and run billboard on them by feeding in the camera
+        foreach (BasePlayer Player in players)
+        {
+            foreach (Unit CurrUnit in Player.units)
+            {
+                CurrUnit.Billboard(Camera.main);
+            }
+        }
+
+
     }
 
 

@@ -725,8 +725,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991271546020698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.996, y: 0.5, z: 0.974}
+  m_LocalRotation: {x: -0, y: -0.0417971, z: -0, w: 0.9991262}
+  m_LocalPosition: {x: 6.824731, y: -3.565263e-17, z: 3.7893379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224732992298741538}
@@ -852,7 +852,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1669057918326148}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0.352, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4563540398422336}
@@ -1474,6 +1474,7 @@ MonoBehaviour:
   sightPrefab: {fileID: 1915189985047014, guid: e9d606d4ec06a2d49a22931b679b76cc,
     type: 2}
   sightHolder: {fileID: 0}
+  HpTransform: {fileID: 224732992298741538}
   hpBar: {fileID: 114395128567018594}
   hpNum: {fileID: 114562716748141024}
   armourBar: {fileID: 212630981226311762}
@@ -1695,7 +1696,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399858477360178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children: []
   m_Father: {fileID: 224732992298741538}
