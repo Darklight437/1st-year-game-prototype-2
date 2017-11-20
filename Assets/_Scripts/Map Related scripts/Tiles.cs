@@ -83,7 +83,7 @@ public class Tiles : MonoBehaviour
     private float originalY = 0.0f;
     private float originalHeight = 0.0f;
 
-    private float elevatedHeight = 0.75f;
+    private float elevatedHeight = 0.33f;
 
     //this is the position in the list on the map script where this tile is
     public int indexPos;

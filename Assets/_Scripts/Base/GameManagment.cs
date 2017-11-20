@@ -297,7 +297,7 @@ public class GameManagment : MonoBehaviour
         if (selectedUnit != null)
         {
             //turn off the unit selection glow
-            //selectedUnit.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+            selectedUnit.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
         }
 		 
         //deselect the unit
@@ -397,7 +397,7 @@ public class GameManagment : MonoBehaviour
 
         if (selectedUnit != null)
         {
-           // selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+            selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
         }
         
         //there are no units selected
@@ -407,7 +407,7 @@ public class GameManagment : MonoBehaviour
             //the player is selecting a different unit, hide the menu
             if (selectedUnit != unit)
             {
-                //not intended
+     
                 UIManager.ButtonState(UIManager.eCommandState.OFF);
                 
             }
@@ -415,8 +415,10 @@ public class GameManagment : MonoBehaviour
             //stop showing walkable tiles if thy where showing
             ToggleTileModifiersFalse();
 
+
+
             selectedUnit = unit;
-             //selectedUnit.gameObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Custom/WallThrough");
+             selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Custom/WallThrough");
 
             ToggleTileModifiersActive();
         }
@@ -704,9 +706,7 @@ public class GameManagment : MonoBehaviour
 
             endTile = tile;
 
-            //David 
-            //gonna change the Worldspace UI to screenspace set the position relative to the click
-            //set-up the world UI
+          
 
 
             //turn on UI
@@ -714,8 +714,8 @@ public class GameManagment : MonoBehaviour
 
             //set UI to mouse position (really agressivley)
             UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
-            UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one * 3);
-            UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
+            //UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one * 3);
+            //UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
 
             Canvas.ForceUpdateCanvases();
 
@@ -921,14 +921,14 @@ public class GameManagment : MonoBehaviour
 
         //turn off the action menu
         UIManager.ButtonState(UIManager.eCommandState.OFF);
-
+        
         //execute the action
         selectedUnit.Execute(actionEvent, startTile, endTile, OnActionFinished);
 
         //stop showing walkable and attackable tiles tiles
         ToggleTileModifiersFalse();
         //turn off the glow (new method in the works)
-        //selectedUnit.gameObject.GetComponent<Renderer>().material.shader = Shader.Find("Custom/DefaultShader");
+        selectedUnit.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.shader = Shader.Find("Standard");
 
         //deselect the unit
         selectedUnit = null;
