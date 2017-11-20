@@ -26,6 +26,11 @@ public class AiPlayer : BasePlayer
     //fuzzy logic machine for making decisions and moves
     public FuzzyLogic logicMachine;
 
+    //timer for thinking
+    private float m_thinkTimer = 0.0f;
+    private bool m_initialThink = false;
+    public float thinkTime = 10.0f;
+
     //AI stats
     public float advanceImportance = 1.0f; //scalar for scoring the benefits of moving up the map
     public float fleeImportance = 1.0f; //scalar for scoring the benefits of fleeing a fight
@@ -38,6 +43,7 @@ public class AiPlayer : BasePlayer
     // Use this for initialization
     new void Start()
     {
+
         isHuman = false;
         manager = Object.FindObjectOfType<GameManagment>();
         map = Object.FindObjectOfType<Map>();
@@ -83,6 +89,20 @@ public class AiPlayer : BasePlayer
     }
 
     /*
+    * Reset
+    * 
+    * resets the thinking timers and flags for the AI
+    * 
+    * @returns void
+    */
+    public void Reset()
+    {
+        m_thinkTimer = 0.0f;
+        m_initialThink = true;
+    }
+
+
+    /*
     * UpdateTurn 
     * overrides BasePlayers' UpdateTurn()
     * 
@@ -93,6 +113,21 @@ public class AiPlayer : BasePlayer
     public override void UpdateTurn()
     {
 
+        if (!m_initialThink)
+        {
+            manager.OnNextTurn();
+        }
+
+        m_thinkTimer += Time.deltaTime;
+
+        //don't do anything if the think timer hasn't gone over the limit
+        if (m_thinkTimer < thinkTime)
+        {
+            return;
+        }
+
+        m_initialThink = false;
+        m_thinkTimer = 0.0f;
 
         //get the size of the units list
         int unitSize = units.Count;
@@ -113,7 +148,7 @@ public class AiPlayer : BasePlayer
             logicMachine.Execute();
         }
 
-        manager.OnNextTurn();
+        
 
     }
 
