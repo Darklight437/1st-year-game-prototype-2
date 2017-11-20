@@ -87,24 +87,24 @@ public class TileModifierCommand : UnitCommand
             //this is a trap tile, it could kill the unit
             if (endTile.tileType == eTileType.PLACABLETRAP)
             {
-                if (unit.ArtLink != null)
+                if (endTile.unit.ArtLink != null)
                 {
-                    unit.ArtLink.SetTrigger("TakeDamage");
+                    endTile.unit.ArtLink.SetTrigger("TakeDamage");
                 }
 
-                unit.Defend(GameManagment.stats.trapTileDamage);
+                endTile.unit.Defend(GameManagment.stats.trapTileDamage);
             }
 
             //this is a defensive tile
             if (endTile.tileType == eTileType.PLACABLEDEFENSE)
             {
                 //defensive buff
-                unit.armour = unit.baseArmour + 1;
+                endTile.unit.armour = endTile.unit.baseArmour + 1;
             }
             else
             {
                 //remove the defensive buff
-                unit.armour = unit.baseArmour;
+                endTile.unit.armour = endTile.unit.baseArmour;
             }
         }
 

@@ -130,12 +130,12 @@ public class MoveCommand : UnitCommand
             if (endTile.tileType == eTileType.PLACABLEDEFENSE || endTile.tileType == eTileType.DEFENSE)
             {
                 //defensive buff
-                unit.armour = unit.baseArmour + 1;
+                endTile.unit.armour = endTile.unit.baseArmour + 1;
             }
             else
             {
                 //remove the defensive buff
-                unit.armour = unit.baseArmour;
+                endTile.unit.armour = endTile.unit.baseArmour;
             }
 
             //set the unit moving
