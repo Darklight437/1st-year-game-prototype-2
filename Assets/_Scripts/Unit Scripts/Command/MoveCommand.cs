@@ -18,8 +18,6 @@ public class MoveCommand : UnitCommand
     //list of tiles to follow
     private List<Tiles> m_tilePath = null;
 
-   
-
     /*
     * MoveCommand()
     * 
@@ -39,7 +37,6 @@ public class MoveCommand : UnitCommand
         }
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
-     
     }
 
 
@@ -115,6 +112,23 @@ public class MoveCommand : UnitCommand
                     }
 
                     unit.Defend(GameManagment.stats.trapTileDamage);
+
+                    //reset the explosion
+                    ParticleLibrary.explosionSystem.transform.position = nextTile.transform.position;
+                    ParticleLibrary.explosionSystem.time = 0.0f;
+                    ParticleLibrary.explosionSystem.Play();
+
+                    //an unexpected stop has occured, reset the target
+                    endTile.unit = null;
+                    nextTile.unit = unit;
+
+                    //movement stops if a trap tile is hit
+                    m_tilePath.Clear();
+
+                    unit.transform.position = target;
+                    successCallback();
+
+                    return;
                 }
 
                 unit.transform.position = target;
@@ -137,9 +151,6 @@ public class MoveCommand : UnitCommand
                 //remove the defensive buff
                 endTile.unit.armour = endTile.unit.baseArmour;
             }
-
-            //set the unit moving
-
             successCallback();
 
             //Stop walking Anim

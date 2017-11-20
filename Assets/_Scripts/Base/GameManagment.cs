@@ -96,6 +96,7 @@ public class GameManagment : MonoBehaviour
     {
         //set the reference
         GameManagment.stats = statsReference;
+        ParticleLibrary.GetSystems();
     }
 	// Use this for initialization
 	void Start ()
@@ -791,9 +792,11 @@ public class GameManagment : MonoBehaviour
 
             if (
                     !(selectedUnit.hasAttacked) &&
+                    (
                     (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
                     (selectedUnit is Melee && (enemyTile && inrange || defaultTile && inrange)) ||
                     (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
+                    )
 
 
                )

@@ -107,6 +107,13 @@ public class SpreadAttackCommand : UnitCommand
         {
             unit.ArtLink.SetBool("ActionsAvailable", false);
         }
+
+        //reset the explosion
+        ParticleLibrary.explosionSystem.transform.position = endTile.transform.position;
+        ParticleLibrary.explosionSystem.time = 0.0f;
+        ParticleLibrary.explosionSystem.Play();
+
+
         successCallback();
     }
 }
