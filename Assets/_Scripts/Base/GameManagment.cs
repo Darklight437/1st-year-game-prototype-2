@@ -105,7 +105,7 @@ public class GameManagment : MonoBehaviour
     {
         //set the reference
         GameManagment.stats = statsReference;
-        ParticleLibrary.GetSystems();
+        
     }
 	// Use this for initialization
 	void Start ()
@@ -115,6 +115,11 @@ public class GameManagment : MonoBehaviour
 			g_GM = this;		
 		}
         
+        map.SetUp (stats);
+
+        ParticleLibrary.GetSystems();
+
+
         map.SetUp (stats);
 
 		for (int i = 0; i < players.Count; i++) 

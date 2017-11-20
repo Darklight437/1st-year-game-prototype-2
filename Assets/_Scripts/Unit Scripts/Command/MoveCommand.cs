@@ -113,10 +113,14 @@ public class MoveCommand : UnitCommand
 
                     unit.Defend(GameManagment.stats.trapTileDamage);
 
-                    //reset the explosion
-                    ParticleLibrary.explosionSystem.transform.position = nextTile.transform.position;
-                    ParticleLibrary.explosionSystem.time = 0.0f;
-                    ParticleLibrary.explosionSystem.Play();
+                    //explosion is required
+                    if (nextTile.tileType == eTileType.PLACABLETRAP)
+                    {
+                        //reset the explosion
+                        ParticleLibrary.explosionSystem.transform.position = nextTile.transform.position;
+                        ParticleLibrary.explosionSystem.time = 0.0f;
+                        ParticleLibrary.explosionSystem.Play();
+                    }
 
                     //an unexpected stop has occured, reset the target
                     endTile.unit = null;
@@ -136,11 +140,25 @@ public class MoveCommand : UnitCommand
                     unit.transform.position = target;
                     successCallback();
 
+                    //Stop walking Anim
+                    if (unit.ArtLink != null)
+                    {
+                        unit.ArtLink.SetBool("IsWalking", false);
+                    }
+
                     return;
                 }
 
                 unit.transform.position = target;
                 m_tilePath.RemoveAt(0);
+
+                //don't move into the same space as another unit
+                if (m_tilePath.Count > 0 && m_tilePath[0].unit != null && m_tilePath[0].unit != unit)
+                {
+                    successCallback();
+                    return;
+                }
+
             }
             else
             {

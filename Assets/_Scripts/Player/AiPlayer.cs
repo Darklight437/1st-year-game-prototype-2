@@ -181,6 +181,14 @@ public class AiPlayer : BasePlayer
     }
 
 
+    /*
+    * EvalGroup 
+    * 
+    * fuzzy function used to determine if the group seeking function should be used
+    * 
+    * @param BaseInput inp - the input of the fuzzy logic machine
+    * @returns float - the score evaluated
+    */
     public float EvalGroup(BaseInput inp)
     {
         //up-cast the base input
@@ -208,7 +216,7 @@ public class AiPlayer : BasePlayer
         Vector3 relative = average - minp.unit.transform.position;
 
         //0 = at the centre of the group, 1 = maximum possible difference that can be achieved given the map size
-        return relative.magnitude / maxDifference;
+        return (relative.magnitude / maxDifference) * groupImportance;
     }
 
 
@@ -216,6 +224,15 @@ public class AiPlayer : BasePlayer
     {
         //up-cast the base input
         ManagerInput minp = inp as ManagerInput;
+
+        //don't do anything if the unit has run out of points
+        if (minp.unit.movementPoints == 0)
+        {
+            return;
+        }
+
+        //get a list of walkable tiles around the unit
+        List<Tiles> walkable = GetArea.GetAreaOfMoveable(map.GetTileAtPos(minp.unit.transform.position), minp.unit.movementPoints, map);
 
         //get the length of the units list
         int unitCount = units.Count;
@@ -232,7 +249,37 @@ public class AiPlayer : BasePlayer
         //average group position
         Vector3 average = sum / unitCount;
 
-        Move(minp.unit, average);
+        //worst possible score to start
+        float bestScore = float.MaxValue;
+
+        //reference to the best tile that has been found
+        Tiles bestTile = null;
+
+        //get the size of the walkable list
+        int walkSize = walkable.Count;
+
+        //iterate through all walkable tiles
+        for (int i = 0; i < walkSize; i++)
+        {
+            //store in a temp variable
+            Tiles tile = walkable[i];
+          
+            //get the squared distance to the tile
+            float sqrDistance = (tile.transform.position - average).sqrMagnitude;
+
+            if (sqrDistance < bestScore)
+            {
+                //reassign the best score
+                bestTile = tile;
+                bestScore = sqrDistance;
+            }
+        }
+
+        //move towards the best tile if one was found
+        if (bestTile != null)
+        {
+            Move(minp.unit, bestTile.pos);
+        }
     }
 
 
