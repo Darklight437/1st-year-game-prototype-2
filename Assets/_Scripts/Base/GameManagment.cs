@@ -154,7 +154,6 @@ public class GameManagment : MonoBehaviour
         
         m_scroll = Input.GetAxis("Mouse ScrollWheel");
         m_waitTimmer += Time.deltaTime;
-        Debug.Log(m_scroll);
 
         if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(2) || m_scroll != 0) && m_waitTimmer > unitToggleWait)
         {
@@ -515,7 +514,7 @@ public class GameManagment : MonoBehaviour
                 }
             }
 
-            for (int i = activePlayer.units.Count - 1; i >= 0; i++)
+            for (int i = activePlayer.units.Count - 1; i >= 0; i--)
             {
                 if (activePlayer.units[i] == selectedUnit)
                 {
@@ -558,10 +557,9 @@ public class GameManagment : MonoBehaviour
 
 
     /*
-    * ToggleWalkableTilesActive 
+    * ToggleTileModifiersActive 
     * 
-    * tells all tiles held in movableTiles to show that they are
-    * movable
+    * shows all relavent tile modifiers
     * 
     * @param non
     * @returns void
@@ -607,7 +605,7 @@ public class GameManagment : MonoBehaviour
             }
         }
 
-        if (dangerTiles.Count > 0)
+        if (dangerTiles.Count > 0 && selectedUnit == null)
         {
             for (int i = 0; i < dangerTiles.Count; i++)
             {
@@ -621,8 +619,7 @@ public class GameManagment : MonoBehaviour
     /*
     * ToggleTileModifiersFalse 
     * 
-    * tells all tiles held in movableTiles to stop showing that they are
-    * walable and attackable
+    * toggles off all tile modifers
     * 
     * @param non
     * @returns void
@@ -687,6 +684,7 @@ public class GameManagment : MonoBehaviour
         if (tile.unit != null && tile.unit.playerID != activePlayer.playerID)
         {
             ToggleTileModifiersFalse();
+            selectedUnit = null;
 
             List<Tiles> holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
 
