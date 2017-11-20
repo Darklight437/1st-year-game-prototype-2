@@ -121,6 +121,14 @@ public class MoveCommand : UnitCommand
                     //an unexpected stop has occured, reset the target
                     endTile.unit = null;
                     nextTile.unit = unit;
+                    
+                    //regain most movemeantpoints back
+                    unit.movementPoints += m_tilePath.Count - 1;
+                    
+                    if (unit.movementPoints < 0)
+                    {
+                        unit.movementPoints = 0;
+                    }
 
                     //movement stops if a trap tile is hit
                     m_tilePath.Clear();
