@@ -76,9 +76,9 @@ public class SpreadAttackCommand : UnitCommand
 
         int maxDistance = Mathf.CeilToInt(attackRadius);
 
-        //get the surrounding tiles, considering obstacles
+        //get the surrounding tiles, not considering obstacles
         List<Tiles> area = GetArea.GetAreaOfAttack(endTile, maxDistance, map);
-
+        
         //get the size of the area tiles list
         int areaSize = area.Count;
 
