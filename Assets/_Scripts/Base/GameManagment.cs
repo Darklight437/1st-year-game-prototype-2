@@ -598,11 +598,14 @@ public class GameManagment : MonoBehaviour
         //gather and show new walkable tiles
         if (selectedUnit != null && selectedUnit.movementPoints > 0)
         {
-            List<Tiles> holder = GetArea.GetAreaOfMoveable(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.movementPoints, map);
-
+            List<Tiles> holder = GetArea.GetAreaOfMoveable(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.movementPoints, map, selectedUnit);
+            
             foreach (Tiles tile in holder)
             {
-                movableTiles.Add(tile);
+                if (tile != startTile)
+                {
+                    movableTiles.Add(tile);
+                }
             }
 
             foreach (Tiles tile in movableTiles)
@@ -619,8 +622,15 @@ public class GameManagment : MonoBehaviour
         {
             List<Tiles> holder2 = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
 
+            bool isRanger = selectedUnit is Ranger;
+
             foreach (Tiles tile in holder2)
             {
+                if (isRanger == false && tile == startTile)
+                {
+                    continue;
+                }
+
                 attackableTiles.Add(tile);
             }
 
@@ -695,7 +705,7 @@ public class GameManagment : MonoBehaviour
     {
         unitPathTiles.Add(map.GetTileAtPos(selectedUnit.transform.position));
 
-        foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile))
+        foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit))
         {
             unitPathTiles.Add(tile);
         }
@@ -794,12 +804,27 @@ public class GameManagment : MonoBehaviour
             ToggleTileModifiersFalse();
             selectedUnit = null;
 
-            List<Tiles> holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+            List<Tiles> holder = new List<Tiles>();
+
+            if (tile.unit is Ranger)
+            {
+                holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+            }
+            else
+            {
+                holder = GetArea.GetAreaOfMeleeDangerZone(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+            }
+
+            Tiles enemyTile = tile;
 
             for (int i = 0; i < holder.Count; i++)
             {
-                dangerTiles.Add(holder[i]);
+                if (holder[i] != tile)
+                {
+                    dangerTiles.Add(holder[i]);
+                }
             }
+
             ToggleTileModifiersActive();
         }
     }
@@ -849,7 +874,7 @@ public class GameManagment : MonoBehaviour
             startTile.unit = null;
 
             //get the path using A*
-            List<Tiles> path = AStar.GetAStarPath(startTile, endTile);
+            List<Tiles> path = AStar.GetAStarPath(startTile, endTile, selectedUnit);
 
             //reassign the unit reference
             startTile.unit = selectedUnit;

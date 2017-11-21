@@ -130,37 +130,59 @@ public class Tiles : MonoBehaviour
     }
 
     //determins if this tile is passible
-    public bool IsPassible
+    public bool IsPassible(Unit aUnit)
     {
-        get
+        if (unit != null && aUnit.playerID != unit.playerID)
         {
-            if (unit != null)
-            {
-                return false;
-            }
-
-            switch (tileType)
-            {
-                case eTileType.NORMAL:
-                    return true;
-                case eTileType.DAMAGE:
-                    return true;
-                case eTileType.DEFENSE:
-                    return true;
-                case eTileType.IMPASSABLE:
-                    return false;
-                case eTileType.NULL:
-                    return false;
-                case eTileType.DEBUGGING:
-                    return true;
-                case eTileType.PLACABLEDEFENSE:
-                    return true;
-                case eTileType.PLACABLETRAP:
-                    return true;
-            }
-
             return false;
         }
+
+        switch (tileType)
+        {
+            case eTileType.NORMAL:
+                return true;
+            case eTileType.DAMAGE:
+                return true;
+            case eTileType.DEFENSE:
+                return true;
+            case eTileType.IMPASSABLE:
+                return false;
+            case eTileType.NULL:
+                return false;
+            case eTileType.DEBUGGING:
+                return true;
+            case eTileType.PLACABLEDEFENSE:
+                return true;
+            case eTileType.PLACABLETRAP:
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool IsPassible()
+    {
+        switch (tileType)
+        {
+            case eTileType.NORMAL:
+                return true;
+            case eTileType.DAMAGE:
+                return true;
+            case eTileType.DEFENSE:
+                return true;
+            case eTileType.IMPASSABLE:
+                return false;
+            case eTileType.NULL:
+                return false;
+            case eTileType.DEBUGGING:
+                return true;
+            case eTileType.PLACABLEDEFENSE:
+                return true;
+            case eTileType.PLACABLETRAP:
+                return true;
+        }
+
+        return false;
     }
 
     //determines if this tile has healing effects on it

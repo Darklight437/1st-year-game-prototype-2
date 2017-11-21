@@ -20,10 +20,10 @@ public static class AStar
     * 
     * @returns List<Tiles>
     */
-    public static List<Tiles> GetAStarPath(Tiles startTile, Tiles endTile)
+    public static List<Tiles> GetAStarPath(Tiles startTile, Tiles endTile, Unit unit)
     {
         //check to see if one of the tiles passed in does not exist or is not passible meaning they can not move to/from
-        if (startTile == null || endTile == null || endTile.IsPassible == false)
+        if (startTile == null || endTile == null || endTile.IsPassible(unit) == false)
         {
             return new List<Tiles>();
         }
@@ -71,7 +71,7 @@ public static class AStar
             {
                 //check if the tile is passible or we have already looked at it
                 //if so we skip over this tile
-                if (tile.IsPassible != true || closedSet.Contains(tile))
+                if (tile.IsPassible(unit) != true || closedSet.Contains(tile))
                 {
                     continue;
                 }

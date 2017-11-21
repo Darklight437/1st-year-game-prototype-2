@@ -58,7 +58,7 @@ public class MoveCommand : UnitCommand
             startingTile.unit = null;
 
             //get the tile path to follow
-            m_tilePath = AStar.GetAStarPath(startingTile, endTile);
+            m_tilePath = AStar.GetAStarPath(startingTile, endTile, unit);
 
             //the path is clear, and the unit can move there
             if (m_tilePath.Count > 0 && m_tilePath.Count <= unit.movementPoints)
@@ -152,12 +152,12 @@ public class MoveCommand : UnitCommand
                 unit.transform.position = target;
                 m_tilePath.RemoveAt(0);
 
-                //don't move into the same space as another unit
-                if (m_tilePath.Count > 0 && m_tilePath[0].unit != null && m_tilePath[0].unit != unit)
-                {
-                    successCallback();
-                    return;
-                }
+                ////don't move into the same space as another unit
+                //if (m_tilePath.Count > 0 && m_tilePath[0].unit != null && m_tilePath[0].unit != unit)
+                //{
+                //    successCallback();
+                //    return;
+                //}
 
             }
             else

@@ -267,7 +267,7 @@ public class AiPlayer : BasePlayer
         }
 
         //get a list of walkable tiles around the unit
-        List<Tiles> walkable = GetArea.GetAreaOfMoveable(map.GetTileAtPos(minp.unit.transform.position), minp.unit.movementPoints, map);
+        List<Tiles> walkable = GetArea.GetAreaOfMoveable(map.GetTileAtPos(minp.unit.transform.position), minp.unit.movementPoints, map, minp.unit);
 
         //get the length of the units list
         int unitCount = units.Count;
