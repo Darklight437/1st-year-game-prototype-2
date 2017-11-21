@@ -13,8 +13,9 @@ public class SoundSystem : MonoBehaviour {
     public AudioSource TilePlace;
     public AudioSource TileAction;
 
-    float idleTimer = 0;
-    
+    float walkTimer = 0;
+    bool endedWalk = false;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -24,12 +25,15 @@ public class SoundSystem : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //idleTimer -= Time.deltaTime;
-
-        //if (idleTimer <= 0f && idleAwake.loop == true)
-        //{
-        //    IdleEnd();
-        //}
+        if (walkTimer <= 0 && endedWalk)
+        {
+            EndWalk.Play();
+            endedWalk = false;
+        }
+        if (endedWalk)
+        {
+            walkTimer -= Time.deltaTime;
+        }
 	}
 
 
@@ -38,8 +42,6 @@ public class SoundSystem : MonoBehaviour {
     {
 
         idleAwake.Play();
-
-
     }
 
     public void activeIdle()
@@ -47,8 +49,6 @@ public class SoundSystem : MonoBehaviour {
 
         idleAwake.Play();
         idleAwake.loop = true;
-        //idleTimer += 12;
-        
     }
     public void IdleEnd()
     {
@@ -58,7 +58,6 @@ public class SoundSystem : MonoBehaviour {
        
     public void Attack()
     {
-        //IdleEnd();
         attack.Play();
     }
 
@@ -66,10 +65,18 @@ public class SoundSystem : MonoBehaviour {
     {
         idleAwake.Play();
         walk.Play();
+        endedWalk = false;
+
     }
 
     public void PlaceTile()
     {
         TilePlace.Play();
+    }
+
+    public void walkEnd()
+    {
+        walkTimer = 1.0f;
+        endedWalk = true;
     }
 }
