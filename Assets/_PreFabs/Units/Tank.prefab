@@ -1114,9 +1114,9 @@ MonoBehaviour:
   armour: 4
   baseArmour: 4
   damage: 1200
-  maxHealth: 8000
-  health: 8000
-  AOV: 11
+  maxHealth: 7000
+  health: 7000
+  AOV: 6
   movementPoints: 0
   hasAttacked: 0
   movementSpeed: 3
@@ -1132,6 +1132,7 @@ MonoBehaviour:
   hpNum: {fileID: 114078513373952690}
   armourBar: {fileID: 212672136769699492}
   ArtLink: {fileID: 95612247974449468}
+  inSight: 0
   MeshLink: {fileID: 0}
 --- !u!114 &114831069162064744
 MonoBehaviour:
