@@ -90,6 +90,9 @@ public class Tiles : MonoBehaviour
 
     //refrence to the map the tile is parented to
     private Map m_myMap;
+    
+    //this setthe tiles render ques
+    public int renderQue;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -339,10 +342,17 @@ public class Tiles : MonoBehaviour
         if (useTileSet.tileTypes.Length > 1)
         {
             GameObject tileSpawn = Instantiate(useTileSet.tileTypes[statistics.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
-            //GameObject tileSpawn = Instantiate(useTileSet.tileTypes[m_myMap.RandomTileNum(tileType)], new Vector3(0, 0, 0), Quaternion.identity);
             tileSpawn.transform.SetParent(gameObject.transform);
 
             tileSpawn.transform.localPosition = new Vector3(0, 0, 0);
+
+            foreach (Transform trans in tileSpawn.transform)
+            {
+                if (trans.tag == "Renderer Que")
+                {
+                    trans.GetComponent<Renderer>().material.renderQueue = renderQue;
+                }
+            }
         }
         else
         {
@@ -350,7 +360,16 @@ public class Tiles : MonoBehaviour
             tileSpawn.transform.SetParent(gameObject.transform);
 
             tileSpawn.transform.localPosition = new Vector3(0, 0, 0);
+
+            foreach (Transform trans in tileSpawn.transform)
+            {
+                if (trans.tag == "Renderer Que")
+                {
+                    trans.GetComponent<Renderer>().material.renderQueue = renderQue;
+                }
+            }
         }
+
     }
 
     /*

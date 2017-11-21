@@ -707,7 +707,7 @@ public class GameManagment : MonoBehaviour
 
         LineRenderer LR = lineRendererOBJ.GetComponent<LineRenderer>();
         
-        LR.positionCount = unitPathTiles.Count - 1;
+        LR.positionCount = unitPathTiles.Count;
 
         for (int i = 0; i < unitPathTiles.Count; i++)
         {

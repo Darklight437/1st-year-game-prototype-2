@@ -18,9 +18,7 @@ public class Map : MonoBehaviour
     //maps width and height
     public int width;
     public int height;
-
-    protected bool setUp = false;
-
+    
 	public virtual void SetUp(Statistics stats)
     {
 		for (int i = 0; i < mapTiles.Count; i++) 
@@ -34,6 +32,7 @@ public class Map : MonoBehaviour
         {
             mapTiles[i].indexPos = i;
         }
+
     }
     
     /*
