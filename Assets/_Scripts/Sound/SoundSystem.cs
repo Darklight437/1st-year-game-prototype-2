@@ -13,7 +13,7 @@ public class SoundSystem : MonoBehaviour {
     public AudioSource TileAction;
 
     float idleTimer = 0;
-
+    
 	// Use this for initialization
 	void Start ()
     {
@@ -23,28 +23,47 @@ public class SoundSystem : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
+        //idleTimer -= Time.deltaTime;
+
+        //if (idleTimer <= 0f && idleAwake.loop == true)
+        //{
+        //    IdleEnd();
+        //}
 	}
 
 
     //plays the param sound
     public void UsedIdle()
     {
-        //idleAwake.Play();
-        if (idleTimer > 0)
-        {
-            idleAwake.loop = true;
-            //idleTimer = 1.2
-        }
+
+        idleAwake.Play();
+
+
     }
 
     public void activeIdle()
     {
 
+        idleAwake.Play();
+        idleAwake.loop = true;
+        //idleTimer += 12;
+        
     }
-
+    public void IdleEnd()
+    {
+        idleAwake.loop = false;
+        idleAwake.Stop();
+    }
+       
     public void Attack()
     {
+        //IdleEnd();
         attack.Play();
+    }
+
+    public void Walk()
+    {
+        idleAwake.Play();
+        walk.Play();
     }
 }
