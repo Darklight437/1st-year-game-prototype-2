@@ -99,8 +99,6 @@ public class Unit : MonoBehaviour
 
     public void UnitInit()
 	{
-		Debug.Log ("Unit Run");
-
 		//get the tile that the unit is standing on
 		Tiles currentTile = GameObject.FindObjectOfType<Map>().GetTileAtPos(transform.position);
 

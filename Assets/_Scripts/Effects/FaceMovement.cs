@@ -6,14 +6,14 @@ public class FaceMovement : MonoBehaviour
 {
 
     private Vector3 m_prevPos = Vector3.zero;
-    private Vector3 DefaultForward;
+    private Quaternion defaultOffset = Quaternion.identity;
     private Transform myTransform;
     
     // Use this for initialization
     void Start ()
     {
         m_prevPos = transform.position;
-        DefaultForward = transform.forward;
+        defaultOffset = transform.rotation;
         myTransform = transform;
     }
 	
@@ -23,11 +23,11 @@ public class FaceMovement : MonoBehaviour
 
         if (m_prevPos != myTransform.position)
         {
-            myTransform.forward = myTransform.position - m_prevPos;
+            myTransform.rotation = Quaternion.LookRotation((myTransform.position - m_prevPos).normalized) * defaultOffset;
         }
         else
         {
-            myTransform.forward = DefaultForward;
+            myTransform.rotation = Quaternion.LookRotation(Vector3.forward) * defaultOffset;
         }
         m_prevPos = myTransform.position;
     }
