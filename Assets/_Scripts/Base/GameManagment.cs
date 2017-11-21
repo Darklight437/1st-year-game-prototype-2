@@ -69,7 +69,8 @@ public class GameManagment : MonoBehaviour
     //a list of ties the unit will follow when commanded to walk from there current pos to selected pos
     public List<Tiles> unitPathTiles;
     //the game object with the line renderer that we will acces to show the unit movmeant path
-    public GameObject lineRendererOBJ;
+    public GameObject lineRendererPrefab;
+    private GameObject m_lineRenderer;
 
     public GameObject pathEndPrefab;
     private GameObject m_pathEnd;
@@ -118,10 +119,7 @@ public class GameManagment : MonoBehaviour
         map.SetUp (stats);
 
         ParticleLibrary.GetSystems();
-
-
-        map.SetUp (stats);
-
+        
 		for (int i = 0; i < players.Count; i++) 
 		{
 			for (int u = 0; u < players[i].units.Count; u++) 
@@ -162,9 +160,12 @@ public class GameManagment : MonoBehaviour
 
         m_pathEnd = Instantiate(pathEndPrefab, new Vector3(0,0,0), Quaternion.identity);
         m_pathEnd.SetActive(false);
-        lineRendererOBJ.SetActive(false);
+
+        m_lineRenderer = Instantiate(lineRendererPrefab, new Vector3(0, 0, 0), lineRendererPrefab.transform.rotation);
+        m_lineRenderer.SetActive(false);
+
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -701,11 +702,11 @@ public class GameManagment : MonoBehaviour
 
         unitPathTiles.Add(endTile);
 
-        lineRendererOBJ.SetActive(true);
+        m_lineRenderer.SetActive(true);
 
         Vector3 pos = new Vector3(0,0,0);
 
-        LineRenderer LR = lineRendererOBJ.GetComponent<LineRenderer>();
+        LineRenderer LR = m_lineRenderer.GetComponent<LineRenderer>();
         
         LR.positionCount = unitPathTiles.Count;
 
@@ -732,7 +733,7 @@ public class GameManagment : MonoBehaviour
     public void TurnOffLineRenderer()
     {
         m_pathEnd.SetActive(false);
-        lineRendererOBJ.SetActive(false);
+        m_lineRenderer.SetActive(false);
         unitPathTiles.Clear();
 
     }

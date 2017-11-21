@@ -69,8 +69,13 @@ MonoBehaviour:
   transitioning: 0
   tileLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294966015
   unitToggleWait: 0.2
+  unitPathTiles: []
+  lineRendererPrefab: {fileID: 1693328981265506, guid: 0fbde1e48190d2d4d982d4781eafb589,
+    type: 2}
+  pathEndPrefab: {fileID: 1226796095614456, guid: 49a51157c5c6fe0439319fd5078a29f3,
+    type: 2}
   UIManager: {fileID: 0}
   actionEvent: 0
   uiPressed: 0

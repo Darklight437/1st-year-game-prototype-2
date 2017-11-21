@@ -78,6 +78,7 @@ public class Unit : MonoBehaviour
     public void Initialise()
     {
         MeshLink = ArtLink.GetComponentInChildren<SkinnedMeshRenderer>();
+        transform.position = new Vector3((int)(transform.position.x + 0.5f), 0.5f, (int)(transform.position.z + 0.5f));
     }
 
 
