@@ -12,6 +12,7 @@ public class SoundSystem : MonoBehaviour {
     public AudioSource TilePlace;
     public AudioSource TileAction;
 
+    float idleTimer = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -27,9 +28,23 @@ public class SoundSystem : MonoBehaviour {
 
 
     //plays the param sound
-    public void playsound(AudioSource Sound)
+    public void UsedIdle()
     {
-        Sound.Play();
-       
+        //idleAwake.Play();
+        if (idleTimer > 0)
+        {
+            idleAwake.loop = true;
+            //idleTimer = 1.2
+        }
+    }
+
+    public void activeIdle()
+    {
+
+    }
+
+    public void Attack()
+    {
+        attack.Play();
     }
 }
