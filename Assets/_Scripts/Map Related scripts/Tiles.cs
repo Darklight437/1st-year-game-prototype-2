@@ -91,8 +91,8 @@ public class Tiles : MonoBehaviour
     //refrence to the map the tile is parented to
     private Map m_myMap;
     
-    //this setthe tiles render ques
-    public int renderQue;
+    //this set the render ques of tile objects
+    public int renderQueTile;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -346,11 +346,12 @@ public class Tiles : MonoBehaviour
 
             tileSpawn.transform.localPosition = new Vector3(0, 0, 0);
 
-            foreach (Transform trans in tileSpawn.transform)
+            foreach (Transform trans in tileSpawn.GetComponentsInChildren<Transform>())
             {
                 if (trans.tag == "Renderer Que")
                 {
-                    trans.GetComponent<Renderer>().material.renderQueue = renderQue;
+                    trans.GetComponent<Renderer>().material.renderQueue = renderQueTile;
+                    Debug.Log(trans.GetComponent<Renderer>().material.renderQueue);
                 }
             }
         }
@@ -365,7 +366,8 @@ public class Tiles : MonoBehaviour
             {
                 if (trans.tag == "Renderer Que")
                 {
-                    trans.GetComponent<Renderer>().material.renderQueue = renderQue;
+                    trans.GetComponent<Renderer>().material.renderQueue = renderQueTile;
+                    Debug.Log(trans.GetComponent<Renderer>().material.renderQueue);
                 }
             }
         }
