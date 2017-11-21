@@ -98,7 +98,7 @@ public class MoveCommand : UnitCommand
             if (relative.magnitude < unit.movementSpeed * Time.deltaTime)
             {
                 //this is a healing tile, heal the unit
-                if (nextTile.IsHealing)
+                if (nextTile.IsHealing(false, unit))
                 {
                     unit.Heal(GameManagment.stats.tileHealthGained);
                 }

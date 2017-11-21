@@ -63,7 +63,7 @@ public class TileModifierCommand : UnitCommand
         //determine what to do
         switch (modifyType)
         {
-            case eModifyType.HEALING: endTile.IsHealing = true; break;
+            case eModifyType.HEALING: endTile.IsHealing(true, unit); break;
             case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
             case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
         }
@@ -79,20 +79,9 @@ public class TileModifierCommand : UnitCommand
         if (endTile.unit != null)
         {
             //this is a healing tile
-            if (endTile.IsHealing)
+            if (endTile.IsHealing(false, unit))
             {
                 endTile.unit.Heal(GameManagment.stats.tileHealthGained);
-            }
-
-            //this is a trap tile, it could kill the unit
-            if (endTile.tileType == eTileType.PLACABLETRAP)
-            {
-                if (endTile.unit.ArtLink != null)
-                {
-                    endTile.unit.ArtLink.SetTrigger("TakeDamage");
-                }
-
-                endTile.unit.Defend(GameManagment.stats.trapTileDamage);
             }
 
             //this is a defensive tile

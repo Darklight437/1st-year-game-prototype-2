@@ -79,6 +79,7 @@ public class Tiles : MonoBehaviour
 
     //check if a tile is healing
     private bool m_isHealing = false;
+    private int m_playerID = -1;
 
     private float originalY = 0.0f;
     private float originalHeight = 0.0f;
@@ -90,9 +91,11 @@ public class Tiles : MonoBehaviour
 
     //refrence to the map the tile is parented to
     private Map m_myMap;
-    
+
     //this set the render ques of tile objects
     public int renderQueTile;
+
+    public MediPack tileMediPack;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -186,25 +189,63 @@ public class Tiles : MonoBehaviour
     }
 
     //determines if this tile has healing effects on it
-    public bool IsHealing
+    public bool IsHealing(bool value, Unit unit)
     {
-        get
+        //reset the healing on the tile
+        if (m_isHealing && value != true)
         {
-            //reset the healing on the tile
-            if (m_isHealing)
+            m_isHealing = false;
+
+            Destroy(tileMediPack.currMedPack);
+            Destroy(tileMediPack.usedHealthMist);
+            Destroy(tileMediPack.usedTeamParticals);
+
+            if (m_playerID != unit.playerID)
             {
-                m_isHealing = false;
-                return true;
+                Destroy(Instantiate(tileMediPack.destroyedParticals, 
+                                    new Vector3(transform.position.x, 
+                                    0.3f, 
+                                    transform.position.z), 
+                                    tileMediPack.destroyedParticals.transform.rotation), 
+                                    5);
+
+                return false;
             }
 
-            return false;
+            Destroy(Instantiate(tileMediPack.usedParticals, 
+                                new Vector3(transform.position.x,
+                                0.3f,
+                                transform.position.z),
+                                tileMediPack.destroyedParticals.transform.rotation),
+                                5);
 
+            return true;
         }
 
-        set
+        if (value)
         {
             m_isHealing = value;
+
+            if (m_isHealing)
+            {
+                m_playerID = unit.playerID;
+
+                if (m_playerID == 1)
+                {
+                    tileMediPack.currMedPack = Instantiate(tileMediPack.redTeamMediPack, transform.position, Quaternion.identity);
+                    tileMediPack.usedHealthMist = Instantiate(tileMediPack.redTeamHealthMist, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+                    tileMediPack.usedTeamParticals = Instantiate(tileMediPack.redTeamParticals, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+                }
+
+                if (m_playerID == 0)
+                {
+
+                }
+            }
         }
+
+
+        return false;
     }
 
     //this is the tiles parent for pathfinding purposes
@@ -423,6 +464,35 @@ public class Tiles : MonoBehaviour
 
         tileSpawn.transform.localPosition = new Vector3(0, 0, 0);
     }
+}
+
+/*
+* class MediPack
+* 
+* this holds all the prefabs for medipack related stuff
+* 
+* author: Callum Dunstone, Academy of Interactive Entertainment, 2017
+*/
+[System.Serializable]
+public class MediPack
+{
+    //OH BOY IT IS MEDICPACK STUFF
+    public GameObject redTeamMediPack;
+    public GameObject blueTeamMediPack;
+
+    public GameObject currMedPack;
+
+    public GameObject redTeamHealthMist;
+    public GameObject redTeamParticals;
+
+    public GameObject blueTeamHealthMist;
+    public GameObject blueTeamParticals;
+
+    public GameObject usedHealthMist;
+    public GameObject usedTeamParticals;
+
+    public GameObject usedParticals;
+    public GameObject destroyedParticals;
 }
 
 /*
