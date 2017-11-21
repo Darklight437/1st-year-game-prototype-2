@@ -287,13 +287,13 @@ public class GameManagment : MonoBehaviour
         //remove all dead units
         foreach (BasePlayer p in players)
         {
-            if (p is AiPlayer)
-            {
-                //cast to the true type
-                AiPlayer ap = p as AiPlayer;
+            //if (p is AiPlayer)
+            //{
+            //    //cast to the true type
+            //    AiPlayer ap = p as AiPlayer;
 
-                ap.Reset();
-            }
+            //    ap.Reset();
+            //}
             
 
             //iterate through all units, removing null references
