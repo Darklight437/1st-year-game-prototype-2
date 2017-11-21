@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 3089fb53e0a9c4142bc23f95f57c2fef
-timeCreated: 1511222431
+guid: 11937240ffe511d48b3235f2754a329b
+timeCreated: 1511222372
 licenseType: Pro
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 21
   fileIDToRecycleName:
     100000: Chest
     100002: Core
@@ -55,17 +55,10 @@ ModelImporter:
     7400000: Take 001
     9500000: //RootNode
     13700000: pCube65
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn2
-    second: {fileID: 2100000, guid: cbac51cd2226ff34fbeadd9493b49975, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -78,7 +71,6 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -107,7 +99,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
