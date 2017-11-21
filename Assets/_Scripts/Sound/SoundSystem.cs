@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundSystem : MonoBehaviour {
     //each type of high level audio file
     public AudioSource idleAwake;
+    public AudioSource idleAsleep;
     public AudioSource walk;
     public AudioSource EndWalk;
     public AudioSource attack;
