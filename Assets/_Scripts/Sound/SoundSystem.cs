@@ -67,4 +67,9 @@ public class SoundSystem : MonoBehaviour {
         idleAwake.Play();
         walk.Play();
     }
+
+    public void PlaceTile()
+    {
+        TilePlace.Play();
+    }
 }

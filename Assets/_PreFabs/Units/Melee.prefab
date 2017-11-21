@@ -725,8 +725,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991271546020698}
-  m_LocalRotation: {x: -0, y: 0.61058944, z: -0, w: 0.7919473}
-  m_LocalPosition: {x: 0.4178, y: 0.375, z: 2.4454}
+  m_LocalRotation: {x: -0, y: 0.3907435, z: -0, w: 0.9204996}
+  m_LocalPosition: {x: -0.19, y: 0.446, z: 2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224732992298741538}
@@ -734,7 +734,7 @@ Transform:
   - {fileID: 4238374241134862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 75.264, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 46.002003, z: 0}
 --- !u!4 &4098551838452182
 Transform:
   m_ObjectHideFlags: 1
@@ -1473,14 +1473,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 0
-  movementRange: 9
+  movementRange: 5
   attackRange: 1
   armour: 2
   baseArmour: 2
-  damage: 1000
+  damage: 1200
   maxHealth: 3000
   health: 3000
-  AOV: 7
+  AOV: 4
   movementPoints: 0
   hasAttacked: 0
   movementSpeed: 3
