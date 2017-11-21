@@ -165,16 +165,9 @@ public static class AStar
     public static int GetDistance(Tiles tileA, Tiles tileB)
     {
         int disX = Mathf.RoundToInt(Mathf.Abs(tileA.transform.position.x - tileB.transform.position.x));
-        int disY = Mathf.RoundToInt(Mathf.Abs(tileA.transform.position.y - tileB.transform.position.y));
-
-        if (disX > disY)
-        {
-            return disY + 10 * (disX - disY);
-        }
-        else
-        {
-            return disX + 10 * (disY - disX);
-        }
+        int disZ = Mathf.RoundToInt(Mathf.Abs(tileA.transform.position.z - tileB.transform.position.z));
+        
+        return disX + disZ;
     }
     
 }
