@@ -22,6 +22,7 @@ public class Sight : MonoBehaviour
         if (U != null)
         {
             U.TurnOffRender();
+
         }
     }
 }

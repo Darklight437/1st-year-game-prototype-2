@@ -63,6 +63,9 @@ public class Unit : MonoBehaviour
     //Animator 
     public Animator ArtLink;
 
+    //check if the unit is within sight
+    public bool inSight;
+
     [HideInInspector]
     public SkinnedMeshRenderer MeshLink;
 
@@ -89,11 +92,13 @@ public class Unit : MonoBehaviour
 
     public void TurnOffRender()
     {
+        inSight = false;
         MeshLink.enabled = false;
         hpBar.transform.parent.gameObject.SetActive(false);
     }
     public void TurnOnRender()
     {
+        inSight = true;
         MeshLink.enabled = true;
         hpBar.transform.parent.gameObject.SetActive(true);
     }

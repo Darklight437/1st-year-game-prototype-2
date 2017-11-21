@@ -799,7 +799,7 @@ public class GameManagment : MonoBehaviour
             OnUnitSelected(tile.unit);
         }
 
-        if (tile.unit != null && tile.unit.playerID != activePlayer.playerID)
+        if (tile.unit != null && tile.unit.playerID != activePlayer.playerID && tile.unit.inSight == true)
         {
             ToggleTileModifiersFalse();
             selectedUnit = null;
