@@ -13,42 +13,54 @@ public class SoundSystem : MonoBehaviour {
     public AudioSource TilePlace;
     public AudioSource TileAction;
 
-    float walkTimer = 0;
-    bool endedWalk = false;
+    public Animator Animator;
+    
+    
+    bool IsWalking = false;
+    bool idling = false;
 
 	// Use this for initialization
 	void Start ()
     {
-        //playsound(idleAwake);
+        Animator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (walkTimer <= 0 && endedWalk)
+        //walk just finished
+        if (IsWalking && !Animator.GetBool("IsWalking"))
         {
-            EndWalk.Play();
-            endedWalk = false;
+            IsWalking = false;
+            if (EndWalk)
+            {
+                walk.Stop();
+                EndWalk.Play();
+            }
         }
-        if (endedWalk)
-        {
-            walkTimer -= Time.deltaTime;
-        }
+        if (idling && !Animator.GetBool("ActionsAvailable")) ;
 	}
 
 
     //plays the param sound
     public void UsedIdle()
     {
-
-        idleAwake.Play();
+        if (idleAsleep)
+        {
+            idleAsleep.Play();
+        }
+        
     }
 
     public void activeIdle()
     {
 
-        idleAwake.Play();
-        idleAwake.loop = true;
+        if (idleAwake)
+        {
+            idleAwake.Play();
+            idleAwake.loop = true;
+        }
+        
     }
     public void IdleEnd()
     {
@@ -66,7 +78,7 @@ public class SoundSystem : MonoBehaviour {
     {
         idleAwake.Play();
         walk.Play();
-        endedWalk = false;
+        IsWalking = true;
 
     }
 
@@ -77,7 +89,7 @@ public class SoundSystem : MonoBehaviour {
 
     public void walkEnd()
     {
-        walkTimer = 1.0f;
-        endedWalk = true;
+
+        //IsWalking = true;
     }
 }
