@@ -78,17 +78,7 @@ public class GameManagment : MonoBehaviour
 
     //David's
     //reference to Main UI manager script
-    /*
-  * WorldUi is Depreciated
-  * use the state switch of UIManager to 
-  * control which buttons are visible
-  * UIManager.ButtonState(UIManager.eCommandState.OFF);
-  * turns off all buttons
-  * other button states are based off the board
-  * MSC etcetera
-  * 
-  * 
-  */
+
     public UIManager UIManager = null;
     
  
@@ -772,6 +762,92 @@ public class GameManagment : MonoBehaviour
     }
 
     /*
+     * UI block begin
+     * 
+     */
+
+    //Buttonshow Block 
+    //**********************
+    //bools for determining appropriate actions
+    bool move = false;
+    bool attack = false;
+    bool special = false;
+    bool inrange = false;
+    //**********************
+
+     /*   
+     * getValidButtons
+     * 
+     * @param bool move, bool attack, bool special: wether each button should be shown
+     * @returns the correct enum forthe current state of button combinations
+     * @author David Passlow
+     */
+    private UIManager.eCommandState getvalidButtons(bool mov, bool att, bool spec)
+    {
+
+        //only move is true
+        if (mov && !att && !spec)
+        {
+            return UIManager.eCommandState.MC;
+        }
+
+        //only special is true
+        if (spec && !mov && !att)
+        {
+            return UIManager.eCommandState.SC;
+        }
+
+        //only att is true
+        if (att && !mov && !spec)
+        {
+            return UIManager.eCommandState.AC;
+        }
+
+        //att and special
+        if (att && spec && !mov)
+        {
+            return UIManager.eCommandState.ASC;
+        }
+        //attack & move
+        if (mov && att && !spec)
+        {
+            return UIManager.eCommandState.MAC;
+        }
+        if (mov && spec && att)
+        {
+            return UIManager.eCommandState.MSAC;
+        }
+
+        //special & mov
+        if (spec && mov && !att)
+        {
+            return UIManager.eCommandState.MSC;
+        }
+
+        //cancel only
+        if (!mov && !spec && !att)
+        {
+            return UIManager.eCommandState.C;
+        }
+
+        
+        return UIManager.eCommandState.C;
+    }
+
+
+
+    /*
+     * UI block end
+     * 
+     * 
+     */
+
+
+
+
+
+
+    /*
     * OnTileSelected 
     * 
     * callback when a tile is clicked on
@@ -846,12 +922,12 @@ public class GameManagment : MonoBehaviour
             //turn on UI
             UIManager.MenuPosition.SetActive(true);
 
-            //set UI to mouse position (really agressivley)
+            
             UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
-            //UIManager.MenuPosition.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition + (Vector3.one * 3);
-            //UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition;
+            
+            
 
-            Canvas.ForceUpdateCanvases();
+
 
             //get the tile position of the unit
             Vector3 unitTilePos = selectedUnit.transform.position - Vector3.up * selectedUnit.transform.position.y;
@@ -866,7 +942,7 @@ public class GameManagment : MonoBehaviour
             manhattanDistanceSqr *= manhattanDistanceSqr;
             manhattanDistanceSqr = Mathf.Round(manhattanDistanceSqr);
 
-            //reset the buttons
+            
 
 
 
@@ -883,64 +959,11 @@ public class GameManagment : MonoBehaviour
             float pathDistanceSqr = path.Count;
             pathDistanceSqr *= pathDistanceSqr;
 
-            //Buttonshow Block 
-            //**********************
-            //bools for determining appropriate actions
-            bool move = false;
-            bool attack = false;
-            bool special = false;
-            bool inrange = false;
-            //**********************
+            
 
 
             //shorthand alias for readability
-            bool emptyTile = endTile.unit == null;
-            bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
-            bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
-            bool defaultTile = endTile.unit == null && endTile.tileType != eTileType.IMPASSABLE;
-            List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
-
-            for (int i = 0; i < AttackRadiusTiles.Count; i++)
-            {
-                if (AttackRadiusTiles[i] == endTile)
-                {
-                    inrange = true;
-                }
-
-            }
-
-
-            if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
-            {
-                move = true;
-            }
-
-            if (
-                    !(selectedUnit.hasAttacked) &&
-                    !(selectedUnit is Medic) &&
-                    ((!(selectedUnit is Ranger) && enemyTile && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange) ||
-                    (selectedUnit is Ranger && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange))
-               )
-            {
-                attack = true;
-            }
-
-            if (
-                    !(selectedUnit.hasAttacked) &&
-                    (
-                    (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
-                    (selectedUnit is Melee && (enemyTile && inrange || defaultTile && inrange)) ||
-                    (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
-                    )
-
-
-               )
-            {
-                special = true;
-            }
             
-            //sets the button state in the UI manager to show the appropriate buttons
-            UIManager.ButtonState(getvalidButtons(move, attack, special));
 
             /*
             //call the unit handling function if a unit was found on the tile
@@ -977,67 +1000,7 @@ public class GameManagment : MonoBehaviour
     }
     
 
-    /*
-     * getValidButtons
-     * 
-     * @param bool move, bool attack, bool special: wether each button should be shown
-     * @returns the correct enum forthe current state of button combinations
-     * @author David Passlow
-     */
-   private UIManager.eCommandState getvalidButtons(bool mov, bool att, bool spec)
-    {
 
-        //only move is true
-        if (mov && !att && !spec) 
-        {
-            return UIManager.eCommandState.MC;
-        }
-
-        //only special is true
-        if (spec && !mov && !att)
-        {
-            return UIManager.eCommandState.SC;
-        }
-
-        //only att is true
-        if (att && !mov && !spec)
-        {
-            return UIManager.eCommandState.AC;
-        }
-
-        //att and special
-        if (att && spec && !mov)
-        {
-            return UIManager.eCommandState.ASC;
-        }
-        //attack & move
-        if (mov && att && !spec)
-        {
-            return UIManager.eCommandState.MAC;
-        }
-        if (mov && spec && att)
-        {
-            return UIManager.eCommandState.MSAC;
-        }
-
-        //special & mov
-        if (spec && mov && !att)
-        {
-            return UIManager.eCommandState.MSC;
-        }
-
-        //cancel only
-        if (!mov && !spec && !att)
-        {
-            return UIManager.eCommandState.C;
-        }
-
-
-        
-
-
-        return UIManager.eCommandState.C;
-    }
 
     /*
     * OnActionSelected 
