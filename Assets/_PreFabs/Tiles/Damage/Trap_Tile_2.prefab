@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23062340158106890}
   - component: {fileID: 111297402705351940}
   - component: {fileID: 95323671063879008}
+  - component: {fileID: 114354515349618122}
   m_Layer: 0
   m_Name: Acid_Trap
   m_TagString: Renderer Que
@@ -39,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4743295711151512}
   m_Layer: 0
-  m_Name: Trap_Tile_2_0
+  m_Name: Trap_Tile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,6 +208,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &114354515349618122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1153639528040150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c981e1f6d06f0ae479ca493e45e74ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationOptions: []
 --- !u!198 &198042947044685520
 ParticleSystem:
   m_ObjectHideFlags: 1

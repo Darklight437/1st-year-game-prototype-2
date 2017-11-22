@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4318049346903242}
   - component: {fileID: 33574227386762486}
   - component: {fileID: 23742258190262522}
+  - component: {fileID: 114031842148505922}
   m_Layer: 0
   m_Name: Impassable_Tile_Master_1_3
   m_TagString: Renderer Que
@@ -79,6 +80,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -94,6 +96,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -109,3 +112,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497709754200300}
   m_Mesh: {fileID: 4300000, guid: be4b33cb374dd8340a5500f643579358, type: 3}
+--- !u!114 &114031842148505922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1497709754200300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c981e1f6d06f0ae479ca493e45e74ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationOptions: []
