@@ -54,6 +54,7 @@ public class SoundSystem : MonoBehaviour {
     {
         idleAwake.loop = false;
         idleAwake.Stop();
+        //idleAsleep.Stop();
     }
        
     public void Attack()
