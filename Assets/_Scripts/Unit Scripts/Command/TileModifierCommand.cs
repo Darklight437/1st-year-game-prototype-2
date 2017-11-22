@@ -53,19 +53,49 @@ public class TileModifierCommand : UnitCommand
     */
     public override void Update()
     {
-        //can't modify a wall or change a tile being stood on
-        if (endTile.tileType != eTileType.NORMAL)
+        if (modifyType == eModifyType.HEALING &&
+            endTile.tileType != eTileType.IMPASSABLE && 
+            (endTile.isHealing == false))
         {
-            failedCallback();
-            return;
+            endTile.IsHealing(true, unit);
+        }
+        else if(modifyType == eModifyType.HEALING)
+        {
+            if (endTile.isHealing == true)
+            {
+                failedCallback();
+                return;
+            }
+
+            if (endTile.tileType == eTileType.IMPASSABLE)
+            {
+                failedCallback();
+                return;
+            }
+
+            if (endTile.unit != null && endTile.unit.playerID != unit.playerID)
+            {
+                failedCallback();
+                return;
+            }
         }
 
-        //determine what to do
-        switch (modifyType)
+
+        if (modifyType != eModifyType.HEALING)
         {
-            case eModifyType.HEALING: endTile.IsHealing(true, unit); break;
-            case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
-            case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
+            //can't modify a wall or change a tile being stood on
+            if (endTile.tileType != eTileType.NORMAL)
+            {
+                failedCallback();
+                return;
+            }
+
+            //determine what to do
+            switch (modifyType)
+            {
+                case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
+                case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
+            }
         }
 
         unit.hasAttacked = true;

@@ -78,7 +78,7 @@ public class Tiles : MonoBehaviour
     public Unit unit = null;
 
     //check if a tile is healing
-    private bool m_isHealing = false;
+    public bool isHealing = false;
     private int m_playerID = -1;
 
     private float originalY = 0.0f;
@@ -192,9 +192,9 @@ public class Tiles : MonoBehaviour
     public bool IsHealing(bool value, Unit unit)
     {
         //reset the healing on the tile
-        if (m_isHealing && value != true)
+        if (isHealing && value != true)
         {
-            m_isHealing = false;
+            isHealing = false;
 
             Destroy(tileMediPack.currMedPack);
             Destroy(tileMediPack.usedHealthMist);
@@ -222,24 +222,26 @@ public class Tiles : MonoBehaviour
             return true;
         }
 
-        if (value)
+        if (value && isHealing != true)
         {
-            m_isHealing = value;
+            isHealing = value;
 
-            if (m_isHealing)
+            if (isHealing)
             {
                 m_playerID = unit.playerID;
+
+                tileMediPack.usedTeamParticals = Instantiate(tileMediPack.healthParticals, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
 
                 if (m_playerID == 1)
                 {
                     tileMediPack.currMedPack = Instantiate(tileMediPack.redTeamMediPack, transform.position, Quaternion.identity);
                     tileMediPack.usedHealthMist = Instantiate(tileMediPack.redTeamHealthMist, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-                    tileMediPack.usedTeamParticals = Instantiate(tileMediPack.redTeamParticals, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
                 }
 
                 if (m_playerID == 0)
                 {
-
+                    tileMediPack.currMedPack = Instantiate(tileMediPack.blueTeamMediPack, transform.position, Quaternion.identity);
+                    tileMediPack.usedHealthMist = Instantiate(tileMediPack.blueTeamHealthMist, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
                 }
             }
         }
@@ -483,10 +485,9 @@ public class MediPack
     public GameObject currMedPack;
 
     public GameObject redTeamHealthMist;
-    public GameObject redTeamParticals;
-
     public GameObject blueTeamHealthMist;
-    public GameObject blueTeamParticals;
+
+    public GameObject healthParticals;
 
     public GameObject usedHealthMist;
     public GameObject usedTeamParticals;

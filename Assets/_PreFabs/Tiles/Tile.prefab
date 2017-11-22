@@ -117,19 +117,21 @@ MonoBehaviour:
   dangerZoneRangeHighLight: {fileID: 0}
   statistics: {fileID: 11400000, guid: 8b4b09e9b10efc04da6487f05b6c780b, type: 2}
   unit: {fileID: 0}
+  isHealing: 0
   indexPos: 0
   renderQueTile: 1000
   tileMediPack:
     redTeamMediPack: {fileID: 1153576863791376, guid: fc547370dad2eb34f88e4248eecd36ba,
       type: 2}
-    blueTeamMediPack: {fileID: 0}
+    blueTeamMediPack: {fileID: 1916523745357674, guid: 72b7e146042d69644b83a42133dc6fc9,
+      type: 2}
     currMedPack: {fileID: 0}
     redTeamHealthMist: {fileID: 1694009849978674, guid: 45df368253ccaa844b006352068c02ed,
       type: 2}
-    redTeamParticals: {fileID: 1720718534090486, guid: 7e13bb8a7a3c6c34689d0f472c1cb0a3,
+    blueTeamHealthMist: {fileID: 1233724980932178, guid: f038a303af142254b959886d05fd0e36,
       type: 2}
-    blueTeamHealthMist: {fileID: 0}
-    blueTeamParticals: {fileID: 0}
+    healthParticals: {fileID: 1720718534090486, guid: 7e13bb8a7a3c6c34689d0f472c1cb0a3,
+      type: 2}
     usedHealthMist: {fileID: 0}
     usedTeamParticals: {fileID: 0}
     usedParticals: {fileID: 1527657769310848, guid: a27def271c7f2294e96bd0fbbb5d474a,
