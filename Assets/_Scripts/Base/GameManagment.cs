@@ -278,14 +278,14 @@ public class GameManagment : MonoBehaviour
         //remove all dead units
         foreach (BasePlayer p in players)
         {
-            //if (p is AiPlayer)
-            //{
-            //    //cast to the true type
-            //    AiPlayer ap = p as AiPlayer;
 
-            //    ap.Reset();
-            //}
-            
+            if (p is AiPlayer)
+            {
+                //cast to the true type
+                AiPlayer ap = p as AiPlayer;
+
+                ap.Reset();
+            }
 
             //iterate through all units, removing null references
             for (int i = 0; i < p.units.Count; i++)
@@ -338,9 +338,9 @@ public class GameManagment : MonoBehaviour
 
         cam.Goto(activePlayer.kingPosition, cam.transform.eulerAngles + new Vector3(0.0f, 180.0f, 0.0f), OnCameraFinished);
 
-       transitioning = true;
+        transitioning = true;
 
-       TurnUnitsOff();
+        TurnUnitsOff();
     }
 
     /*
@@ -1073,8 +1073,6 @@ public class GameManagment : MonoBehaviour
 
         //deselect the unit
         selectedUnit = null;
-
-        
 
         //deselect the tiles
         startTile = null;
