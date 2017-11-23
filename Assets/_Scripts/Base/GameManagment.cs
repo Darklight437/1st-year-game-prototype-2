@@ -924,8 +924,8 @@ public class GameManagment : MonoBehaviour
 
             
             UIManager.MenuPosition.GetComponent<RectTransform>().position = Input.mousePosition + Vector3.one;
-            
-            
+
+            Canvas.ForceUpdateCanvases();
 
 
 
@@ -959,11 +959,68 @@ public class GameManagment : MonoBehaviour
             float pathDistanceSqr = path.Count;
             pathDistanceSqr *= pathDistanceSqr;
 
-            
+            // Buttonshow Block
+            //**********************
+            //bools for determining appropriate actions
+            bool move = false;
+            bool attack = false;
+            bool special = false;
+            bool inrange = false;
+            //**********************
 
 
             //shorthand alias for readability
-            
+            bool emptyTile = endTile.unit == null;
+            bool friendlyTile = endTile.unit != null && endTile.unit.playerID == activePlayer.playerID;
+            bool enemyTile = endTile.unit != null && endTile.unit.playerID != activePlayer.playerID;
+            bool defaultTile = endTile.unit == null && endTile.tileType != eTileType.IMPASSABLE;
+            List<Tiles> AttackRadiusTiles = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+
+            for (int i = 0; i < AttackRadiusTiles.Count; i++)
+            {
+                if (AttackRadiusTiles[i] == endTile)
+                {
+                    inrange = true;
+                }
+
+            }
+
+
+            if (pathDistanceSqr <= selectedUnit.movementPoints * selectedUnit.movementPoints && endTile.tileType != eTileType.IMPASSABLE && endTile.unit == null && !selectedUnit.hasAttacked)
+            {
+                move = true;
+            }
+
+            if (
+                    !(selectedUnit.hasAttacked) &&
+                    !(selectedUnit is Medic) &&
+                    ((!(selectedUnit is Ranger) && enemyTile && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange) ||
+                    (selectedUnit is Ranger && manhattanDistanceSqr <= selectedUnit.attackRange * selectedUnit.attackRange))
+               )
+            {
+                attack = true;
+            }
+
+            if (
+                    !(selectedUnit.hasAttacked) &&
+                    (
+                    (selectedUnit is Medic && (defaultTile && inrange || friendlyTile && inrange)) ||
+                    (selectedUnit is Melee && (enemyTile && inrange || defaultTile && inrange)) ||
+                    (selectedUnit is Tank && (defaultTile && inrange || friendlyTile && inrange))
+                    )
+
+
+               )
+            {
+                special = true;
+            }
+
+            //sets the button state in the UI manager to show the appropriate buttons
+            UIManager.ButtonState(getvalidButtons(move, attack, special));
+
+
+            //shorthand alias for readability
+
 
             /*
             //call the unit handling function if a unit was found on the tile
@@ -982,20 +1039,6 @@ public class GameManagment : MonoBehaviour
                 startTile = tile;
                 OnUnitSelected(tile.unit);
             }
-        }
-
-        if (tile.unit != null && tile.unit.playerID != activePlayer.playerID)
-        {
-            ToggleTileModifiersFalse();
-
-            List<Tiles> holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
-
-            for (int i = 0; i < holder.Count; i++)
-            {
-                dangerTiles.Add(holder[i]);
-            }
-
-            ToggleTileModifiersActive();
         }*/
     }
     
