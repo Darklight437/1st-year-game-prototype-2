@@ -884,7 +884,7 @@ public class GameManagment : MonoBehaviour
 
             if (tile.unit is Ranger)
             {
-                holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+                holder = GetArea.GetAreaOfRangeDangerZone(tile, tile.unit.movementRange, tile.unit.attackRange, map);
             }
             else
             {

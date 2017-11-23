@@ -19,6 +19,9 @@ public static class GetArea
 
     private static List<Tiles> tilesToReturn = new List<Tiles>();
 
+    private static List<Tiles> holder = new List<Tiles>();
+    private static List<Tiles> holder2 = new List<Tiles>();
+
     /*
     * GetAreaOfMoveable
     * public List<Tiles> function (Tiles start, int radius, map)
@@ -198,6 +201,97 @@ public static class GetArea
     }
 
     /*
+    * GetAreaOfRangeDangerZone
+    * public List<Tiles> function (Tiles start, int radius, map)
+    * 
+    * this function calculates all the "danger zone" tiles around a unit with a ranged attack
+    * basically the area where if you have a unit there unit could attack you from
+    * 
+    * @returns List<Tiles> - all movable tiles
+    */
+    public static List<Tiles> GetAreaOfRangeDangerZone(Tiles startTile, int movemantRange, int attackRange, Map map)
+    {
+        //clear open set
+        openSet.Clear();
+
+        //gather all tiles the unit could walk to
+        openSet = GetAreaOfMeleeDangerZone(startTile, movemantRange, map);
+
+        holder.Clear();
+        holder2.Clear();
+
+        //set the closed set back to being -1 by default for logic reason purposes
+        for (int i = 0; i < closedSet.Length; i++)
+        {
+            //we can stop when we hit -1 as there should not be any more changes needed
+            if (closedSet[i] == -1)
+            {
+                break;
+            }
+
+            closedSet[i] = -1;
+        }
+
+        currSet.Clear();
+
+        //loop throught the open set and add there tiles into the current set
+        for (int u = 0; u < openSet.Count; u++)
+        {
+            //make sure we are not adding duplicates
+            if (FindInContainerCurrent(openSet[u].indexPos) == false)
+            {
+                currSet.Add(openSet[u]);
+            }
+        }
+
+        //clear the open set and ready it for new tiles
+        openSet.Clear();
+
+        //go through the current tiles looking for the edge tiles and add them to the holder list
+        for (int x = 0; x < currSet.Count; x++)
+        {
+            for (int i = 0; i < currSet[x].tileEdges.Count; i++)
+            {
+                //if a tiles edge tiles are not in the list then the tile is on the edge of the search
+                if (FindInContainerCurrent(currSet[x].tileEdges[i].indexPos) == false)
+                {
+                    holder.Add(currSet[x]);
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currSet.Count; i++)
+        {
+            holder2.Add(currSet[i]);
+        }
+
+        //go through all the edge tiles and gather the area of attack for earch one
+        for (int i = 0; i < holder.Count; i++)
+        {
+            openSet = GetAreaOfAttack(holder[i], attackRange, map);
+
+            for (int u = 0; u < openSet.Count; u++)
+            {
+                if (FindInContainerHolder2(openSet[u].indexPos) == false)
+                {
+                    holder2.Add(openSet[u]);
+                }
+            }
+
+            openSet.Clear();
+        }
+
+        foreach (Tiles tile in holder2)
+        {
+            Debug.Log(tile.indexPos);
+        }
+
+        //return the gathered tiles
+        return holder2;
+    }
+
+    /*
     * GetAreaOfAttack
     * public List<Tiles> function (Tiles start, int radius, Map map)
     * 
@@ -326,6 +420,26 @@ public static class GetArea
         for (int i = 0; i < currSet.Count; i++)
         {
             if (currSet[i].indexPos == toFind)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    * FindInContainerHolder2
+    * public bool function (Int toFind)
+    * 
+    * this checks holder2 of tiles to find duplicates to not add them in
+    * 
+    * @returns bool
+    */
+    public static bool FindInContainerHolder2(int toFind)
+    {
+        for (int i = 0; i < holder2.Count; i++)
+        {
+            if (holder2[i].indexPos == toFind)
             {
                 return true;
             }
