@@ -40,8 +40,8 @@ public class AiPlayer : BasePlayer
     public float advanceImportance = 1.0f; //scalar for scoring the benefits of moving up the map
     public float fleeImportance = 1.0f; //scalar for scoring the benefits of fleeing a fight
     public float attackImportance = 1.0f; //scalar for scoring the benefits of attacking enemies
-    public float healingImportance = 1.0f; //scalar for scoring the benefits of stepping on a healing tile
-    public float terrainImportance = 1.0f; //scalar for scoring the benefits of stepping on a defensive tile
+    public float healingImportance = 1.0f; //scalar for scoring the benefits of placing healing tiles
+    public float effortImportance = 1.0f; //scalar for scoring the benefits of stepping on a defensive tile
     public float groupImportance = 1.0f; //scalar for scoring the benefits of moving towards the average group position
     public float kingBias = 20.0f; //additional points for the flee mechanic and penalty for the attack mechanic for the king only
 
@@ -72,18 +72,18 @@ public class AiPlayer : BasePlayer
         }
 
         FuzzyFunction advance = new FuzzyFunction(EvalAdvance, ExecAdvance);
-        FuzzyFunction flee = new FuzzyFunction(null, null);
+        FuzzyFunction flee = new FuzzyFunction(EvalFlee, ExecFlee);
         FuzzyFunction attack = new FuzzyFunction(EvalAttack, ExecAttack);
-        FuzzyFunction healing = new FuzzyFunction(null, null);
-        FuzzyFunction terrain = new FuzzyFunction(null, null);
+        FuzzyFunction healing = new FuzzyFunction(EvalHeal, ExecHeal);
+        FuzzyFunction effort = new FuzzyFunction(EvalEffort, ExecEffort);
         FuzzyFunction group = new FuzzyFunction(EvalGroup, ExecGroup);
 
         //add all fuzzy functions to the fuzzy logic machine
         logicMachine.functions.Add(advance);
-        //logicMachine.functions.Add(flee);
+        logicMachine.functions.Add(flee);
         logicMachine.functions.Add(attack);
-        //logicMachine.functions.Add(healing);
-        //logicMachine.functions.Add(terrain);
+        logicMachine.functions.Add(healing);
+        logicMachine.functions.Add(effort);
         logicMachine.functions.Add(group);
     }
 
@@ -281,8 +281,6 @@ public class AiPlayer : BasePlayer
             }
         }
 
-        Debug.Log("Advance Score: " + ((1 - (float)visibleEnemies / (float)totalEnemies) * advanceImportance).ToString());
-
         return ((1 - (float)visibleEnemies / (float)totalEnemies)) * advanceImportance;
     }
 
@@ -314,6 +312,97 @@ public class AiPlayer : BasePlayer
 
 
     /*
+    * EvalFlee 
+    * 
+    * fuzzy function used to determine if the player should run away
+    * 
+    * @param BaseInput inp - the input of the fuzzy logic machine
+    * @returns float - the score evaluated
+    */
+    public float EvalFlee(BaseInput inp)
+    {
+        //up-cast the base input
+        ManagerInput minp = inp as ManagerInput;
+
+        return (1 - (minp.unit.health / minp.unit.maxHealth)) * fleeImportance;
+    }
+
+
+    /*
+    * ExecFlee 
+    * 
+    * fuzzy function for running away from less players
+    * 
+    * @param BaseInput inp - the object containing useful data that the function uses to determine what to do
+    * @returns void
+    */
+    public void ExecFlee(BaseInput inp)
+    {
+        //up-cast the base input
+        ManagerInput minp = inp as ManagerInput;
+
+        //get the size of the players array
+        int playerSize = minp.manager.players.Count;
+
+        //list of enemies that can be seen
+        List<Unit> visibleEnemies = new List<Unit>();
+
+        //iterate through all players except for this one, getting all of the visible enemies
+        for (int i = 0; i < playerSize; i++)
+        {
+            //store in a temp variable
+            BasePlayer bp = minp.manager.players[i];
+
+            if (bp == this)
+            {
+                continue;
+            }
+
+            //get the size of the player's units array
+            int unitCount = bp.units.Count;
+
+            //check for visibility and count
+            for (int j = 0; j < unitCount; j++)
+            {
+                if (bp.units[j].inSight)
+                {
+                    visibleEnemies.Add(bp.units[j]);
+                }
+            }
+        }
+
+        //get the size of the visible enemies list
+        int visibleSize = visibleEnemies.Count;
+
+        //cancel the movement if there are no enemies to run away from
+        if (visibleSize == 0)
+        {
+            return;
+        }
+
+        //divide this to get the average
+        Vector3 sum = Vector3.zero;
+
+        //iterate through all of the units, adding them together
+        for (int i = 0; i < visibleSize; i++)
+        {
+            //store in a temp variable
+            Unit enemy = visibleEnemies[i];
+
+            sum += enemy.transform.position;
+        }
+
+        //calculate the average from the sum and amount of additions to the sum
+        Vector3 average = sum / visibleSize;
+
+        //calculate a target away from the average
+        Vector3 repel = minp.unit.transform.position + (minp.unit.transform.position - average);
+
+        ExecuteMovementGivenTarget(minp.unit, repel);
+    }
+
+
+    /*
     * EvalAttack 
     * 
     * fuzzy function used to determine if the attack function should be used
@@ -325,6 +414,12 @@ public class AiPlayer : BasePlayer
     {
         //up-cast the base input
         ManagerInput minp = inp as ManagerInput;
+
+        //don't even consider attacking if the unit is a medic
+        if (minp.unit is Medic)
+        {
+            return 0.0f;
+        }
 
         //count the visible and total enemies of the opponents
         int visibleEnemies = 0;
@@ -358,8 +453,6 @@ public class AiPlayer : BasePlayer
                 }
             }
         }
-
-        Debug.Log("Attack Score: " + (((float)visibleEnemies / (float)totalEnemies) * advanceImportance).ToString());
 
         return ((float)visibleEnemies / (float)totalEnemies) * advanceImportance;
     }
@@ -407,8 +500,8 @@ public class AiPlayer : BasePlayer
             {
                 if (tile.unit.playerID != playerID)
                 {
-                    //health ratio * damage per turn
-                    float threatScore = (tile.unit.health / tile.unit.maxHealth) * tile.unit.damage;
+                    //health ratio * damage per turn / max health
+                    float threatScore = (tile.unit.health / tile.unit.maxHealth) * tile.unit.damage / tile.unit.maxHealth;
 
                     if (bestScore < threatScore)
                     {
@@ -484,6 +577,182 @@ public class AiPlayer : BasePlayer
 
 
     /*
+    * EvalHeal 
+    * 
+    * fuzzy function used to determine if the unit should be healing
+    * 
+    * @param BaseInput inp - the input of the fuzzy logic machine
+    * @returns float - the score evaluated
+    */
+    public float EvalHeal(BaseInput inp)
+    {
+        //up-cast the base input
+        ManagerInput minp = inp as ManagerInput;
+
+        //don't even consider healing if the unit isn't a medic
+        if (!(minp.unit is Medic))
+        {
+            return 0.0f;
+        }
+
+        //get the lowest health ratio
+        float lowestRatio = 1.0f;
+
+        //get the size of the units
+        int unitCount = units.Count;
+
+        //iterate through all of the units, getting the lowest health ratio
+        for (int i = 0; i < unitCount; i++)
+        {
+            //store in a temp value
+            Unit unit = units[i];
+
+            //ratio of health remaining
+            float healthRatio = unit.health / unit.maxHealth;
+
+            //compare with the lowest ratio and set it to that
+            if (healthRatio < lowestRatio)
+            {
+                lowestRatio = healthRatio;
+            }
+        }
+
+        return lowestRatio;
+    }
+
+
+    /*
+    * ExecHeal
+    * 
+    * fuzzy function for healing the enemy that is closest and needs it the most
+    * 
+    * @param BaseInput inp - the object containing useful data that the function uses to determine what to do
+    * @returns void
+    */
+    public void ExecHeal(BaseInput inp)
+    {
+        //up-cast the base input
+        ManagerInput minp = inp as ManagerInput;
+
+        //don't do anything if the unit cannot attack
+        if (minp.unit.hasAttacked)
+        {
+            return;
+        }
+
+        //get the size of the units
+        int unitCount = units.Count;
+
+        //track the lowest score of all units and the unit that gave the score
+        Unit highestUnit = null;
+        float highestScore = 0.0f;
+
+        //iterate through all of the units, getting the lowest health ratio
+        for (int i = 0; i < unitCount; i++)
+        {
+            //store in a temp value
+            Unit unit = units[i];
+
+            //inverse ratio of health remaining and the distance and calculate a score
+            float healthRatio = 1 - unit.health / unit.maxHealth;
+            float distance = 1 - (Mathf.Abs(minp.unit.transform.position.x - unit.transform.position.x) + Mathf.Abs(minp.unit.transform.position.y - unit.transform.position.y));
+
+            //higher scores if close or has little health
+            float score = healthRatio * distance;
+
+            //favour healing the king over other units
+            if (unit is King)
+            {
+                score *= kingBias;
+            }
+
+            //compare with the lowest ratio and set it to that
+            if (highestScore < score)
+            {
+                highestScore = score;
+                highestUnit = unit;
+            }
+        }
+
+        //don't attempt to heal if there isn't a target to heal
+        if (highestUnit != null)
+        {
+            ExecuteMovementGivenTarget(minp.unit, highestUnit.transform.position);
+
+            //manhattan distance to the best healing target
+            float manhatt = Mathf.Abs(minp.unit.transform.position.x - highestUnit.transform.position.x) + Mathf.Abs(minp.unit.transform.position.y - highestUnit.transform.position.y);
+
+            //check that the unit is close enough to drop a special tile
+            if (manhatt < minp.unit.attackRange)
+            {
+                Ability(minp.unit, highestUnit.transform.position);
+            }
+        }
+
+    }
+
+
+    /*
+    * EvalEffort 
+    * 
+    * fuzzy function used to determine if the unit should give up
+    * 
+    * @param BaseInput inp - the object containing useful data that the function uses to determine what to do
+    * @returns void
+    */
+    public float EvalEffort(BaseInput inp)
+    {
+        //up-cast the base input
+        ManagerInput minp = inp as ManagerInput;
+
+        //don't even consider attacking if the unit is a medic
+        if (minp.unit is Medic)
+        {
+            return 0.0f;
+        }
+
+        //count the total enemies of the opponents
+        int totalEnemies = 0;
+
+        //get the size of the players array
+        int playerSize = minp.manager.players.Count;
+
+        //iterate through all players except for this one, getting the amount of enemies that are visible and the total
+        for (int i = 0; i < playerSize; i++)
+        {
+            //store in a temp variable
+            BasePlayer bp = minp.manager.players[i];
+
+            if (bp == this)
+            {
+                continue;
+            }
+
+            //get the size of the player's units array
+            int unitCount = bp.units.Count;
+
+            totalEnemies += unitCount;
+        }
+
+        return (1 - ((float)units.Count / (float)totalEnemies)) * effortImportance;
+    }
+
+
+    /*
+    * ExecEffort 
+    * 
+    * fuzzy function for not doing anything if the
+    * 
+    * @param BaseInput inp - the input of the fuzzy logic machine
+    * @returns float - the score evaluated
+    */
+    public void ExecEffort(BaseInput inp)
+    {
+        //do nothing
+    }
+
+
+    /*
     * EvalGroup 
     * 
     * fuzzy function used to determine if the group seeking function should be used
@@ -516,8 +785,6 @@ public class AiPlayer : BasePlayer
 
         //relative vector from the unit to the average
         Vector3 relative = average - minp.unit.transform.position;
-
-        Debug.Log("Group Score: " + ((relative.magnitude / maxDifference) * groupImportance).ToString());
 
         //0 = at the centre of the group, 1 = maximum possible difference that can be achieved given the map size
         return (relative.magnitude / maxDifference) * groupImportance;
