@@ -11,6 +11,9 @@ using UnityEngine;
 */
 public static class AStar
 {
+
+    private static List<Tiles> movableTiles = new List<Tiles>();
+
     /*
     * GetAStarPath
     * public List<Tiles> function (Tiles startTile, Tiles endTile)
@@ -25,6 +28,7 @@ public static class AStar
         //check to see if one of the tiles passed in does not exist or is not passible meaning they can not move to/from
         if (startTile == null || endTile == null || endTile.IsPassible(unit) == false)
         {
+            Debug.LogError("INVALID PARAMATERS PASSED");
             return new List<Tiles>();
         }
         
@@ -96,8 +100,117 @@ public static class AStar
 
         }
 
+        Debug.LogError("NormalTile VALID PATH FOUND");
+
         //if we get here there was no path so we return a empty container
         return new List<Tiles>();
+    }
+
+    /*
+    * GetSafeAStarPath
+    * public List<Tiles> function (Tiles startTile, Tiles endTile, List<Tiles> movableSet)
+    * 
+    * this function attempts to find the shortes path between the two tiles passed in
+    * and tryies to avoid all trap/damage tiles and only allows tiles in the area you can walk
+    * 
+    * @returns List<Tiles>
+    */
+    public static List<Tiles> GetSafeAStarPath(Tiles startTile, Tiles endTile, Unit unit, List<Tiles> movableSet)
+    {
+        //check to see if one of the tiles passed in does not exist or is not passible meaning they can not move to/from
+        if (startTile == null || endTile == null || endTile.IsPassible(unit) == false)
+        {
+            Debug.LogError("INVALID PARAMATERS PASSED");
+            return new List<Tiles>();
+        }
+
+        movableTiles = movableSet;
+
+        //list of tiles we can look at
+        List<Tiles> openSet = new List<Tiles>();
+        //list of tiles we have looked at
+        List<Tiles> closedSet = new List<Tiles>();
+
+        //add the start tile to our open list to start off the search
+        openSet.Add(startTile);
+
+        //while there are things to search keep searching
+        while (openSet.Count > 0)
+        {
+            //set the first tile in the list to be the tile we look at
+            Tiles currentTile = openSet[0];
+
+            //search through the list for a tile that is closer to our target and set it to the current
+            for (int i = 0; i < openSet.Count; i++)
+            {
+                if (openSet[i].FCost + openSet[i].WCost < currentTile.FCost + currentTile.WCost)
+                {
+                    currentTile = openSet[i];
+                }
+                else if (openSet[i].FCost == currentTile.FCost && openSet[i].HCost < currentTile.HCost)
+                {
+                    currentTile = openSet[i];
+                }
+            }
+
+            //remove the tile we just looked at from open set and add it to closed set
+            openSet.Remove(currentTile);
+            closedSet.Add(currentTile);
+
+            //check if the current tile is the tile we are trying to get to
+            //if it is get the path and return it
+            if (currentTile == endTile)
+            {
+                return RetracePath(startTile, currentTile);
+            }
+
+            //go through all the tiles that are adgacent to the tile we are currently looking at
+            foreach (Tiles tile in currentTile.tileEdges)
+            {
+                //check if the tile is passible or we have already looked at it
+                //if so we skip over this tile
+                if (tile.IsPassible(unit) != true || closedSet.Contains(tile) || IsTileMovable(tile) == false)
+                {
+                    continue;
+                }
+
+                int newMovmeantCostToNeighbour = Mathf.RoundToInt(currentTile.GCost + GetDistance(currentTile, tile));
+
+                //check if it has a lower g score now for what ever reason or if the node is not in the open list
+                if (newMovmeantCostToNeighbour < tile.GCost || FindInContainer(openSet, tile) == false)
+                {
+                    //set/re set it vlaues
+                    tile.GCost = newMovmeantCostToNeighbour;
+                    tile.HCost = GetDistance(tile, endTile);
+                    tile.parent = currentTile;
+
+                    //if tile is not it the open list add it
+                    if (FindInContainer(openSet, tile) == false)
+                    {
+                        openSet.Add(tile);
+                    }
+                }
+            }
+
+        }
+
+        Debug.LogError("NormalTile VALID PATH FOUND");
+
+        //if we get here there was no path so we return a empty container
+        return new List<Tiles>();
+    }
+
+    public static bool IsTileMovable(Tiles tile)
+    {
+        for (int i = 0; i < movableTiles.Count; i++)
+        {
+            if (movableTiles[i] == tile)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /*

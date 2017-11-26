@@ -695,7 +695,7 @@ public class GameManagment : MonoBehaviour
     {
         unitPathTiles.Add(map.GetTileAtPos(selectedUnit.transform.position));
 
-        foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit))
+        foreach (Tiles tile in AStar.GetSafeAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit, movableTiles))
         {
             unitPathTiles.Add(tile);
         }

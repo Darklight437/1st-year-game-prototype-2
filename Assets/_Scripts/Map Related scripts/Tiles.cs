@@ -124,6 +124,43 @@ public class Tiles : MonoBehaviour
         }
     }
 
+    public float WCost
+    {
+        get
+        {
+            switch (tileType)
+            {
+                case eTileType.NORMAL:
+                    return 0;
+
+                case eTileType.DAMAGE:
+                    return 1000;
+
+                case eTileType.DEFENSE:
+                    return 0;
+
+                case eTileType.IMPASSABLE:
+                    return 0;
+
+                case eTileType.NULL:
+                    return 0;
+
+                case eTileType.DEBUGGING:
+                    return 0;
+
+                case eTileType.PLACABLEDEFENSE:
+                    return 0;
+
+                case eTileType.PLACABLETRAP:
+                    return 1000;
+
+                default:
+                    Debug.LogError("INVALID TILE TYPE SOME HOW");
+                    return 0;
+            }
+        }
+    }
+
     public float FCost
     {
         get
