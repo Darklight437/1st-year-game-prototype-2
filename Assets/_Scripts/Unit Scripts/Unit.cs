@@ -377,11 +377,11 @@ public class Unit : MonoBehaviour
             armour = 5;
         }
 
-        Vector2 shield1 = new Vector2(2.44f, 2.5f);
-        Vector2 shield2 = new Vector2(4.89f, 2.5f);
-        Vector2 shield3 = new Vector2(7.3f, 2.5f);
-        Vector2 shield4 = new Vector2(9.78f, 2.5f);
-        Vector2 shield5 = new Vector2(12.2f, 2.5f);
+        Vector2 shield1 = new Vector2(2.5f, 2.5f);
+        Vector2 shield2 = new Vector2(5.0f, 2.5f);
+        Vector2 shield3 = new Vector2(7.5f, 2.5f);
+        Vector2 shield4 = new Vector2(10, 2.5f);
+        Vector2 shield5 = new Vector2(12.8f, 2.5f);
 
         switch(armour)
         {
