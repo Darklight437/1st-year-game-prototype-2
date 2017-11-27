@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
         //set the array of Vector 3s to the correct relative positions for the menu
         {
             
-            ActivePos[0] = new Vector3 (53.4f, -11.16f, 0);
+            ActivePos[0] = new Vector3(53.4f, -11.16f, 0);
             ActivePos[1] = new Vector3(53.4f, -36.7f, 0);
             ActivePos[2] = new Vector3(53.4f, -62.3f, 0);
             ActivePos[3] = new Vector3(53.4f, -88.3f, 0);

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4525053557762788}
   - component: {fileID: 114294644126629088}
-  - component: {fileID: 114702926072946004}
+  - component: {fileID: 114020081166143770}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -41,45 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114294644126629088
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295968878040748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7707b45a9d3573b4fbf80ce9cdcc8ef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  statsReference: {fileID: 11400000, guid: 8b4b09e9b10efc04da6487f05b6c780b, type: 2}
-  map: {fileID: 0}
-  activePlayer: {fileID: 0}
-  selectedUnit: {fileID: 0}
-  movableTiles: []
-  attackableTiles: []
-  dangerTiles: []
-  startTile: {fileID: 0}
-  endTile: {fileID: 0}
-  cam: {fileID: 0}
-  turn: 0
-  transitioning: 0
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 4294966015
-  unitToggleWait: 0.2
-  unitPathTiles: []
-  lineRendererPrefab: {fileID: 1693328981265506, guid: 0fbde1e48190d2d4d982d4781eafb589,
-    type: 2}
-  pathEndPrefab: {fileID: 1226796095614456, guid: 49a51157c5c6fe0439319fd5078a29f3,
-    type: 2}
-  UIManager: {fileID: 0}
-  actionEvent: 0
-  uiPressed: 0
---- !u!114 &114702926072946004
+--- !u!114 &114020081166143770
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,3 +62,43 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  DamageText: {fileID: 0}
+--- !u!114 &114294644126629088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295968878040748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7707b45a9d3573b4fbf80ce9cdcc8ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  statsReference: {fileID: 11400000, guid: 8b4b09e9b10efc04da6487f05b6c780b, type: 2}
+  map: {fileID: 0}
+  activePlayer: {fileID: 0}
+  selectedUnit: {fileID: 0}
+  movableSafeTiles: []
+  movableNotSafeTiles: []
+  attackableTiles: []
+  dangerTiles: []
+  startTile: {fileID: 0}
+  endTile: {fileID: 0}
+  cam: {fileID: 0}
+  turn: 0
+  transitioning: 0
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 4294966015
+  unitToggleWait: 0.2
+  unitPathTiles: []
+  lineRendererPrefab: {fileID: 1693328981265506, guid: 0fbde1e48190d2d4d982d4781eafb589,
+    type: 2}
+  pathEndPrefab: {fileID: 1226796095614456, guid: 49a51157c5c6fe0439319fd5078a29f3,
+    type: 2}
+  UIManager: {fileID: 0}
+  actionEvent: 0
+  uiPressed: 0

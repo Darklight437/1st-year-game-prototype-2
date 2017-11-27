@@ -84,7 +84,7 @@ public class GameManagment : MonoBehaviour
 
     //David's
     //reference to Main UI manager script
-
+    [HideInInspector]
     public UIManager UIManager = null;
     
  
@@ -159,6 +159,15 @@ public class GameManagment : MonoBehaviour
 
         m_lineRenderer = Instantiate(lineRendererPrefab, new Vector3(0, 0, 0), lineRendererPrefab.transform.rotation);
         m_lineRenderer.SetActive(false);
+
+        //billboarding snippet for HP bars
+        foreach (BasePlayer Player in players)
+        {
+            foreach (Unit CurrUnit in Player.units)
+            {
+                CurrUnit.Billboard(Camera.main);
+            }
+        }
 
     }
 
