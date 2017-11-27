@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Winscreen : MonoBehaviour {
-
+    public Material mat;
     Renderer DISPLAY;
     public List<Texture> FrameList;
-    public float playBackSpeed = 0.5f;
+    public float playBackSpeed = 0.032f;
     float Timer;
     int currentFrame;
     public bool isLooping = false;
@@ -33,7 +33,7 @@ public class Winscreen : MonoBehaviour {
         PlaneQuad.transform.localRotation = Quaternion.identity;
 
         DISPLAY = PlaneQuad.GetComponent<Renderer>();
-
+        DISPLAY.material = mat;
 
         DISPLAY.material.mainTexture = FrameList[currentFrame];
 
