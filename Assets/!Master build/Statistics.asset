@@ -10,7 +10,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b90a7ce7eadd74aba7af9f83ed9f71, type: 3}
   m_Name: Statistics
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   armourCurve:
     serializedVersion: 2
     m_Curve:
@@ -18,50 +18,27 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 10
-      inSlope: 13.427734
-      outSlope: 13.427734
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 2
-      value: 20
-      inSlope: 12.760162
-      outSlope: 12.760162
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 3
-      value: 30
-      inSlope: 14.781952
-      outSlope: 14.781952
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 4
-      value: 40
-      inSlope: 12.5
       outSlope: 12.5
       tangentMode: 0
     - serializedVersion: 2
-      time: 5
+      time: 4
       value: 50
-      inSlope: 11.672974
-      outSlope: 11.672974
+      inSlope: 12.5
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   tileHealthGained: 500
-  trapTileDamage: 500
+  trapTileDamage: 100
+  shrinkZoneDamage: 0
   normalTileTypeAmount: 34
-  shrinkZoneDamage: 1000  damageTileTypeAmount: 4
-  impassableTileTypeAmount: 8
-  defenseTileTypeAmount: 2
-  placableDefenseTileAmount: 1
-  placableTrapTileAmount: 3
-  normalChunkTypeAmount: 1
-  damageChunkTypeAmount: 2
-  impassableChunkTypeAmount: 2
-  defenseChunkTypeAmount: 2
+  damageTileTypeAmount: 0
+  impassableTileTypeAmount: 0
+  defenseTileTypeAmount: 0
+  placableDefenseTileAmount: 0
+  placableTrapTileAmount: 0
+  normalChunkTypeAmount: 0
+  damageChunkTypeAmount: 0
+  impassableChunkTypeAmount: 0
+  defenseChunkTypeAmount: 0

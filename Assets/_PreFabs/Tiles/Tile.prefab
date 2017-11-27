@@ -97,6 +97,11 @@ MonoBehaviour:
     - {fileID: 1705137692282850, guid: 04d69f771464d17498c15bbdb0ee236f, type: 2}
     - {fileID: 1826290007994720, guid: 0fd675f61cdc32945a99b3df2198f3af, type: 2}
     - {fileID: 1101593408027728, guid: ea69bbf9a8e56a04c84af5a8616d6947, type: 2}
+    - {fileID: 1933211222577844, guid: c27580da93692584f92f7a0d87b03e58, type: 2}
+    - {fileID: 1415928301777368, guid: 16f49af4d7307e64696a335419400dbc, type: 2}
+    - {fileID: 1705137692282850, guid: 04d69f771464d17498c15bbdb0ee236f, type: 2}
+    - {fileID: 1826290007994720, guid: 0fd675f61cdc32945a99b3df2198f3af, type: 2}
+    - {fileID: 1101593408027728, guid: ea69bbf9a8e56a04c84af5a8616d6947, type: 2}
   damageTile:
     tileTypes:
     - {fileID: 1922732236373118, guid: 75489a03c7897a14ba8911a3c4f2a3f0, type: 2}
@@ -167,9 +172,8 @@ MonoBehaviour:
       type: 2}
   sandExplosion: {fileID: 1234970859195202, guid: d694dc2208e840c48ab9cd1fd36cc937,
     type: 2}
-  tileDrop: {fileID: 1786198218328034, guid: 8cebd9760b88edc44b9dc93e2d8fa733, type: 2}
-  shrinkZoneAreaPrefab: {fileID: 1817320025883514, guid: 542c87008adab7c4a8caa8a3350f513e,
-    type: 2}
+  tileDrop: {fileID: 0}
+  shrinkZoneAreaPrefab: {fileID: 0}
   shrinkZoneAreaHighLight: {fileID: 0}
   parent: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
