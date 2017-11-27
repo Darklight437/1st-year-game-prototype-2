@@ -842,7 +842,7 @@ public class AiPlayer : BasePlayer
     public void ExecuteMovementGivenTarget(Unit unit, Vector3 target)
     {
         //get a list of walkable tiles around the unit
-        List<Tiles> walkable = GetArea.GetAreaOfMoveable(map.GetTileAtPos(unit.transform.position), unit.movementPoints, map, unit);
+        List<Tiles> walkable = GetArea.GetAreaOfSafeMoveable(map.GetTileAtPos(unit.transform.position), unit.movementPoints, map, unit);
 
         //worst possible score to start
         float bestMoveScore = float.MaxValue;

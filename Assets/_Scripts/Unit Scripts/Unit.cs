@@ -245,7 +245,7 @@ public class Unit : MonoBehaviour
         if (health <= 0.0f)
         {
             health = 0.0f;
-            Execute(GameManagment.eActionType.DEATH, currentTile, null, null);
+            Execute(GameManagment.eActionType.DEATH, currentTile, null, null, false);
         }
     }
 
@@ -273,8 +273,7 @@ public class Unit : MonoBehaviour
 
         Debug.Log(gameObject.name + " was healed for " + points.ToString() + " health.");
     }
-
-
+    
 
     /*
     * Execute 
@@ -286,9 +285,10 @@ public class Unit : MonoBehaviour
     * @param Tiles st - the first tile selected
     * @param Tiles et - the last tile selected
     * @param UnitCommand.VoidFunc callback - function reference to invoke if the command completes
+    * @param safeMove - Determins if we are doing a safe move or not
     * @returns void
     */
-    public virtual void Execute(GameManagment.eActionType actionType, Tiles st, Tiles et, UnitCommand.VoidFunc callback)
+    public virtual void Execute(GameManagment.eActionType actionType, Tiles st, Tiles et, UnitCommand.VoidFunc callback, bool safeMove)
     {
 
     }

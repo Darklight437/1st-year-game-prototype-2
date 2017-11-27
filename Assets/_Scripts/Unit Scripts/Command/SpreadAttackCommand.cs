@@ -96,7 +96,7 @@ public class SpreadAttackCommand : UnitCommand
                 //manhattan distance
                 int manhattDistance = (int)(relative.x + relative.z);
 
-                float ratio = 1 - ((float)(manhattDistance - 1)  / (float)maxDistance);
+                float ratio = 1 - ((float)(manhattDistance)  / (float)maxDistance);
 
                 unit.Attack(defendingUnit, ratio);
 

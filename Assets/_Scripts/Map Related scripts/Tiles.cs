@@ -57,9 +57,14 @@ public class Tiles : MonoBehaviour
     public TileTypes useTileSet;
 
     //the prefab we will spawn to show what tiles are walkable
-    public GameObject walkablePrefab;
+    public GameObject safeWalkablePrefab;
     //the gameobject that is used to show walkable that we can toggle on and off
-    public GameObject walkableHighLight;
+    public GameObject safeWalkableHighLight;
+
+    //the prefab we will spawn to show what tiles are walkable
+    public GameObject notSafeWalkablePrefab;
+    //the gameobject that is used to show walkable that we can toggle on and off
+    public GameObject notSafeWalkableHighLight;
 
     //prefabe used to show your units attack range
     public GameObject attackRangePrefab;
@@ -173,6 +178,11 @@ public class Tiles : MonoBehaviour
     public bool IsPassible(Unit aUnit)
     {
         if (unit != null && aUnit.playerID != unit.playerID)
+        {
+            return false;
+        }
+
+        if (unit != null && (tileType == eTileType.DAMAGE || tileType == eTileType.PLACABLETRAP))
         {
             return false;
         }
@@ -354,23 +364,29 @@ public class Tiles : MonoBehaviour
     */
     public void GenerateTileModifiers()
     {
-        GameObject obj = Instantiate(walkablePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject obj = Instantiate(safeWalkablePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         obj.transform.SetParent(gameObject.transform);
-        walkableHighLight = obj;
+        safeWalkableHighLight = obj;
         obj.transform.localPosition = new Vector3(0, 0, 0);
         obj.gameObject.SetActive(false);
 
-        GameObject obj2 = Instantiate(attackRangePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject obj2 = Instantiate(notSafeWalkablePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         obj2.transform.SetParent(gameObject.transform);
-        attackRangeHighLight = obj2;
+        notSafeWalkableHighLight = obj2;
         obj2.transform.localPosition = new Vector3(0, 0, 0);
         obj2.gameObject.SetActive(false);
 
-        GameObject obj3 = Instantiate(dangerZoneRangePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject obj3 = Instantiate(attackRangePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         obj3.transform.SetParent(gameObject.transform);
-        dangerZoneRangeHighLight = obj3;
+        attackRangeHighLight = obj3;
         obj3.transform.localPosition = new Vector3(0, 0, 0);
         obj3.gameObject.SetActive(false);
+
+        GameObject obj4 = Instantiate(dangerZoneRangePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        obj4.transform.SetParent(gameObject.transform);
+        dangerZoneRangeHighLight = obj4;
+        obj4.transform.localPosition = new Vector3(0, 0, 0);
+        obj4.gameObject.SetActive(false);
     }
 
     /*

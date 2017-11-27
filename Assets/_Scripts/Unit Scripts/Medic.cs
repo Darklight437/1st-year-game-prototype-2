@@ -25,7 +25,7 @@ public class Medic : Unit
     * param UnitCommand.VoidFunc callback - function reference to invoke if the command completes
     * @returns void
     */
-    public override void Execute(GameManagment.eActionType actionType, Tiles st, Tiles et, UnitCommand.VoidFunc callback)
+    public override void Execute(GameManagment.eActionType actionType, Tiles st, Tiles et, UnitCommand.VoidFunc callback, bool safeMove)
     {
         //create a list of function references to execute
         UnitCommand.VoidFunc callstack = OnCommandFinish;
@@ -34,7 +34,7 @@ public class Medic : Unit
         //movement command
         if (actionType == GameManagment.eActionType.MOVEMENT)
         {
-            MoveCommand mc = new MoveCommand(this, callstack, OnCommandFailed, st, et);
+            MoveCommand mc = new MoveCommand(this, callstack, OnCommandFailed, st, et, safeMove);
 
             commands.Add(mc);
         }

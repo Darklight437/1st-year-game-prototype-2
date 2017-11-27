@@ -194,7 +194,7 @@ public static class AStar
 
         }
 
-        Debug.LogError("NormalTile VALID PATH FOUND");
+        Debug.LogError("NO VALID PATH FOUND");
 
         //if we get here there was no path so we return a empty container
         return new List<Tiles>();

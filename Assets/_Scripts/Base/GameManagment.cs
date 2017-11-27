@@ -35,7 +35,10 @@ public class GameManagment : MonoBehaviour
     public Unit selectedUnit = null;
 
     //list of all walkable tiles that the slected unit can walk to
-    public List<Tiles> movableTiles = new List<Tiles>();
+    public List<Tiles> movableSafeTiles = new List<Tiles>();
+    
+    //list of all walkable tiles that the slected unit can walk to
+    public List<Tiles> movableNotSafeTiles = new List<Tiles>();
 
     //list of all attackable tiles
     public List<Tiles> attackableTiles = new List<Tiles>();
@@ -75,6 +78,8 @@ public class GameManagment : MonoBehaviour
 
     public GameObject pathEndPrefab;
     private GameObject m_pathEnd;
+
+    private bool m_isSafeMove;
 
 
     //David's
@@ -589,21 +594,44 @@ public class GameManagment : MonoBehaviour
         //gather and show new walkable tiles
         if (selectedUnit != null && selectedUnit.movementPoints > 0)
         {
-            List<Tiles> holder = GetArea.GetAreaOfMoveable(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.movementPoints, map, selectedUnit);
+            List<Tiles> holder = GetArea.GetAreaOfSafeMoveable(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.movementPoints, map, selectedUnit);
             
             foreach (Tiles tile in holder)
             {
                 if (tile != startTile)
                 {
-                    movableTiles.Add(tile);
+                    movableSafeTiles.Add(tile);
                 }
             }
 
-            foreach (Tiles tile in movableTiles)
+            holder = GetArea.GetAreaOfNotSafeMoveable(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.movementPoints, map, selectedUnit);
+
+            foreach (Tiles tile in holder)
             {
-                if (tile.walkableHighLight.gameObject.activeSelf == false)
+                if (tile != startTile)
                 {
-                    tile.walkableHighLight.gameObject.SetActive(true);
+                    movableNotSafeTiles.Add(tile);
+                }
+            }
+
+            CullSafeTilesFromNotSafe();
+
+            foreach (Tiles tile in movableSafeTiles)
+            {
+                if (tile.safeWalkableHighLight.gameObject.activeSelf == false)
+                {
+                    tile.safeWalkableHighLight.gameObject.SetActive(true);
+                }
+            }
+
+            if (movableNotSafeTiles.Count > 0)
+            {
+                foreach (Tiles tile in movableNotSafeTiles)
+                {
+                    if (tile.notSafeWalkableHighLight.gameObject.activeSelf == false)
+                    {
+                        tile.notSafeWalkableHighLight.gameObject.SetActive(true);
+                    }
                 }
             }
         }
@@ -642,7 +670,28 @@ public class GameManagment : MonoBehaviour
             }
         }
     }
-    
+
+    private void CullSafeTilesFromNotSafe()
+    {
+        List<Tiles> holder = new List<Tiles>();
+
+        for (int i = 0; i < movableSafeTiles.Count; i++)
+        {
+            for (int u = 0; u < movableNotSafeTiles.Count; u++)
+            {
+                if (movableSafeTiles[i] == movableNotSafeTiles[u])
+                {
+                    holder.Add(movableNotSafeTiles[u]);
+                }
+            }
+        }
+
+        for (int i = 0; i < holder.Count; i++)
+        {
+            movableNotSafeTiles.Remove(holder[i]);
+        }
+    }
+
     /*
     * ToggleTileModifiersFalse 
     * 
@@ -654,11 +703,19 @@ public class GameManagment : MonoBehaviour
     */
     public void ToggleTileModifiersFalse()
     {
-        foreach (Tiles tile in movableTiles)
+        foreach (Tiles tile in movableSafeTiles)
         {
-            if (tile.walkableHighLight.gameObject.activeSelf == true)
+            if (tile.safeWalkableHighLight.gameObject.activeSelf == true)
             {
-                tile.walkableHighLight.gameObject.SetActive(false);
+                tile.safeWalkableHighLight.gameObject.SetActive(false);
+            }
+        }
+
+        foreach (Tiles tile in movableNotSafeTiles)
+        {
+            if (tile.notSafeWalkableHighLight.gameObject.activeSelf == true)
+            {
+                tile.notSafeWalkableHighLight.gameObject.SetActive(false);
             }
         }
 
@@ -675,7 +732,8 @@ public class GameManagment : MonoBehaviour
             dangerTiles[i].dangerZoneRangeHighLight.SetActive(false);
         }
 
-        movableTiles.Clear();
+        movableSafeTiles.Clear();
+        movableNotSafeTiles.Clear();
         attackableTiles.Clear();
         dangerTiles.Clear();
 
@@ -696,10 +754,23 @@ public class GameManagment : MonoBehaviour
     {
         unitPathTiles.Add(map.GetTileAtPos(selectedUnit.transform.position));
 
-        foreach (Tiles tile in AStar.GetSafeAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit, movableTiles))
+        CheckIfSafeMove();
+
+        if (m_isSafeMove)
         {
-            unitPathTiles.Add(tile);
+            foreach (Tiles tile in AStar.GetSafeAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit, movableSafeTiles))
+            {
+                unitPathTiles.Add(tile);
+            }
         }
+        else
+        {
+            foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit))
+            {
+                unitPathTiles.Add(tile);
+            }
+        }
+        
 
         unitPathTiles.Add(endTile);
 
@@ -751,9 +822,17 @@ public class GameManagment : MonoBehaviour
     */
     public bool IsWithinWalkable(Tiles tile)
     {
-        for (int i = 0; i < movableTiles.Count; i++)
+        for (int i = 0; i < movableSafeTiles.Count; i++)
         {
-            if (movableTiles[i] == tile)
+            if (movableSafeTiles[i] == tile)
+            {
+                return true;
+            }
+        }
+
+        for (int i = 0; i < movableNotSafeTiles.Count; i++)
+        {
+            if (movableNotSafeTiles[i] == tile)
             {
                 return true;
             }
@@ -1067,9 +1146,11 @@ public class GameManagment : MonoBehaviour
 
         //turn off the action menu
         UIManager.ButtonState(UIManager.eCommandState.OFF);
-        
+
+        CheckIfSafeMove();
+
         //execute the action
-        selectedUnit.Execute(actionEvent, startTile, endTile, OnActionFinished);
+        selectedUnit.Execute(actionEvent, startTile, endTile, OnActionFinished, m_isSafeMove);
 
         //stop showing walkable and attackable tiles tiles
         ToggleTileModifiersFalse();
@@ -1085,6 +1166,31 @@ public class GameManagment : MonoBehaviour
 
     }
 
+    /*
+    * CheckIfSafeMove 
+    * 
+    * checks if we are trying to do a safe or not safe move
+    * 
+    * @param int actionType - the type of action that was triggered (int representation of the enum)
+    */
+    private void CheckIfSafeMove()
+    {
+        if (movableNotSafeTiles.Count == 0)
+        {
+            m_isSafeMove = true;
+        }
+
+        for (int i = 0; i < movableNotSafeTiles.Count; i++)
+        {
+            if (movableNotSafeTiles[i] == endTile)
+            {
+                m_isSafeMove = false;
+                return;
+            }
+        }
+
+        m_isSafeMove = true;
+    }
 
     /*
     * OnCameraFinished 
@@ -1223,7 +1329,7 @@ public class GameManagment : MonoBehaviour
                     //get the tile that the unit is standing on
                     Tiles currentTile = map.GetTileAtPos(unit.transform.position);
 
-                    unit.Execute(eActionType.DEATH, currentTile, null, null);
+                    unit.Execute(eActionType.DEATH, currentTile, null, null, false);
                 }
             }
         }

@@ -18,6 +18,11 @@ public class MoveCommand : UnitCommand
     //list of tiles to follow
     private List<Tiles> m_tilePath = null;
 
+    //reference to the game manager
+    private GameManagment m_manager = null;
+
+    private bool isSafeMove;
+
     /*
     * MoveCommand()
     * 
@@ -29,7 +34,7 @@ public class MoveCommand : UnitCommand
     * @param Tiles st - the first tile selected
     * @param Tiles et - the last tile selected
     */
-    public MoveCommand(Unit u, VoidFunc scb, VoidFunc fcb, Tiles st, Tiles et) : base(u, scb, fcb, st, et)
+    public MoveCommand(Unit u, VoidFunc scb, VoidFunc fcb, Tiles st, Tiles et, bool safeMove) : base(u, scb, fcb, st, et)
     {
         if (unit.ArtLink != null)
         {
@@ -37,6 +42,11 @@ public class MoveCommand : UnitCommand
         }
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
+
+        //find the manager component
+        m_manager = GameObject.FindObjectOfType<GameManagment>();
+
+        isSafeMove = safeMove;
     }
 
 
@@ -58,7 +68,15 @@ public class MoveCommand : UnitCommand
             startingTile.unit = null;
 
             //get the tile path to follow
-            m_tilePath = AStar.GetAStarPath(startingTile, endTile, unit);
+            if (isSafeMove)
+            {
+                m_tilePath = AStar.GetSafeAStarPath(startingTile, endTile, unit, GetArea.GetAreaOfSafeMoveable(startingTile, unit.movementPoints, map, unit));
+
+            }
+            else
+            {
+                m_tilePath = AStar.GetAStarPath(startingTile, endTile, unit);
+            }
 
             //the path is clear, and the unit can move there
             if (m_tilePath.Count > 0 && m_tilePath.Count <= unit.movementPoints)
