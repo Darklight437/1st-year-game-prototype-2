@@ -14,6 +14,8 @@ public class Statistics : ScriptableObject
     //amount of damage a trap tile does when stepped on
     public float trapTileDamage = 100.0f;
 
+    public float shrinkZoneDamage;
+
     //the amount and list of normal tiles that are still useable for random logic
     public int normalTileTypeAmount;
     private List<int> m_normalTileVariantUnused = new List<int>();

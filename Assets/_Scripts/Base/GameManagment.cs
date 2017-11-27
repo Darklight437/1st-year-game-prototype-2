@@ -76,11 +76,23 @@ public class GameManagment : MonoBehaviour
     public GameObject lineRendererPrefab;
     private GameObject m_lineRenderer;
 
+    //end prefab for end of movemeant path
     public GameObject pathEndPrefab;
     private GameObject m_pathEnd;
 
+    //is the tile safe to move to
     private bool m_isSafeMove;
 
+
+    public int minShrinkArea;
+    public int shrinkAmount;
+
+    public int toShrink;
+
+    public int turnToStartShrink;
+    public int turnsPast;
+
+    public List<Tiles> shrinkAreaTiles = new List<Tiles>();
 
     //David's
     //reference to Main UI manager script
@@ -274,6 +286,99 @@ public class GameManagment : MonoBehaviour
         }
     }
 
+    public void ShrinkArea()
+    {
+        if (map.width >= map.height)
+        {
+            if ((((map.height  - toShrink) * 0.5f)) < minShrinkArea)
+            {
+                for (int i = 0; i < shrinkAreaTiles.Count; i++)
+                {
+                    if (shrinkAreaTiles[i].unit != null)
+                    {
+                        shrinkAreaTiles[i].unit.Defend(stats.shrinkZoneDamage);
+                    }
+                }
+                return;
+            }
+        }
+        else
+        {
+            if ((((map.width - toShrink) * 0.5f)) < minShrinkArea)
+            {
+                for (int i = 0; i < shrinkAreaTiles.Count; i++)
+                {
+                    if (shrinkAreaTiles[i].unit != null)
+                    {
+                        shrinkAreaTiles[i].unit.Defend(stats.shrinkZoneDamage);
+                    }
+                }
+                return;
+            }
+        }
+
+        shrinkAreaTiles.Clear();
+
+        for (int i = 0; i < map.mapTiles.Count; i++)
+        {
+            if (map.mapTiles[i].pos.x < toShrink)
+            {
+                if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
+                {
+                    shrinkAreaTiles.Add(map.mapTiles[i]);
+                }
+            }
+
+            if (map.mapTiles[i].pos.x >= map.height - toShrink)
+            {
+                if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
+                {
+                    shrinkAreaTiles.Add(map.mapTiles[i]);
+                }
+            }
+
+            if (map.mapTiles[i].pos.z < toShrink)
+            {
+                if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
+                {
+                    shrinkAreaTiles.Add(map.mapTiles[i]);
+                }
+            }
+
+            if (map.mapTiles[i].pos.z >= map.width - toShrink)
+            {
+                if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
+                {
+                    shrinkAreaTiles.Add(map.mapTiles[i]);
+                }
+            }
+        }
+
+        toShrink += shrinkAmount;
+
+        for (int i = 0; i < shrinkAreaTiles.Count; i++)
+        {
+            shrinkAreaTiles[i].shrinkZoneAreaHighLight.SetActive(true);
+
+            if (shrinkAreaTiles[i].unit != null)
+            {
+                shrinkAreaTiles[i].unit.Defend(stats.shrinkZoneDamage);
+            }
+        }
+    }
+
+    public bool IsTileInShrinkAreaTiles(Tiles tile)
+    {
+        for (int i = 0; i < shrinkAreaTiles.Count; i++)
+        {
+            if (shrinkAreaTiles[i] == tile)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /*
     * OnNextTurn 
@@ -340,11 +445,17 @@ public class GameManagment : MonoBehaviour
 
         //increment the turn id
         turn++;
-        
+
         //wrap around the turn id
         if (turn > players.Count - 1)
         {
             turn = 0;
+            turnsPast++;
+
+            if (turnsPast >= turnToStartShrink)
+            {
+                ShrinkArea();
+            }
         }
 
         //set the active player
@@ -356,6 +467,8 @@ public class GameManagment : MonoBehaviour
         transitioning = true;
 
         TurnUnitsOff();
+
+        
     }
 
     /*
@@ -989,7 +1102,8 @@ public class GameManagment : MonoBehaviour
 
             if (tile.unit is Ranger)
             {
-                holder = GetArea.GetAreaOfRangeDangerZone(tile, tile.unit.movementRange, tile.unit.attackRange, map);
+                //holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
+                holder = GetArea.GetAreaOfRangeDangerZone(tile, tile.unit.movementRange, tile.unit.attackRange + (int)((Ranger)tile.unit).splashRange, map);
             }
             else
             {

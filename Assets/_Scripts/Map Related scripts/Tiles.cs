@@ -100,10 +100,16 @@ public class Tiles : MonoBehaviour
     //this set the render ques of tile objects
     public int renderQueTile;
 
+    //this holds all the info for health packs
     public MediPack tileMediPack;
-
+    
+    //effects for placing down new tiles or health pack placemeant
     public GameObject sandExplosion;
     public GameObject tileDrop;
+
+    //this shows the maps shrink zones
+    public GameObject shrinkZoneAreaPrefab;
+    public GameObject shrinkZoneAreaHighLight;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -238,7 +244,18 @@ public class Tiles : MonoBehaviour
         return false;
     }
 
-    //determines if this tile has healing effects on it
+    /*
+    * IsHealing
+    * public void function
+    * 
+    * this function controls when a health pack gets placed
+    * what team the healthpack is for as well as plays the effects for the health packs
+    * 
+    * @param bool value - this dictates wether we are placing or consuming a health pack if true placing if false consuming
+    * @param Unit unit  - this is the unit placing the tile so we know wich faction owns the health pack
+    * 
+    * @returns nothing
+    */
     public bool IsHealing(bool value, Unit unit)
     {
         //reset the healing on the tile
@@ -407,6 +424,12 @@ public class Tiles : MonoBehaviour
         dangerZoneRangeHighLight = obj4;
         obj4.transform.localPosition = new Vector3(0, 0, 0);
         obj4.gameObject.SetActive(false);
+
+        GameObject obj5 = Instantiate(shrinkZoneAreaPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        obj5.transform.SetParent(gameObject.transform);
+        shrinkZoneAreaHighLight = obj5;
+        obj5.transform.localPosition = new Vector3(0, 0, 0);
+        obj5.gameObject.SetActive(false);
     }
 
     /*
