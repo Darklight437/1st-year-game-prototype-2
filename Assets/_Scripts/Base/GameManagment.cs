@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagment : MonoBehaviour
 {
@@ -1017,6 +1018,10 @@ public class GameManagment : MonoBehaviour
 
             //sets the button state in the UI manager to show the appropriate buttons
             UIManager.ButtonState(getvalidButtons(move, attack, special));
+            if (attack)
+            {
+                UIManager.DamageText.text = selectedUnit.damage.ToString();
+            }
 
 
             //shorthand alias for readability

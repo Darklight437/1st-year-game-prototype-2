@@ -60,6 +60,7 @@ public class Unit : MonoBehaviour
 
     //reference to the UI armour bar
     public SpriteRenderer armourBar = null;
+    
     //Animator 
     public Animator ArtLink;
 

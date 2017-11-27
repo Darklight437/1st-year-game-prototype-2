@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class UIManager : MonoBehaviour
     //the button Gameobjects
     public GameObject[] Buttons = new GameObject[4];
     private bool[] ButtonsStates = new bool[4];
-    
+    public Text DamageText = null;
 
     // Use this for initialization
     void Start()
@@ -35,7 +36,8 @@ public class UIManager : MonoBehaviour
         resetUI();
         //set the array of Vector 3s to the correct relative positions for the menu
         {
-            ActivePos[0] = new Vector3(53.4f, -11.16f, 0);
+            
+            ActivePos[0] = new Vector3 (53.4f, -11.16f, 0);
             ActivePos[1] = new Vector3(53.4f, -36.7f, 0);
             ActivePos[2] = new Vector3(53.4f, -62.3f, 0);
             ActivePos[3] = new Vector3(53.4f, -88.3f, 0);
@@ -137,7 +139,7 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
-
+    //interprets an enum to set each UI state for right click buttons
     public void ButtonState(eCommandState inComingCommand)
     {
         CurrentCommand = inComingCommand;
@@ -154,7 +156,7 @@ public class UIManager : MonoBehaviour
 
             case eCommandState.ASC:
                 HideButtons();
-                ButtonsStates[1] = true;
+                ButtonsStates[1] = true;         
                 ButtonsStates[2] = true;
                 ButtonsStates[3] = true;
                 moveButton();
