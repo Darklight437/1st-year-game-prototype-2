@@ -5,7 +5,13 @@ using UnityEngine;
 public class MapChunk : MonoBehaviour
 {
     public Tiles[] chunkTiles = new Tiles[5 * 5];
-    
+
+    //the cardial tile edge colour types
+    public eChunkEdgeTypes north;
+    public eChunkEdgeTypes east;
+    public eChunkEdgeTypes south;
+    public eChunkEdgeTypes west;
+
     public Tiles GetTileAtPos(Vector3 pos)
     {
         for (int i = 0; i < chunkTiles.Length; i++)

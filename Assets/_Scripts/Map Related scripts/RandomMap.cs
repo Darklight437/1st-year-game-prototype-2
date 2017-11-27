@@ -15,12 +15,12 @@ public class RandomMap : Map
 
     public bool perlinNoiseBool;
 
-    public bool diamondSquareAlgorithm;
-    public int size;
-    public int divisions;
-    public float worldHeight;
-    public eChunkTypes[] chunkLayout;
-    public int recusionAmount;
+    public bool wangTilesBool;
+    private eChunkEdgeTypes m_north;
+    private eChunkEdgeTypes m_east;
+    private eChunkEdgeTypes m_south;
+    private eChunkEdgeTypes m_west;
+    private List<GameObject> m_toPick = new List<GameObject>();
 
     public override void SetUp(Statistics stats)
     {
@@ -34,7 +34,9 @@ public class RandomMap : Map
                 holder.transform.localPosition = new Vector3(x * 5, 0, z * 5);
 
                 Chunk chunk = holder.GetComponent<Chunk>();
-                
+
+                chunk.myChunk = null;
+
                 mapChunks.Add(chunk);
             }
         }
@@ -44,9 +46,9 @@ public class RandomMap : Map
             GenerateMapTilesPerlinNoise();
         }
 
-        if (diamondSquareAlgorithm)
+        if (wangTilesBool)
         {
-            GenerateDiamondSquareAlgorithm();
+            WangTilesAlgorthim();
         }
         
         for (int i = 0; i < mapChunks.Count; i++)
@@ -58,6 +60,59 @@ public class RandomMap : Map
         }
 
         base.SetUp(stats);
+    }
+
+    /*
+    * SetChunkEdges
+    * public void function
+    * 
+    * this function goes through all the chunks finding there
+    * adjacents on North, South, East and west and connects them up for map generation
+    * purposes
+    * 
+    * @returns nothing
+    */
+    private void SetChunkEdges()
+    {
+        //goes through each of the nodes
+        foreach (Chunk chunkA in mapChunks)
+        {
+            chunkA.eastChunk = null;
+            chunkA.westChunk = null;
+            chunkA.southChunk = null;
+            chunkA.northChunk = null;
+
+            foreach (Chunk chunkB in mapChunks)
+            {
+                //gets the offset of the x and z to determin if the tile is next to the one we are looking at
+                float offsetX = chunkA.transform.position.x - chunkB.transform.position.x;
+                float offsetZ = chunkA.transform.position.z - chunkB.transform.position.z;
+
+                //true if tile to the East
+                if (offsetX == 5 && offsetZ == 0)
+                {
+                    chunkA.eastChunk = chunkB;
+                }
+
+                //true if tile to the South
+                if (offsetX == 0 && offsetZ == -5)
+                {
+                    chunkA.westChunk = chunkB;
+                }
+
+                //true if tile to the West
+                if (offsetX == -5 && offsetZ == 0)
+                {
+                    chunkA.southChunk = chunkB;
+                }
+
+                //true if tile to the North
+                if (offsetX == 0 && offsetZ == 5)
+                {
+                    chunkA.northChunk = chunkB;
+                }
+            }
+        }
     }
 
     #region perlinNoise
@@ -134,30 +189,94 @@ public class RandomMap : Map
     }
     #endregion
 
-    #region DiamondSquare
+    #region WangTiles
 
-    public void GenerateDiamondSquareAlgorithm()
+    public void WangTilesAlgorthim()
     {
-        recusionAmount = (divisions + 1) * (divisions + 1);
-        chunkLayout = new eChunkTypes[recusionAmount];
-
-        float halfSize = size * 0.5f;
-        float divisionSize = size / divisions;
-
-        for (int i = 0; i <= divisions; i++)
-        {
-            for (int u = 0; u <= divisions; u++)
-            {
-                chunkLayout[i * (divisions + 1) + u] = eChunkTypes.NORMAL;
-            }
-        }
-
         for (int i = 0; i < mapChunks.Count; i++)
         {
-            mapChunks[i].chunkType = chunkLayout[i];
-            mapChunks[i].GenerateRandomChunkVariant();
+            m_north = eChunkEdgeTypes.NON;
+            m_east = eChunkEdgeTypes.NON;
+            m_south = eChunkEdgeTypes.NON;
+            m_west = eChunkEdgeTypes.NON;
+
+            if (mapChunks[i].northChunk != null)
+            {
+                if (mapChunks[i].northChunk.myChunk != null)
+                {
+                    m_north = mapChunks[i].northChunk.myChunk.south;
+                }
+            }
+
+            if (mapChunks[i].eastChunk != null)
+            {
+                if (mapChunks[i].eastChunk.myChunk != null)
+                {
+                    m_north = mapChunks[i].eastChunk.myChunk.west;
+                }
+            }
+
+            if (mapChunks[i].southChunk != null)
+            {
+                if (mapChunks[i].southChunk.myChunk != null)
+                {
+                    m_north = mapChunks[i].southChunk.myChunk.north;
+                }
+            }
+
+            if (mapChunks[i].westChunk != null)
+            {
+                if (mapChunks[i].westChunk.myChunk != null)
+                {
+                    m_north = mapChunks[i].westChunk.myChunk.east;
+                }
+            }
+
+            ToPickSetUP(m_north);
+            ToPickSetUP(m_east);
+            ToPickSetUP(m_south);
+            ToPickSetUP(m_west);
+
         }
     }
+
+    public void ToPickSetUP(eChunkEdgeTypes type)
+    {
+        switch (type)
+        {
+            case eChunkEdgeTypes.WHITE:
+                foreach (GameObject chunk in mapChunks[0].northChunks.white)
+                {
+                    m_toPick.Add(chunk);
+                }
+                return;
+
+            case eChunkEdgeTypes.RED:
+                foreach (GameObject chunk in mapChunks[0].northChunks.red)
+                {
+                    m_toPick.Add(chunk);
+                }
+                return;
+
+            case eChunkEdgeTypes.GREEN:
+                foreach (GameObject chunk in mapChunks[0].northChunks.green)
+                {
+                    m_toPick.Add(chunk);
+                }
+                return;
+
+            case eChunkEdgeTypes.BLUE:
+                foreach (GameObject chunk in mapChunks[0].northChunks.blue)
+                {
+                    m_toPick.Add(chunk);
+                }
+                return;
+        }
+
+        Debug.LogError("INVALID CHUNK TYPE PASSED");
+        return;
+    }
+}
 
 #endregion
 }

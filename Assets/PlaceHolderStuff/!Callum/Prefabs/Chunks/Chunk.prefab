@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1203163268213146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1060686, y: 1.119257, z: 8.448999}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,12 +67,86 @@ MonoBehaviour:
     chunkTypes:
     - {fileID: 1753752837418858, guid: bca9401904d808c438b71192f30eeb1a, type: 2}
     - {fileID: 1380885250141026, guid: a3a28aef8ac4e094280f7fc858b19559, type: 2}
-  statistics: {fileID: 11400000, guid: a6a2d0191422fe4478fda186bbba7e3e, type: 2}
+  northChunks:
+    white:
+    - {fileID: 1195137177307326, guid: e40d35d569f881d4b875daa9183f9c5c, type: 2}
+    - {fileID: 1411813080545904, guid: fd34eb5fe38815f4b86b097692e4055f, type: 2}
+    - {fileID: 1293077265693222, guid: e993f890e63ed344ba94e63b0acedda3, type: 2}
+    - {fileID: 1181949739338628, guid: b3f9c5fbf2185844a9f8aa71c69e3521, type: 2}
+    red:
+    - {fileID: 1498688577010568, guid: b90180691030ac94292f01ad8a4ea741, type: 2}
+    - {fileID: 1881993007867692, guid: 6ab70f678567cae42a4688d135dee04d, type: 2}
+    - {fileID: 1185352303052068, guid: e53d872ff8730ff47a83114aaebd503b, type: 2}
+    - {fileID: 1467359361710236, guid: 263896f74ee81354786281c7989ba705, type: 2}
+    green:
+    - {fileID: 1851553021335086, guid: bd048a49510992948b7157fccb7bb220, type: 2}
+    - {fileID: 1867290689353376, guid: d8bd1d7d1aa6ce344bd12b420e5b221d, type: 2}
+    blue:
+    - {fileID: 1880393629588606, guid: d9a40198e79c5ea4ab7c4a9325d87a42, type: 2}
+    - {fileID: 1730899852888862, guid: 649036c1d6377ed4d99fd6f17258b65a, type: 2}
+    - {fileID: 1111320683184298, guid: 05275937402d9d94f80f84a5caf15e4a, type: 2}
+    - {fileID: 1668088029495340, guid: 51a6124716c268c4d81547234e41906f, type: 2}
+    - {fileID: 1369670409271980, guid: 1662d908372dfe24e9b76d00cb142945, type: 2}
+  eastChunks:
+    white:
+    - {fileID: 1369670409271980, guid: 1662d908372dfe24e9b76d00cb142945, type: 2}
+    - {fileID: 1867290689353376, guid: d8bd1d7d1aa6ce344bd12b420e5b221d, type: 2}
+    - {fileID: 1467359361710236, guid: 263896f74ee81354786281c7989ba705, type: 2}
+    - {fileID: 1293077265693222, guid: e993f890e63ed344ba94e63b0acedda3, type: 2}
+    - {fileID: 1181949739338628, guid: b3f9c5fbf2185844a9f8aa71c69e3521, type: 2}
+    red:
+    - {fileID: 1111320683184298, guid: 05275937402d9d94f80f84a5caf15e4a, type: 2}
+    - {fileID: 1668088029495340, guid: 51a6124716c268c4d81547234e41906f, type: 2}
+    - {fileID: 1185352303052068, guid: e53d872ff8730ff47a83114aaebd503b, type: 2}
+    green:
+    - {fileID: 1730899852888862, guid: 649036c1d6377ed4d99fd6f17258b65a, type: 2}
+    - {fileID: 1851553021335086, guid: bd048a49510992948b7157fccb7bb220, type: 2}
+    - {fileID: 1881993007867692, guid: 6ab70f678567cae42a4688d135dee04d, type: 2}
+    - {fileID: 1411813080545904, guid: fd34eb5fe38815f4b86b097692e4055f, type: 2}
+    - {fileID: 1498688577010568, guid: b90180691030ac94292f01ad8a4ea741, type: 2}
+    blue:
+    - {fileID: 1880393629588606, guid: d9a40198e79c5ea4ab7c4a9325d87a42, type: 2}
+    - {fileID: 1195137177307326, guid: e40d35d569f881d4b875daa9183f9c5c, type: 2}
+  southChunks:
+    white:
+    - {fileID: 1880393629588606, guid: d9a40198e79c5ea4ab7c4a9325d87a42, type: 2}
+    - {fileID: 1668088029495340, guid: 51a6124716c268c4d81547234e41906f, type: 2}
+    - {fileID: 1867290689353376, guid: d8bd1d7d1aa6ce344bd12b420e5b221d, type: 2}
+    - {fileID: 1411813080545904, guid: fd34eb5fe38815f4b86b097692e4055f, type: 2}
+    red:
+    - {fileID: 1185352303052068, guid: e53d872ff8730ff47a83114aaebd503b, type: 2}
+    - {fileID: 1467359361710236, guid: 263896f74ee81354786281c7989ba705, type: 2}
+    - {fileID: 1467359361710236, guid: 263896f74ee81354786281c7989ba705, type: 2}
+    - {fileID: 1195137177307326, guid: e40d35d569f881d4b875daa9183f9c5c, type: 2}
+    - {fileID: 1181949739338628, guid: b3f9c5fbf2185844a9f8aa71c69e3521, type: 2}
+    green:
+    - {fileID: 1730899852888862, guid: 649036c1d6377ed4d99fd6f17258b65a, type: 2}
+    - {fileID: 1881993007867692, guid: 6ab70f678567cae42a4688d135dee04d, type: 2}
+    blue:
+    - {fileID: 1111320683184298, guid: 05275937402d9d94f80f84a5caf15e4a, type: 2}
+    - {fileID: 1369670409271980, guid: 1662d908372dfe24e9b76d00cb142945, type: 2}
+    - {fileID: 1851553021335086, guid: bd048a49510992948b7157fccb7bb220, type: 2}
+    - {fileID: 1498688577010568, guid: b90180691030ac94292f01ad8a4ea741, type: 2}
+  westChunks:
+    white:
+    - {fileID: 1730899852888862, guid: 649036c1d6377ed4d99fd6f17258b65a, type: 2}
+    - {fileID: 1498688577010568, guid: b90180691030ac94292f01ad8a4ea741, type: 2}
+    - {fileID: 1411813080545904, guid: fd34eb5fe38815f4b86b097692e4055f, type: 2}
+    - {fileID: 1181949739338628, guid: b3f9c5fbf2185844a9f8aa71c69e3521, type: 2}
+    red:
+    - {fileID: 1668088029495340, guid: 51a6124716c268c4d81547234e41906f, type: 2}
+    - {fileID: 1851553021335086, guid: bd048a49510992948b7157fccb7bb220, type: 2}
+    - {fileID: 1369670409271980, guid: 1662d908372dfe24e9b76d00cb142945, type: 2}
+    green:
+    - {fileID: 1111320683184298, guid: 05275937402d9d94f80f84a5caf15e4a, type: 2}
+    - {fileID: 1867290689353376, guid: d8bd1d7d1aa6ce344bd12b420e5b221d, type: 2}
+    - {fileID: 1881993007867692, guid: 6ab70f678567cae42a4688d135dee04d, type: 2}
+    - {fileID: 1467359361710236, guid: 263896f74ee81354786281c7989ba705, type: 2}
+    blue:
+    - {fileID: 1880393629588606, guid: d9a40198e79c5ea4ab7c4a9325d87a42, type: 2}
+    - {fileID: 1185352303052068, guid: e53d872ff8730ff47a83114aaebd503b, type: 2}
+    - {fileID: 1195137177307326, guid: e40d35d569f881d4b875daa9183f9c5c, type: 2}
+    - {fileID: 1293077265693222, guid: e993f890e63ed344ba94e63b0acedda3, type: 2}
+  statistics: {fileID: 0}
   myChunk: {fileID: 0}
-  chunkVarience:
-  - {fileID: 1005471814842874, guid: a44ce02b12e54ea45aa38b6143c925b3, type: 2}
-  - {fileID: 1949905423495046, guid: 9d24386dbbcc7c14ca38c83671e07d4f, type: 2}
-  - {fileID: 1601533389555864, guid: bd11dcfa93fbf754d8ca9f3d1103832d, type: 2}
-  - {fileID: 1777935290770398, guid: 51a62039fd97fd74b8fa198a6b743126, type: 2}
-  chunkNumType: 0
-  pos: {x: 0, y: 0, z: 0}
+  chunkEdges: []
