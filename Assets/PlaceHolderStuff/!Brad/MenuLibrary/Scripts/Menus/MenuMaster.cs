@@ -35,9 +35,14 @@ public class MenuMaster : MonoBehaviour
 
             menu.Initialise();
             menu.gameObject.SetActive(false);
+
+            //set the main menu as the active one
+            if (menu.MENU_NAME == "main")
+            {
+                activeMenu = menu;
+            }
         }
 
-        activeMenu = menus[0];
         activeMenu.gameObject.SetActive(true);
     }
 
