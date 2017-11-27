@@ -35,7 +35,7 @@ public class Tiles : MonoBehaviour
 {
     //this dictates what tile type this tile is
     public eTileType tileType;
-    
+
     //this is the tiles that are next to it and is connected to
     //for pathfinding purposes
     public List<Tiles> tileEdges;
@@ -70,14 +70,14 @@ public class Tiles : MonoBehaviour
     public GameObject attackRangePrefab;
     //the refrence the the gameobject to show the units attack range
     public GameObject attackRangeHighLight;
-    
+
     //the prefab to show the area an enemy could attack you on there turn
     public GameObject dangerZoneRangePrefab;
     //the variable that holds the tile modifier that shows you where you can be attacked
     public GameObject dangerZoneRangeHighLight;
 
     //the statistics used for random number logic
-	public Statistics statistics;
+    public Statistics statistics;
 
     //unit that is on the tile
     public Unit unit = null;
@@ -101,6 +101,8 @@ public class Tiles : MonoBehaviour
     public int renderQueTile;
 
     public MediPack tileMediPack;
+
+    public GameObject sandExplosion;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -249,17 +251,17 @@ public class Tiles : MonoBehaviour
 
             if (m_playerID != unit.playerID)
             {
-                Destroy(Instantiate(tileMediPack.destroyedParticals, 
-                                    new Vector3(transform.position.x, 
-                                    0.3f, 
-                                    transform.position.z), 
-                                    tileMediPack.destroyedParticals.transform.rotation), 
+                Destroy(Instantiate(tileMediPack.destroyedParticals,
+                                    new Vector3(transform.position.x,
+                                    0.3f,
+                                    transform.position.z),
+                                    tileMediPack.destroyedParticals.transform.rotation),
                                     5);
 
                 return false;
             }
 
-            Destroy(Instantiate(tileMediPack.usedParticals, 
+            Destroy(Instantiate(tileMediPack.usedParticals,
                                 new Vector3(transform.position.x,
                                 0.3f,
                                 transform.position.z),
@@ -279,6 +281,8 @@ public class Tiles : MonoBehaviour
 
                 tileMediPack.usedTeamParticals = Instantiate(tileMediPack.healthParticals, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
 
+                SandExplosion();
+
                 if (m_playerID == 1)
                 {
                     tileMediPack.currMedPack = Instantiate(tileMediPack.redTeamMediPack, transform.position, Quaternion.identity);
@@ -295,6 +299,11 @@ public class Tiles : MonoBehaviour
 
 
         return false;
+    }
+
+    public void SandExplosion()
+    {
+        Destroy(Instantiate(sandExplosion, new Vector3(transform.position.x, 0.5f, transform.position.z), sandExplosion.transform.rotation), 5);
     }
 
     //this is the tiles parent for pathfinding purposes

@@ -762,6 +762,12 @@ public class GameManagment : MonoBehaviour
     */
     public void DrawLineRendere(Tiles endTile)
     {
+        if (endTile.unit != null)
+        {
+            TurnOffLineRenderer();
+            return;
+        }
+
         unitPathTiles.Add(map.GetTileAtPos(selectedUnit.transform.position));
 
         CheckIfSafeMove();
