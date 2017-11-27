@@ -32,6 +32,8 @@ public class TileModifierCommand : UnitCommand
     //the count of how many times we have done animations
     private float m_count;
 
+    private bool m_playAnim;
+
     /*
     * TileModifierCommand()
     * 
@@ -49,6 +51,8 @@ public class TileModifierCommand : UnitCommand
         {
             unit.ArtLink.SetTrigger("SAttack");
         }
+
+        m_playAnim = false;
     }
 
 
@@ -89,6 +93,12 @@ public class TileModifierCommand : UnitCommand
             }
         }
 
+        if (m_playAnim == false && unit.ArtLink != null)
+        {
+            unit.ArtLink.SetBool("ActionsAvailable", false);
+            m_playAnim = true;
+        }
+
         m_timer += Time.deltaTime;
 
         if (modifyType == eModifyType.TRAP && m_timer >= m_waitTime && m_count < 3)
@@ -99,11 +109,35 @@ public class TileModifierCommand : UnitCommand
             return;
         }
 
+        if (modifyType == eModifyType.DEFENSE && m_timer >= m_waitTime && m_count < 3)
+        {
+            if (m_count == 0)
+            {
+                //shoot flare
+            }
+
+            if (m_count == 1)
+            {
+                endTile.TileAirDrop();
+                m_waitTime = 0.1f;
+            }
+
+            if (m_count == 2)
+            {
+                endTile.SandExplosion();
+                m_waitTime = 0.5f;
+            }
+
+            m_count++;
+            m_timer = 0;
+            return;
+        }
+
         if ((modifyType == eModifyType.TRAP || modifyType == eModifyType.DEFENSE) && m_count < 3)
         {
             return;
         }
-        
+
         if (modifyType != eModifyType.HEALING)
         {
             //can't modify a wall or change a tile being stood on

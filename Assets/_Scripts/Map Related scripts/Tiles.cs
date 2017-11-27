@@ -103,6 +103,7 @@ public class Tiles : MonoBehaviour
     public MediPack tileMediPack;
 
     public GameObject sandExplosion;
+    public GameObject tileDrop;
 
     //tile values for pathfinding purposes 
     private float m_gcost;
@@ -304,6 +305,11 @@ public class Tiles : MonoBehaviour
     public void SandExplosion()
     {
         Destroy(Instantiate(sandExplosion, new Vector3(transform.position.x, 0.5f, transform.position.z), sandExplosion.transform.rotation), 5);
+    }
+
+    public void TileAirDrop()
+    {
+        Destroy(Instantiate(tileDrop, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity), 5);
     }
 
     //this is the tiles parent for pathfinding purposes
