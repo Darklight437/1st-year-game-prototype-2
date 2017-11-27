@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Normal
+  m_Name: Normal_Bones
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _NORMALMAP _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 8149cd12cec892f4480114c3d649a3df, type: 3}
+        m_Texture: {fileID: 2800000, guid: 44e83298bea014d4cb7620d4caabf9b6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7a5bbb4e5404acc4f9258d09d54f3ea8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 43c774a97bbf4394f8edd5aa9ede0959, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
