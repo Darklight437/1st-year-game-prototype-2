@@ -24,9 +24,9 @@ public class SoundSystem : MonoBehaviour {
     {
         Animator = GetComponent<Animator>();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         //walk just finished
         if (IsWalking && !Animator.GetBool("IsWalking"))
@@ -37,9 +37,16 @@ public class SoundSystem : MonoBehaviour {
                 walk.Stop();
                 EndWalk.Play();
             }
+            else
+            {
+                walk.Stop();
+            }
         }
-        if (idling && !Animator.GetBool("ActionsAvailable")) ;
-	}
+        if (idling && !Animator.GetBool("ActionsAvailable"))
+        {
+
+        }
+    }
 
 
     //plays the param sound
@@ -49,6 +56,16 @@ public class SoundSystem : MonoBehaviour {
         {
             idleAsleep.Play();
         }
+        
+    }
+    public void stopAll()
+    {
+        idleAwake.Stop();
+        idleAwake.Stop();
+        walk.Stop();
+        attack.Stop();
+        TilePlace.Stop();
+        
         
     }
 
