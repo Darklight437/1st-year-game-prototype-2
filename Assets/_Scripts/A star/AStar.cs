@@ -28,7 +28,6 @@ public static class AStar
         //check to see if one of the tiles passed in does not exist or is not passible meaning they can not move to/from
         if (startTile == null || endTile == null || endTile.IsPassible(unit) == false)
         {
-            Debug.LogError("INVALID PARAMATERS PASSED");
             return new List<Tiles>();
         }
         

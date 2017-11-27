@@ -671,6 +671,16 @@ public class GameManagment : MonoBehaviour
         }
     }
 
+    /*
+   * CullSafeTilesFromNotSafe 
+   * 
+   * loops through all the safe tiles and and not safe tiles
+   * and gather the tiles 
+   * 
+   * @param non
+   * @returns void
+   * @author Callum Dunstone
+   */
     private void CullSafeTilesFromNotSafe()
     {
         List<Tiles> holder = new List<Tiles>();
@@ -1101,29 +1111,7 @@ public class GameManagment : MonoBehaviour
             {
                 UIManager.DamageText.text = selectedUnit.damage.ToString();
             }
-
-
-            //shorthand alias for readability
-
-
-            /*
-            //call the unit handling function if a unit was found on the tile
-            else if (tile.unit != null)
-            {
-                startTile = tile;
-                endTile = null;
-                OnUnitSelected(tile.unit);
-            }*/
         }
-       /* else
-        {
-            //call the unit handling function if a unit was found on the tile
-            if (tile.unit != null)
-            {
-                startTile = tile;
-                OnUnitSelected(tile.unit);
-            }
-        }*/
     }
     
 
