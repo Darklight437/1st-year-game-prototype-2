@@ -96,7 +96,7 @@ public class GameManagment : MonoBehaviour
 
     //David's
     //reference to Main UI manager script
-    [HideInInspector]
+
     public UIManager UIManager = null;
     
  
@@ -171,15 +171,6 @@ public class GameManagment : MonoBehaviour
 
         m_lineRenderer = Instantiate(lineRendererPrefab, new Vector3(0, 0, 0), lineRendererPrefab.transform.rotation);
         m_lineRenderer.SetActive(false);
-
-        //billboarding snippet for HP bars
-        foreach (BasePlayer Player in players)
-        {
-            foreach (Unit CurrUnit in Player.units)
-            {
-                CurrUnit.Billboard(Camera.main);
-            }
-        }
 
     }
 
@@ -1102,7 +1093,6 @@ public class GameManagment : MonoBehaviour
 
             if (tile.unit is Ranger)
             {
-                //holder = GetArea.GetAreaOfAttack(tile, tile.unit.movementRange + tile.unit.attackRange, map);
                 holder = GetArea.GetAreaOfRangeDangerZone(tile, tile.unit.movementRange, tile.unit.attackRange + (int)((Ranger)tile.unit).splashRange, map);
             }
             else
