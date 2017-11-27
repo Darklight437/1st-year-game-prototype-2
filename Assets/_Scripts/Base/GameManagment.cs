@@ -390,13 +390,14 @@ public class GameManagment : MonoBehaviour
         foreach (BasePlayer p in players)
         {
 
-            if (p is AiPlayer)
-            {
-                //cast to the true type
-                AiPlayer ap = p as AiPlayer;
+            //if (p is AiPlayer)
+            //{
+            //    //cast to the true type
+            //    AiPlayer ap = (AiPlayer)p;
 
-                ap.Reset();
-            }
+            //    ap.Reset();
+
+            //}
 
             //iterate through all units, removing null references
             for (int i = 0; i < p.units.Count; i++)

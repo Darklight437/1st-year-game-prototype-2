@@ -276,9 +276,9 @@ public class RandomMap : Map
         Debug.LogError("INVALID CHUNK TYPE PASSED");
         return;
     }
-}
 
 #endregion
+
 }
 
 #endif
