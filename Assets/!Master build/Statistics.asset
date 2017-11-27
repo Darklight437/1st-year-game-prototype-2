@@ -10,7 +10,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8b90a7ce7eadd74aba7af9f83ed9f71, type: 3}
   m_Name: Statistics
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   armourCurve:
     serializedVersion: 2
     m_Curve:
@@ -55,9 +55,8 @@ MonoBehaviour:
     m_RotationOrder: 0
   tileHealthGained: 500
   trapTileDamage: 500
-  shrinkZoneDamage: 1000
-  normalTileTypeAmount: 29
-  damageTileTypeAmount: 4
+  normalTileTypeAmount: 34
+  shrinkZoneDamage: 1000  damageTileTypeAmount: 4
   impassableTileTypeAmount: 8
   defenseTileTypeAmount: 2
   placableDefenseTileAmount: 1
