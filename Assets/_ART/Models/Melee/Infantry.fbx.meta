@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: bf2bd02ac5a1c4d49aa69f399542a11d
-timeCreated: 1511243826
+guid: 1e474471514220b4eabde4c7483095ff
+timeCreated: 1511733301
 licenseType: Pro
 ModelImporter:
   serializedVersion: 21
@@ -81,12 +81,12 @@ ModelImporter:
     400072: Torso
     4300000: pCube86
     7400000: Walk
-    7400002: Active Idle
-    7400004: Used Idle
+    7400002: Idle
+    7400004: UsedIdle
     7400006: Attack
-    7400008: Take Damage
+    7400008: Damage
     7400010: Death
-    7400012: Tile Placement
+    7400012: TilePlacement
     9500000: //RootNode
     13700000: pCube86
   materials:
@@ -142,7 +142,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Active Idle
+      name: Idle
       takeName: Take 001
       firstFrame: 30
       lastFrame: 300
@@ -170,7 +170,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Used Idle
+      name: UsedIdle
       takeName: Take 001
       firstFrame: 310
       lastFrame: 400
@@ -226,10 +226,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Take Damage
+      name: Damage
       takeName: Take 001
-      firstFrame: 700
-      lastFrame: 950
+      firstFrame: 540
+      lastFrame: 675
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -282,9 +282,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Tile Placement
+      name: TilePlacement
       takeName: Take 001
-      firstFrame: 950
+      firstFrame: 960
       lastFrame: 1040
       wrapMode: 0
       orientationOffsetY: 0
@@ -308,7 +308,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     isReadable: 1
   meshes:
     lODScreenPercentages: []
