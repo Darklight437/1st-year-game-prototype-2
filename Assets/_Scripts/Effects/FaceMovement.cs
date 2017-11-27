@@ -9,6 +9,7 @@ public class FaceMovement : MonoBehaviour
     private Quaternion originalDirection = Quaternion.identity;
     private Quaternion defaultOffset = Quaternion.identity;
     private Transform myTransform;
+    private Vector3 directionOverride = Vector3.zero;
     
     // Use this for initialization
     void Start ()
@@ -23,14 +24,22 @@ public class FaceMovement : MonoBehaviour
 	void Update ()
     {
 
-        if (m_prevPos != myTransform.position)
+        if (directionOverride == Vector3.zero)
         {
-            myTransform.rotation = Quaternion.LookRotation((myTransform.position - m_prevPos).normalized) * defaultOffset;
+            if (m_prevPos != myTransform.position)
+            {
+                myTransform.rotation = Quaternion.LookRotation((myTransform.position - m_prevPos).normalized) * defaultOffset;
+            }
+            else
+            {
+                myTransform.rotation = originalDirection * defaultOffset;
+            }
         }
         else
         {
-            myTransform.rotation = originalDirection * defaultOffset;
+            myTransform.rotation = Quaternion.LookRotation(directionOverride.normalized) * defaultOffset;
         }
+
         m_prevPos = myTransform.position;
     }
 }
