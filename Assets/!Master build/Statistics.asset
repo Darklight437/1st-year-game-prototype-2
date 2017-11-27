@@ -30,14 +30,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   tileHealthGained: 500
-  trapTileDamage: 100
-  shrinkZoneDamage: 0
+  trapTileDamage: 500
+  shrinkZoneDamage: 1000
   normalTileTypeAmount: 34
-  damageTileTypeAmount: 0
-  impassableTileTypeAmount: 0
-  defenseTileTypeAmount: 0
-  placableDefenseTileAmount: 0
-  placableTrapTileAmount: 0
+  damageTileTypeAmount: 4
+  impassableTileTypeAmount: 8
+  defenseTileTypeAmount: 2
+  placableDefenseTileAmount: 2
+  placableTrapTileAmount: 3
   normalChunkTypeAmount: 0
   damageChunkTypeAmount: 0
   impassableChunkTypeAmount: 0
