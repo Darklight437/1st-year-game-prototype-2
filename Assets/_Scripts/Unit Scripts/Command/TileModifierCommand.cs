@@ -53,6 +53,7 @@ public class TileModifierCommand : UnitCommand
         }
 
         m_playAnim = false;
+        m_timer -= 2;
     }
 
 
@@ -92,13 +93,7 @@ public class TileModifierCommand : UnitCommand
                 return;
             }
         }
-
-        if (m_playAnim == false && unit.ArtLink != null)
-        {
-            unit.ArtLink.SetBool("ActionsAvailable", false);
-            m_playAnim = true;
-        }
-
+        
         m_timer += Time.deltaTime;
 
         if (modifyType == eModifyType.TRAP && m_timer >= m_waitTime && m_count < 3)
@@ -113,7 +108,8 @@ public class TileModifierCommand : UnitCommand
         {
             if (m_count == 0)
             {
-                //shoot flare
+                endTile.Flare();
+                m_waitTime = 1;
             }
 
             if (m_count == 1)

@@ -312,6 +312,11 @@ public class Tiles : MonoBehaviour
         Destroy(Instantiate(tileDrop, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity), 5);
     }
 
+    public void Flare()
+    {
+        Destroy(Instantiate(tileMediPack.redTeamHealthMist, new Vector3(transform.position.x, 0.5f, transform.position.z), tileMediPack.redTeamHealthMist.transform.rotation), 1.5f);
+    }
+
     //this is the tiles parent for pathfinding purposes
     public Tiles parent;
     
