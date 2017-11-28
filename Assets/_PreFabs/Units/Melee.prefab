@@ -1904,7 +1904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Smoke: {fileID: 198598814216501702}
-  Smoke2: {fileID: 0}
+  Smoke2: {fileID: 198598814216501702}
 --- !u!114 &114675020557574556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2152,7 +2152,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 740226315
+  randomSeed: -1904118493
   InitialModule:
     serializedVersion: 3
     enabled: 1
