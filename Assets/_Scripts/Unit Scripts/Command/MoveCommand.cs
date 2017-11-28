@@ -132,7 +132,7 @@ public class MoveCommand : UnitCommand
             Tiles nextTile = m_tilePath[0];
 
             //the 3D target of the movement
-            Vector3 target = new Vector3(nextTile.pos.x, 0.5f, nextTile.pos.z);
+            Vector3 target = new Vector3(nextTile.pos.x, 0.15f, nextTile.pos.z);
 
             Vector3 relative = target - unit.transform.position;
 

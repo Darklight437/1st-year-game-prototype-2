@@ -1036,6 +1036,11 @@ public class GameManagment : MonoBehaviour
     {
         TurnOffSplash();
 
+        if (ChechIfWithinAttackable(endTile) == false)
+        {
+            return;
+        }
+
         List<Tiles> holder = GetArea.GetAreaOfAttack(endTile, (int)((Ranger)selectedUnit).splashRange, map);
 
         splashDamageTiles.Clear();
@@ -1049,6 +1054,19 @@ public class GameManagment : MonoBehaviour
         {
             splashDamageTiles[i].splashDamageHighLight.gameObject.SetActive(true);
         }
+    }
+
+    public bool ChechIfWithinAttackable(Tiles tiles)
+    {
+        for (int i = 0; i < attackableTiles.Count; i++)
+        {
+            if (attackableTiles[i] == tiles)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /*
