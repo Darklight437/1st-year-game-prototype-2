@@ -50,7 +50,7 @@ public class RandomMap : Map
         {
             WangTilesAlgorthim();
         }
-        
+
         for (int i = 0; i < mapChunks.Count; i++)
         {
             for (int u = 0; u < mapChunks[i].myChunk.chunkTiles.Length; u++)
@@ -127,7 +127,7 @@ public class RandomMap : Map
         {
             for (int z = 0; z < height; z++)
             {
-                mapChunks[num].chunkType = ReturnChunkType(x,z);
+                mapChunks[num].chunkType = ReturnChunkType(x, z);
                 mapChunks[num].GenerateRandomChunkVariant();
 
                 num++;
@@ -156,7 +156,7 @@ public class RandomMap : Map
         float yCord = (float)y / height * scale;
 
         float holder = Mathf.PerlinNoise(xCord + seed, yCord + seed);
-        
+
         return holder;
     }
 
@@ -277,7 +277,8 @@ public class RandomMap : Map
         return;
     }
 
-#endregion
+    #endregion
+
 
 }
 

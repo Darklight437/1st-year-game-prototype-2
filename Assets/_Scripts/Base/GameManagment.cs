@@ -46,6 +46,9 @@ public class GameManagment : MonoBehaviour
     //list of all tiles that an enemy could attack you in
     public List<Tiles> dangerTiles = new List<Tiles>();
 
+    //list of all spash damage tiles
+    public List<Tiles> splashDamageTiles = new List<Tiles>();
+
     //reference to the starting tile (first selection)
     public Tiles startTile = null;
 
@@ -277,10 +280,20 @@ public class GameManagment : MonoBehaviour
         }
     }
 
+    /*
+    * ShrinkArea 
+    * 
+    * this shrinks the area of the play feild and any units caought in it are killed
+    * 
+    * @returns void
+    * @author Callum Dunstone
+    */
     public void ShrinkArea()
     {
+        //figure out if the map is longer then it is wider or vice verser
         if (map.width >= map.height)
         {
+            //figure out if we have hit the minimum and if so simply damage all units foolish enought to stick in the danger zone
             if ((((map.height  - toShrink) * 0.5f)) < minShrinkArea)
             {
                 for (int i = 0; i < shrinkAreaTiles.Count; i++)
@@ -295,6 +308,7 @@ public class GameManagment : MonoBehaviour
         }
         else
         {
+            //figure out if we have hit the minimum and if so simply damage all units foolish enought to stick in the danger zone
             if ((((map.width - toShrink) * 0.5f)) < minShrinkArea)
             {
                 for (int i = 0; i < shrinkAreaTiles.Count; i++)
@@ -310,8 +324,36 @@ public class GameManagment : MonoBehaviour
 
         shrinkAreaTiles.Clear();
 
+        GetShrinkAreaTiles();
+
+        toShrink += shrinkAmount;
+        
+        for (int i = 0; i < shrinkAreaTiles.Count; i++)
+        {
+            if (shrinkAreaTiles[i].unit != null)
+            {
+                shrinkAreaTiles[i].unit.Defend(stats.shrinkZoneDamage);
+            }
+        }
+
+        GetShrinkAreaTiles();
+
+
+    }
+
+    /*
+    * GetShrinkAreaTiles 
+    * 
+    * this Gets all the tiles that are in the shrink area
+    * 
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public void GetShrinkAreaTiles()
+    {
         for (int i = 0; i < map.mapTiles.Count; i++)
         {
+            //gathers all tiles on the x less then the shrink area
             if (map.mapTiles[i].pos.x < toShrink)
             {
                 if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
@@ -320,6 +362,7 @@ public class GameManagment : MonoBehaviour
                 }
             }
 
+            //gathers all tiles on the x greater then the map height - the shrink
             if (map.mapTiles[i].pos.x >= map.height - toShrink)
             {
                 if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
@@ -328,6 +371,7 @@ public class GameManagment : MonoBehaviour
                 }
             }
 
+            //gathers all tiles on the y less then the shrink area
             if (map.mapTiles[i].pos.z < toShrink)
             {
                 if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
@@ -336,6 +380,7 @@ public class GameManagment : MonoBehaviour
                 }
             }
 
+            //gathers all tiles on the y greater then the map width - the shrink
             if (map.mapTiles[i].pos.z >= map.width - toShrink)
             {
                 if (IsTileInShrinkAreaTiles(map.mapTiles[i]) == false)
@@ -345,19 +390,22 @@ public class GameManagment : MonoBehaviour
             }
         }
 
-        toShrink += shrinkAmount;
-
+        //turns all the tiles on to show area
         for (int i = 0; i < shrinkAreaTiles.Count; i++)
         {
             shrinkAreaTiles[i].shrinkZoneAreaHighLight.SetActive(true);
-
-            if (shrinkAreaTiles[i].unit != null)
-            {
-                shrinkAreaTiles[i].unit.Defend(stats.shrinkZoneDamage);
-            }
         }
     }
 
+    /*
+    * IsTileInShrinkAreaTiles 
+    * 
+    * this checks if the tile passed in is already in the list of shrink tiles
+    * 
+    * @param Tiles tile - the tile we are checking if its in the list
+    * @returns void
+    * @author Callum Dunstone
+    */
     public bool IsTileInShrinkAreaTiles(Tiles tile)
     {
         for (int i = 0; i < shrinkAreaTiles.Count; i++)
@@ -447,6 +495,10 @@ public class GameManagment : MonoBehaviour
             if (turnsPast >= turnToStartShrink)
             {
                 ShrinkArea();
+            }
+            else if (turnsPast == (turnToStartShrink - 1))
+            {
+                GetShrinkAreaTiles();
             }
         }
 
@@ -862,6 +914,7 @@ public class GameManagment : MonoBehaviour
         dangerTiles.Clear();
 
         TurnOffLineRenderer();
+        TurnOffSplash();
     }
 
     /*
@@ -874,9 +927,9 @@ public class GameManagment : MonoBehaviour
     * @returns void
     * @author Callum Dunstone
     */
-    public void DrawLineRendere(Tiles endTile)
+    public void DrawLineRendere(Tiles targetTile)
     {
-        if (endTile.unit != null)
+        if (targetTile.unit != null)
         {
             TurnOffLineRenderer();
             return;
@@ -888,21 +941,21 @@ public class GameManagment : MonoBehaviour
 
         if (m_isSafeMove)
         {
-            foreach (Tiles tile in AStar.GetSafeAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit, movableSafeTiles))
+            foreach (Tiles tile in AStar.GetSafeAStarPath(map.GetTileAtPos(selectedUnit.transform.position), targetTile, selectedUnit, movableSafeTiles))
             {
                 unitPathTiles.Add(tile);
             }
         }
         else
         {
-            foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), endTile, selectedUnit))
+            foreach (Tiles tile in AStar.GetAStarPath(map.GetTileAtPos(selectedUnit.transform.position), targetTile, selectedUnit))
             {
                 unitPathTiles.Add(tile);
             }
         }
         
 
-        unitPathTiles.Add(endTile);
+        unitPathTiles.Add(targetTile);
 
         m_lineRenderer.SetActive(true);
 
@@ -969,6 +1022,49 @@ public class GameManagment : MonoBehaviour
         }
 
         return false;
+    }
+
+    /*
+    * ShowSplashDamage 
+    * 
+    * this shows the splash damage radius of the ranged units
+    * 
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public void ShowSplashDamage()
+    {
+        TurnOffSplash();
+
+        List<Tiles> holder = GetArea.GetAreaOfAttack(endTile, (int)((Ranger)selectedUnit).splashRange, map);
+
+        splashDamageTiles.Clear();
+
+        for (int i = 0; i < holder.Count; i++)
+        {
+            splashDamageTiles.Add(holder[i]);
+        }
+
+        for (int i = 0; i < splashDamageTiles.Count; i++)
+        {
+            splashDamageTiles[i].splashDamageHighLight.gameObject.SetActive(true);
+        }
+    }
+
+    /*
+    * TurnOffSplash 
+    * 
+    * this turns off the splash damage radius
+    * 
+    * @returns void
+    * @author Callum Dunstone
+    */
+    public void TurnOffSplash()
+    {
+        for (int i = 0; i < splashDamageTiles.Count; i++)
+        {
+            splashDamageTiles[i].splashDamageHighLight.gameObject.SetActive(false);
+        }
     }
 
     /*
@@ -1128,6 +1224,10 @@ public class GameManagment : MonoBehaviour
             {
                 DrawLineRendere(endTile);
             }
+            else
+            {
+                TurnOffLineRenderer();
+            }
 
             //turn on UI
             UIManager.MenuPosition.SetActive(true);
@@ -1232,11 +1332,13 @@ public class GameManagment : MonoBehaviour
                 UIManager.DamageText.text = selectedUnit.damage.ToString();
             }
         }
+
+        if (selectedUnit is Ranger)
+        {
+            ShowSplashDamage();
+        }
     }
     
-
-
-
     /*
     * OnActionSelected 
     * 

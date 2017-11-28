@@ -53,7 +53,15 @@ public class TileModifierCommand : UnitCommand
         }
 
         m_playAnim = false;
-        m_timer -= 2;
+
+        if (unit is Tank)
+        {
+            m_timer -= 2;
+        }
+        else
+        {
+            m_timer = -1;
+        }
     }
 
 

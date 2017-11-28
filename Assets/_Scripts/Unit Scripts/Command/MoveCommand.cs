@@ -21,7 +21,16 @@ public class MoveCommand : UnitCommand
     //reference to the game manager
     private GameManagment m_manager = null;
 
+    //are we doing a safe or not safe move
     private bool isSafeMove;
+
+    //this timmer gets set if the unit has stopped on a time
+    private float m_timer;
+
+    //wait time for standing still
+    private float m_waitTime = 6;
+
+    private bool m_finishedWaiting;
 
     /*
     * MoveCommand()
@@ -47,6 +56,8 @@ public class MoveCommand : UnitCommand
         m_manager = GameObject.FindObjectOfType<GameManagment>();
 
         isSafeMove = safeMove;
+
+        m_timer = m_waitTime;
     }
 
 
@@ -102,9 +113,21 @@ public class MoveCommand : UnitCommand
             }
         }
 
+        m_timer += Time.deltaTime;
+
         //check if there is still a path to follow
-        if (m_tilePath.Count > 0)
+        if (m_tilePath.Count > 0 && m_timer > m_waitTime)
         {
+            if (m_finishedWaiting == false)
+            {
+                m_finishedWaiting = true;
+
+                if (unit.ArtLink != null)
+                {
+                    unit.ArtLink.SetBool("IsWalking", true);
+                }
+            }
+
             //get the next position to go to
             Tiles nextTile = m_tilePath[0];
 
@@ -140,50 +163,27 @@ public class MoveCommand : UnitCommand
                         ParticleLibrary.explosionSystem.Play();
                     }
 
-                    //an unexpected stop has occured, reset the target
-                    endTile.unit = null;
-                    nextTile.unit = unit;
-                    
-                    //regain most movemeantpoints back
-                    unit.movementPoints += m_tilePath.Count - 1;
-                    
-                    if (unit.movementPoints < 0)
-                    {
-                        unit.movementPoints = 0;
-                    }
-
-                    //movement stops if a trap tile is hit
-                    m_tilePath.Clear();
-
-                    unit.transform.position = target;
-                    successCallback();
+                    m_timer = 0;
+                    m_finishedWaiting = false;
 
                     //Stop walking Anim
                     if (unit.ArtLink != null)
                     {
                         unit.ArtLink.SetBool("IsWalking", false);
                     }
-
-                    return;
                 }
 
                 unit.transform.position = target;
                 m_tilePath.RemoveAt(0);
 
-                ////don't move into the same space as another unit
-                //if (m_tilePath.Count > 0 && m_tilePath[0].unit != null && m_tilePath[0].unit != unit)
-                //{
-                //    successCallback();
-                //    return;
-                //}
-
+                
             }
             else
             {
                 unit.transform.position += relative.normalized * unit.movementSpeed * Time.deltaTime;
             }
         }
-        else
+        else if(m_timer > m_waitTime)
         {
             if (endTile.tileType == eTileType.PLACABLEDEFENSE || endTile.tileType == eTileType.DEFENSE)
             {

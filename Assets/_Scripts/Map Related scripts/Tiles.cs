@@ -111,6 +111,10 @@ public class Tiles : MonoBehaviour
     public GameObject shrinkZoneAreaPrefab;
     public GameObject shrinkZoneAreaHighLight;
 
+    //this shows the rangers splash damage
+    public GameObject splashDamageAreaPrefab;
+    public GameObject splashDamageHighLight;
+
     //tile values for pathfinding purposes 
     private float m_gcost;
     public float GCost
@@ -430,6 +434,12 @@ public class Tiles : MonoBehaviour
         shrinkZoneAreaHighLight = obj5;
         obj5.transform.localPosition = new Vector3(0, 0, 0);
         obj5.gameObject.SetActive(false);
+
+        GameObject obj6 = Instantiate(splashDamageAreaPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        obj6.transform.SetParent(gameObject.transform);
+        splashDamageHighLight = obj6;
+        obj6.transform.localPosition = new Vector3(0, 0, 0);
+        obj6.gameObject.SetActive(false);
     }
 
     /*
