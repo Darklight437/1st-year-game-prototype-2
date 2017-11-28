@@ -32,7 +32,10 @@ public class TileModifierCommand : UnitCommand
     //the count of how many times we have done animations
     private float m_count;
 
-    private bool m_playAnim;
+    private bool m_playAnim = true;
+
+    //flag indicating if the action has been completed
+    private bool applied = false;
 
     /*
     * TileModifierCommand()
@@ -47,6 +50,9 @@ public class TileModifierCommand : UnitCommand
     */
     public TileModifierCommand(Unit u, VoidFunc scb, VoidFunc fcb, Tiles st, Tiles et) : base(u, scb, fcb, st, et)
     {
+        //face the target
+        unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
+
         if (unit.ArtLink != null)
         {
             unit.ArtLink.SetTrigger("SAttack");
@@ -75,119 +81,134 @@ public class TileModifierCommand : UnitCommand
     */
     public override void Update()
     {
-        if (modifyType == eModifyType.HEALING &&
-            endTile.tileType != eTileType.IMPASSABLE && 
-            (endTile.isHealing == false))
+        if (!applied)
         {
-            endTile.IsHealing(true, unit);
-        }
-        else if(modifyType == eModifyType.HEALING)
-        {
-            if (endTile.isHealing == true)
+            if (modifyType == eModifyType.HEALING &&
+                endTile.tileType != eTileType.IMPASSABLE &&
+                (endTile.isHealing == false))
             {
-                failedCallback();
-                return;
+                endTile.IsHealing(true, unit);
+            }
+            else if (modifyType == eModifyType.HEALING)
+            {
+                if (endTile.isHealing == true)
+                {
+                    failedCallback();
+                    return;
+                }
+
+                if (endTile.tileType == eTileType.IMPASSABLE)
+                {
+                    failedCallback();
+                    return;
+                }
+
+                if (endTile.unit != null && endTile.unit.playerID != unit.playerID)
+                {
+                    failedCallback();
+                    return;
+                }
             }
 
-            if (endTile.tileType == eTileType.IMPASSABLE)
-            {
-                failedCallback();
-                return;
-            }
+            m_timer += Time.deltaTime;
 
-            if (endTile.unit != null && endTile.unit.playerID != unit.playerID)
-            {
-                failedCallback();
-                return;
-            }
-        }
-        
-        m_timer += Time.deltaTime;
-
-        if (modifyType == eModifyType.TRAP && m_timer >= m_waitTime && m_count < 3)
-        {
-            endTile.SandExplosion();
-            m_count++;
-            m_timer = 0;
-            return;
-        }
-
-        if (modifyType == eModifyType.DEFENSE && m_timer >= m_waitTime && m_count < 3)
-        {
-            if (m_count == 0)
-            {
-                endTile.Flare();
-                m_waitTime = 1;
-            }
-
-            if (m_count == 1)
-            {
-                endTile.TileAirDrop();
-                m_waitTime = 0.1f;
-            }
-
-            if (m_count == 2)
+            if (modifyType == eModifyType.TRAP && m_timer >= m_waitTime && m_count < 3)
             {
                 endTile.SandExplosion();
-                m_waitTime = 0.5f;
-            }
-
-            m_count++;
-            m_timer = 0;
-            return;
-        }
-
-        if ((modifyType == eModifyType.TRAP || modifyType == eModifyType.DEFENSE) && m_count < 3)
-        {
-            return;
-        }
-
-        if (modifyType != eModifyType.HEALING)
-        {
-            //can't modify a wall or change a tile being stood on
-            if (endTile.tileType != eTileType.NORMAL)
-            {
-                failedCallback();
+                m_count++;
+                m_timer = 0;
                 return;
             }
 
-            //determine what to do
-            switch (modifyType)
+            if (modifyType == eModifyType.DEFENSE && m_timer >= m_waitTime && m_count < 3)
             {
-                case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
-                case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
+                if (m_count == 0)
+                {
+                    endTile.Flare();
+                    m_waitTime = 1;
+                }
+
+                if (m_count == 1)
+                {
+                    endTile.TileAirDrop();
+                    m_waitTime = 0.1f;
+                }
+
+                if (m_count == 2)
+                {
+                    endTile.SandExplosion();
+                    m_waitTime = 0.5f;
+                }
+
+                m_count++;
+                m_timer = 0;
+                return;
+            }
+
+            if ((modifyType == eModifyType.TRAP || modifyType == eModifyType.DEFENSE) && m_count < 3)
+            {
+                return;
+            }
+
+            if (modifyType != eModifyType.HEALING)
+            {
+                //can't modify a wall or change a tile being stood on
+                if (endTile.tileType != eTileType.NORMAL)
+                {
+                    failedCallback();
+                    return;
+                }
+
+                //determine what to do
+                switch (modifyType)
+                {
+                    case eModifyType.TRAP: endTile.tileType = eTileType.PLACABLETRAP; endTile.GenerateRandomTileVariant(); break;
+                    case eModifyType.DEFENSE: endTile.tileType = eTileType.PLACABLEDEFENSE; endTile.GenerateRandomTileVariant(); break;
+                }
+
+                applied = true;
+            }
+
+            unit.hasAttacked = true;
+            unit.movementPoints = 0;
+
+            if (unit.ArtLink != null)
+            {
+                unit.ArtLink.SetBool("ActionsAvailable", false);
+            }
+
+            if (endTile.unit != null)
+            {
+                //this is a healing tile
+                if (endTile.IsHealing(false, unit))
+                {
+                    endTile.unit.Heal(GameManagment.stats.tileHealthGained);
+                }
+
+                //this is a defensive tile
+                if (endTile.tileType == eTileType.PLACABLEDEFENSE)
+                {
+                    //defensive buff
+                    endTile.unit.armour = endTile.unit.baseArmour + 1;
+                }
+                else
+                {
+                    //remove the defensive buff
+                    endTile.unit.armour = endTile.unit.baseArmour;
+                }
+
+                
             }
         }
 
-        unit.hasAttacked = true;
-        unit.movementPoints = 0;
+        AnimatorStateInfo info = unit.ArtLink.GetCurrentAnimatorStateInfo(0);
 
-        if (unit.ArtLink != null)
+        //check that the attack animation has ended
+        if (info.normalizedTime >= 1.0f)
         {
-            unit.ArtLink.SetBool("ActionsAvailable", false);
+            //reset the direction override
+            unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+            successCallback();
         }
-
-        if (endTile.unit != null)
-        {
-            //this is a healing tile
-            if (endTile.IsHealing(false, unit))
-            {
-                endTile.unit.Heal(GameManagment.stats.tileHealthGained);
-            }
-
-            //this is a defensive tile
-            if (endTile.tileType == eTileType.PLACABLEDEFENSE)
-            {
-                //defensive buff
-                endTile.unit.armour = endTile.unit.baseArmour + 1;
-            }
-            else
-            {
-                //remove the defensive buff
-                endTile.unit.armour = endTile.unit.baseArmour;
-            }
-        }
-
-        successCallback();
     }
 }

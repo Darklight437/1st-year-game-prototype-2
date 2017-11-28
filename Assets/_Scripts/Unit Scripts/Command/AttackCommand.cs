@@ -18,6 +18,9 @@ public class AttackCommand : UnitCommand
     //reference to the map
     public Map map = null;
 
+    //flag indicating that the effect has been applied
+    private bool applied = false;
+
     /*
     * AttackCommand()
     * 
@@ -33,6 +36,10 @@ public class AttackCommand : UnitCommand
     {
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
+
+        //face the target and get the target to face it
+        unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
+        et.unit.GetComponentInChildren<FaceMovement>().directionOverride = (st.pos - et.pos).normalized;
 
         // Attacking the enemy unit Anim
         if (unit.ArtLink != null)
@@ -72,21 +79,38 @@ public class AttackCommand : UnitCommand
             return;
         }
 
-        Unit defendingUnit = endTile.unit;
+        //check that the effects of the attack havent been applied yet
+        if (!applied)
+        {
+            Unit defendingUnit = endTile.unit;
 
-        //if the defending unit exists
-        if (defendingUnit != null)
+            //if the defending unit exists
+            if (defendingUnit != null)
+            {
+                unit.Attack(defendingUnit);
+                applied = true;
+            }
+            else
+            {
+                failedCallback();
+                return;
+            }
+            if (unit.ArtLink != null)
+            {
+                unit.ArtLink.SetBool("ActionsAvailable", false);
+            }
+        }
+
+        AnimatorStateInfo info = unit.ArtLink.GetCurrentAnimatorStateInfo(0);
+
+        //check that the attack animation has ended
+        if (info.normalizedTime >= 1.0f)
         {
-            unit.Attack(defendingUnit);
+            //reset the direction overrides
+            unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+            endTile.unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+
             successCallback();
-        }
-        else
-        {
-            failedCallback();
-        }
-        if (unit.ArtLink != null)
-        {
-            unit.ArtLink.SetBool("ActionsAvailable", false);
         }
     }
 }

@@ -86,7 +86,6 @@ public class GameManagment : MonoBehaviour
     //is the tile safe to move to
     private bool m_isSafeMove;
 
-
     public int minShrinkArea;
     public int shrinkAmount;
 

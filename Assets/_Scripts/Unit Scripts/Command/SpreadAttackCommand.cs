@@ -16,6 +16,9 @@ public class SpreadAttackCommand : UnitCommand
     public float attackTimer = 0.0f;
     public float attackRadius = 0.0f;
 
+    private float totalTimer = 0.0f;
+    private bool applied = false;
+
     //reference to the map
     public Map map = null;
 
@@ -32,6 +35,9 @@ public class SpreadAttackCommand : UnitCommand
     */
     public SpreadAttackCommand(Unit u, VoidFunc scb, VoidFunc fcb, Tiles st, Tiles et) : base(u, scb, fcb, st, et)
     {
+        //face the target
+        unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
+
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
 
@@ -74,46 +80,59 @@ public class SpreadAttackCommand : UnitCommand
             return;
         }
 
-        int maxDistance = Mathf.CeilToInt(attackRadius);
-
-        //get the surrounding tiles, not considering obstacles
-        List<Tiles> area = GetArea.GetAreaOfAttack(endTile, maxDistance, map);
-        
-        //get the size of the area tiles list
-        int areaSize = area.Count;
-
-        //iterate through all of the tiles in the area, applying damage to all
-        for (int i = 0; i < areaSize; i++)
+        //only apply the direction once
+        if (!applied)
         {
-            Unit defendingUnit = area[i].unit;
+            int maxDistance = Mathf.CeilToInt(attackRadius);
 
-            //if the defending unit exists and isn't a friendly unit
-            if (defendingUnit != null && defendingUnit.playerID != unit.playerID)
+            //get the surrounding tiles, not considering obstacles
+            List<Tiles> area = GetArea.GetAreaOfAttack(endTile, maxDistance, map);
+
+            //get the size of the area tiles list
+            int areaSize = area.Count;
+
+            //iterate through all of the tiles in the area, applying damage to all
+            for (int i = 0; i < areaSize; i++)
             {
-                //relative vector from the start to the end
-                Vector3 relative = area[i].pos - endTile.pos;
+                Unit defendingUnit = area[i].unit;
 
-                //manhattan distance
-                int manhattDistance = (int)(relative.x + relative.z);
+                //if the defending unit exists and isn't a friendly unit
+                if (defendingUnit != null && defendingUnit.playerID != unit.playerID)
+                {
+                    //relative vector from the start to the end
+                    Vector3 relative = area[i].pos - endTile.pos;
 
-                float ratio = 1 - ((float)(manhattDistance)  / (float)maxDistance);
+                    //manhattan distance
+                    int manhattDistance = (int)(relative.x + relative.z);
 
-                unit.Attack(defendingUnit, ratio);
+                    float ratio = 1 - ((float)(manhattDistance) / (float)maxDistance);
+
+                    unit.Attack(defendingUnit, ratio);
+
+                }
 
             }
-            
+            if (unit.ArtLink != null)
+            {
+                unit.ArtLink.SetBool("ActionsAvailable", false);
+            }
+
+            //reset the explosion
+            ParticleLibrary.explosionSystem.transform.position = endTile.transform.position;
+            ParticleLibrary.explosionSystem.time = 0.0f;
+            ParticleLibrary.explosionSystem.Play();
+
+            applied = true;
         }
-        if (unit.ArtLink != null)
+
+        AnimatorStateInfo info = unit.ArtLink.GetCurrentAnimatorStateInfo(0);
+
+        //check that the attack animation has ended
+        if (info.normalizedTime >= 1.0f)
         {
-            unit.ArtLink.SetBool("ActionsAvailable", false);
+            //reset the direction override
+            unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+            successCallback();
         }
-
-        //reset the explosion
-        ParticleLibrary.explosionSystem.transform.position = endTile.transform.position;
-        ParticleLibrary.explosionSystem.time = 0.0f;
-        ParticleLibrary.explosionSystem.Play();
-
-
-        successCallback();
     }
 }
