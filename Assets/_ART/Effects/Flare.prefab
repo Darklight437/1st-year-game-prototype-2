@@ -140,9 +140,9 @@ Animation:
   m_GameObject: {fileID: 1669287034111490}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: b453156c6cb3d9c4a91997681c0979b3, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
-  - {fileID: 7400000, guid: b453156c6cb3d9c4a91997681c0979b3, type: 2}
+  - {fileID: 0}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -217,7 +217,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -707220549
+  randomSeed: -555799513
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3473,7 +3473,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1205704729
+  randomSeed: -182898569
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6736,7 +6736,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: f01d2b008a971b843b1910d600576cb7, type: 2}
+  - {fileID: 2100000, guid: 3a95d793a35dfc1469446b46be0f16d5, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

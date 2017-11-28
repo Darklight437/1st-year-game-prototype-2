@@ -806,7 +806,15 @@ public class GameManagment : MonoBehaviour
         //gather and show all attackabe tiles
         if (selectedUnit != null && selectedUnit.hasAttacked == false && selectedUnit != null)
         {
-            List<Tiles> holder2 = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+            List<Tiles> holder2 = new List<Tiles>();
+            if (selectedUnit is Ranger || selectedUnit is Medic)
+            {
+                holder2 = GetArea.GetAreaOfAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+            }
+            else
+            {
+                holder2 = GetArea.GetAreaOfMeleeAttack(map.GetTileAtPos(selectedUnit.transform.position), selectedUnit.attackRange, map);
+            }
 
             bool isRanger = selectedUnit is Ranger;
 
