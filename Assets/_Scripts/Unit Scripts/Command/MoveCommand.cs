@@ -147,11 +147,6 @@ public class MoveCommand : UnitCommand
                 //this is a trap tile, it could kill the unit
                 if (nextTile.tileType == eTileType.PLACABLETRAP || nextTile.tileType == eTileType.DAMAGE)
                 {
-                    if (unit.ArtLink != null)
-                    {
-                        unit.ArtLink.SetTrigger("TakeDamage");
-                    }
-
                     unit.Defend(GameManagment.stats.trapTileDamage);
 
                     //explosion is required

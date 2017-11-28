@@ -46,12 +46,6 @@ public class SpreadAttackCommand : UnitCommand
         {
             unit.ArtLink.SetTrigger("Attack");
         }
-        //Enemy Unit taking damage Anim
-        if (et.unit != null && et.unit.ArtLink != null)
-        {
-            et.unit.ArtLink.SetTrigger("TakeDamage");
-        }
-
     }
 
 

@@ -240,6 +240,11 @@ public class Unit : MonoBehaviour
         //calculate the damage reduction
         float armourScalar = 1 - GameManagment.stats.armourCurve.Evaluate(armour) * 0.01f;
 
+        if (ArtLink != null)
+        {
+            ArtLink.SetTrigger("TakeDamage");
+        }
+
         //the armour scalar affects the damage output
         health -= damage * armourScalar;
 

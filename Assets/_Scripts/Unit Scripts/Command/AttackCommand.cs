@@ -46,11 +46,6 @@ public class AttackCommand : UnitCommand
         {
             unit.ArtLink.SetTrigger("Attack");
         }
-        //Enemy Unit taking damage Anim
-        if (unit.ArtLink != null)
-        {
-            et.unit.ArtLink.SetTrigger("TakeDamage");
-        }
     }
 
 
