@@ -13,6 +13,7 @@ public class SoundSystem : MonoBehaviour {
     public AudioSource TilePlace;
     public AudioSource TileAction;
 
+    [HideInInspector]
     public Animator Animator;
     
     
@@ -83,19 +84,27 @@ public class SoundSystem : MonoBehaviour {
     {
         idleAwake.loop = false;
         idleAwake.Stop();
-        //idleAsleep.Stop();
+        
     }
        
     public void Attack()
     {
+        if (attack)
+        {
+            attack.Play();
+        }
         attack.Play();
     }
 
     public void Walk()
     {
-        idleAwake.Play();
-        walk.Play();
-        IsWalking = true;
+        if (walk)
+        {
+            idleAwake.Play();
+            walk.Play();
+            IsWalking = true;
+        }
+        
 
     }
 
@@ -103,10 +112,12 @@ public class SoundSystem : MonoBehaviour {
     {
         TilePlace.Play();
     }
-
-    public void walkEnd()
+    
+    public void tileExtra()
     {
-
-        //IsWalking = true;
+        TileAction.Play();
     }
+
+        
+   
 }

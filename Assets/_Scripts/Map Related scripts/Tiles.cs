@@ -49,6 +49,7 @@ public class Tiles : MonoBehaviour
     public PlacableDefenceTile placableDefenceTile;
     public PlacableTrapTile placableTrapTile;
 
+    
     //these tile set is used for debbuging purposes
     public DebuggingTile debuggingTile;
 
@@ -281,6 +282,8 @@ public class Tiles : MonoBehaviour
                                     tileMediPack.destroyedParticals.transform.rotation),
                                     5);
 
+                tileMediPack.destroySound.Play();
+
                 return false;
             }
 
@@ -290,6 +293,8 @@ public class Tiles : MonoBehaviour
                                 transform.position.z),
                                 tileMediPack.destroyedParticals.transform.rotation),
                                 5);
+
+            tileMediPack.usedSound.Play();
 
             return true;
         }
@@ -601,6 +606,9 @@ public class MediPack
 
     public GameObject usedParticals;
     public GameObject destroyedParticals;
+
+    public AudioSource destroySound;
+    public AudioSource usedSound;
 }
 
 /*
