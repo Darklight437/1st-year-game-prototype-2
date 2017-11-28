@@ -106,6 +106,7 @@ public class Tiles : MonoBehaviour
     //effects for placing down new tiles or health pack placemeant
     public GameObject sandExplosion;
     public GameObject tileDrop;
+    public GameObject flarePrefab;
 
     //this shows the maps shrink zones
     public GameObject shrinkZoneAreaPrefab;
@@ -335,7 +336,7 @@ public class Tiles : MonoBehaviour
 
     public void Flare()
     {
-        Destroy(Instantiate(tileMediPack.redTeamHealthMist, new Vector3(transform.position.x, 0.5f, transform.position.z), tileMediPack.redTeamHealthMist.transform.rotation), 1.5f);
+        Destroy(Instantiate(flarePrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), flarePrefab.transform.rotation), 1.5f);
     }
 
     //this is the tiles parent for pathfinding purposes
