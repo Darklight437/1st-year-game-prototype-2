@@ -115,6 +115,8 @@ public class GameManagment : MonoBehaviour
 
     void Awake()
     {
+        //FindObjectOfType<MapEditorScript>().UpdateTilePrefabs();
+
         //set the reference
         GameManagment.stats = statsReference;
         
@@ -492,11 +494,11 @@ public class GameManagment : MonoBehaviour
             turn = 0;
             turnsPast++;
 
-            if (turnsPast >= turnToStartShrink)
+            if (minShrinkArea != 0 && turnToStartShrink != 0 && turnsPast >= turnToStartShrink)
             {
                 ShrinkArea();
             }
-            else if (turnsPast == (turnToStartShrink - 1))
+            else if (turnsPast == (turnToStartShrink - 1) && minShrinkArea != 0 && turnToStartShrink != 0)
             {
                 GetShrinkAreaTiles();
             }
