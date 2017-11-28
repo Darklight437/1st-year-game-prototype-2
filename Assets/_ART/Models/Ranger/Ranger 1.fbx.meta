@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 11937240ffe511d48b3235f2754a329b
-timeCreated: 1511222372
+guid: 75d5e0cb88f811043b2bc9be1f1f9d56
+timeCreated: 1511821870
 licenseType: Pro
 ModelImporter:
   serializedVersion: 21
@@ -52,12 +52,12 @@ ModelImporter:
     400042: RTip 1
     400044: RWrist
     4300000: pCube65
-    7400000: Walk Animation
-    7400002: Idle Animation
-    7400004: Used Idle
-    7400006: Attack Animation
-    7400008: Death Animation
-    7400010: Take Damage Animation
+    7400000: Walk
+    7400002: Idle
+    7400004: UsedIdle
+    7400006: Attack
+    7400008: Death
+    7400010: Damage
     9500000: //RootNode
     13700000: pCube65
   materials:
@@ -85,9 +85,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Walk Animation
+      name: Walk
       takeName: Take 001
-      firstFrame: 2
+      firstFrame: 1
       lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
@@ -113,7 +113,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle Animation
+      name: Idle
       takeName: Take 001
       firstFrame: 30
       lastFrame: 200
@@ -141,7 +141,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Used Idle
+      name: UsedIdle
       takeName: Take 001
       firstFrame: 220
       lastFrame: 260
@@ -169,7 +169,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack Animation
+      name: Attack
       takeName: Take 001
       firstFrame: 270
       lastFrame: 400
@@ -197,7 +197,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Death Animation
+      name: Death
       takeName: Take 001
       firstFrame: 410
       lastFrame: 550
@@ -225,9 +225,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Take Damage Animation
+      name: Damage
       takeName: Take 001
-      firstFrame: 550
+      firstFrame: 560
       lastFrame: 750
       wrapMode: 0
       orientationOffsetY: 0
@@ -272,7 +272,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
