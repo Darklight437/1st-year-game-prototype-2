@@ -698,6 +698,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1893417350488578
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4576456843553400}
+  - component: {fileID: 212080788317663288}
+  m_Layer: 0
+  m_Name: PowerUp_Fist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1931147431703768
 GameObject:
   m_ObjectHideFlags: 1
@@ -940,7 +956,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991271546020698}
   m_LocalRotation: {x: -0, y: -0.9395519, z: -0, w: -0.3424067}
-  m_LocalPosition: {x: -1.5483578, y: -4.6484798e-17, z: 4.9406343}
+  m_LocalPosition: {x: -45.640583, y: -3.2487965, z: 5.36158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224732992298741538}
@@ -1244,6 +1260,19 @@ Transform:
   - {fileID: 4822523673182014}
   m_Father: {fileID: 4073386606429666}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4576456843553400
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893417350488578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224732992298741538}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4581893965625068
 Transform:
@@ -2021,6 +2050,7 @@ MonoBehaviour:
   HpTransform: {fileID: 224732992298741538}
   hpBar: {fileID: 114395128567018594}
   hpNum: {fileID: 114562716748141024}
+  kingBuff: {fileID: 212080788317663288}
   armourBar: {fileID: 212630981226311762}
   ArtLink: {fileID: 95401932560934636}
   inSight: 0
@@ -12139,6 +12169,48 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!212 &212080788317663288
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893417350488578}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 33cc664b33e45ac4db126b52ce17fc72, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!212 &212630981226311762
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -12318,6 +12390,7 @@ RectTransform:
   - {fileID: 224962149369285660}
   - {fileID: 224564998554578284}
   - {fileID: 224428019112331736}
+  - {fileID: 4576456843553400}
   m_Father: {fileID: 4073386606429666}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 15.000001, y: -179.99501, z: 0}
