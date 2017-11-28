@@ -65,7 +65,11 @@ public class SoundSystem : MonoBehaviour {
         idleAwake.Stop();
         walk.Stop();
         attack.Stop();
-        TilePlace.Stop();
+        if (TilePlace)
+        {
+            TilePlace.Stop();
+        }
+        
         
         
     }
