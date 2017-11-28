@@ -58,6 +58,9 @@ public class Unit : MonoBehaviour
     //the health bar number reference
     public Text hpNum = null;
 
+    //image of the king buff
+    public SpriteRenderer kingBuff = null;
+
     //reference to the UI armour bar
     public SpriteRenderer armourBar = null;
     
@@ -140,6 +143,7 @@ public class Unit : MonoBehaviour
             Debug.Log("Reloaded Sight");
             sightHolder.SetActive(holder);
         }
+
     }
 
     //called when the gameobject it is attached to is destroyed
@@ -412,7 +416,15 @@ public class Unit : MonoBehaviour
         }
 
         float hpPercent = 0;
-       
+        
+        if (attackMultiplier > 1.0f)
+        {
+            kingBuff.gameObject.SetActive(true);
+        }
+        else
+        {
+            kingBuff.gameObject.SetActive(false);
+        }
 
         hpPercent = health / maxHealth;
 
