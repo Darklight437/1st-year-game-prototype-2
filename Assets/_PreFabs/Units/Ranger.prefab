@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 4217730006409030}
   - component: {fileID: 95745179868095956}
   - component: {fileID: 114048178493999408}
+  - component: {fileID: 114160007571978222}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -1258,6 +1259,18 @@ MonoBehaviour:
   TilePlace: {fileID: 0}
   TileAction: {fileID: 0}
   Animator: {fileID: 0}
+--- !u!114 &114160007571978222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114974392946422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca19942615b99394f81f999e7e36d051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionOverride: {x: 0, y: 0, z: 0}
 --- !u!114 &114200691543766706
 MonoBehaviour:
   m_ObjectHideFlags: 1
