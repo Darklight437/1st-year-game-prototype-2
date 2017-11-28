@@ -268,7 +268,7 @@ public class Tiles : MonoBehaviour
         if (isHealing && value != true)
         {
             isHealing = false;
-
+            
             Destroy(tileMediPack.currMedPack);
             Destroy(tileMediPack.usedHealthMist);
             Destroy(tileMediPack.usedTeamParticals);
@@ -282,7 +282,14 @@ public class Tiles : MonoBehaviour
                                     tileMediPack.destroyedParticals.transform.rotation),
                                     5);
 
-                tileMediPack.destroySound.Play();
+                Destroy(Instantiate(tileMediPack.destroySound,
+                                    new Vector3(transform.position.x,
+                                    0.3f,
+                                    transform.position.z),
+                                    tileMediPack.destroySound.transform.rotation),
+                                    5);
+
+                //tileMediPack.destroySound.Play();
 
                 return false;
             }
@@ -294,7 +301,14 @@ public class Tiles : MonoBehaviour
                                 tileMediPack.destroyedParticals.transform.rotation),
                                 5);
 
-            tileMediPack.usedSound.Play();
+            Destroy(Instantiate(tileMediPack.usedSound,
+                                new Vector3(transform.position.x,
+                                0.3f,
+                                transform.position.z),
+                                tileMediPack.usedSound.transform.rotation),
+                                5);
+
+
 
             return true;
         }
@@ -607,8 +621,8 @@ public class MediPack
     public GameObject usedParticals;
     public GameObject destroyedParticals;
 
-    public AudioSource destroySound;
-    public AudioSource usedSound;
+    public GameObject destroySound;
+    public GameObject usedSound;
 }
 
 /*
