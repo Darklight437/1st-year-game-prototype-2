@@ -451,7 +451,6 @@ GameObject:
   - component: {fileID: 114804024196472544}
   - component: {fileID: 114819524562470306}
   - component: {fileID: 114685205004204818}
-  - component: {fileID: 114550763460483202}
   m_Layer: 0
   m_Name: King
   m_TagString: Untagged
@@ -2281,18 +2280,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114550763460483202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1475866609087050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce013603eedf21439a7672914d7c16b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Smoke: {fileID: 198037361003208626}
 --- !u!114 &114685205004204818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2305,6 +2292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Smoke: {fileID: 198928309010228022}
+  Smoke2: {fileID: 198037361003208626}
 --- !u!114 &114717987832272644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2618,7 +2606,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 740226315
+  randomSeed: -1808136154
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5862,7 +5850,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1791743920
+  randomSeed: 276621973
   InitialModule:
     serializedVersion: 3
     enabled: 1

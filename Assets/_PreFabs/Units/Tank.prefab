@@ -214,7 +214,6 @@ GameObject:
   - component: {fileID: 4937871114864298}
   - component: {fileID: 95612247974449468}
   - component: {fileID: 114267790597467816}
-  - component: {fileID: 114031421065467820}
   - component: {fileID: 114572139376416130}
   - component: {fileID: 114342997827647496}
   m_Layer: 0
@@ -1522,18 +1521,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114031421065467820
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1246747482781500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce013603eedf21439a7672914d7c16b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Smoke: {fileID: 198092884526608662}
 --- !u!114 &114078513373952690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1675,6 +1662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Smoke: {fileID: 198931909857021566}
+  Smoke2: {fileID: 198092884526608662}
 --- !u!114 &114606447162806512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,7 +1894,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1200618424
+  randomSeed: -1979407842
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5150,7 +5138,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1429535578
+  randomSeed: 339294732
   InitialModule:
     serializedVersion: 3
     enabled: 1
