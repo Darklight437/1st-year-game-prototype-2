@@ -1491,10 +1491,36 @@ public class GameManagment : MonoBehaviour
             }
         }
 
-        //there is no king because they have been killed
-        if (king == null)
+        //check if any king has died
+        for (int i = 0; i < players.Count; i++)
         {
-            OnKingKilled(turn);
+
+            //store in a temp value
+            BasePlayer bp = players[i];
+
+            //search for the king
+            King kingRef = null;
+
+            for (int j = 0; j < bp.units.Count; j++)
+            {
+                //store in temp variable
+                Unit unit = bp.units[j];
+
+                //if the unit is a king and hasn't already been removed
+                if (unit != null && unit is King)
+                {
+                    kingRef = unit as King;
+                    break;
+                }
+            }
+
+            //there is no king because they have been killed
+            if (kingRef == null)
+            {
+                OnKingKilled(i);
+                return;
+            }
+
         }
 
         int unitsAdjacentToKing = 0;

@@ -103,7 +103,12 @@ public class AttackCommand : UnitCommand
         {
             //reset the direction overrides
             unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
-            endTile.unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+
+            //check that the target unit wasn't killed
+            if (endTile.unit != null)
+            {
+                endTile.unit.GetComponentInChildren<FaceMovement>().directionOverride = Vector3.zero;
+            }
 
             successCallback();
         }
