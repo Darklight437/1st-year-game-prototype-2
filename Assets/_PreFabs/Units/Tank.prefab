@@ -661,8 +661,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1096176911614446}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.813343, y: -3.2487965, z: 8.034073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.991292, y: 0.5, z: 3.9846802}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224870882788027196}
@@ -1744,7 +1744,7 @@ MonoBehaviour:
   hasAttacked: 0
   movementSpeed: 3
   attackMultiplier: 1
-  attackTime: 1
+  attackTime: 3
   deathTime: 1
   aovOBJ: []
   sightPrefab: {fileID: 1915189985047014, guid: e9d606d4ec06a2d49a22931b679b76cc,
@@ -1925,7 +1925,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 829540837
+  randomSeed: 380656271
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5169,7 +5169,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -145098696
+  randomSeed: -359241665
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8368,8 +8368,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3a95d793a35dfc1469446b46be0f16d5, type: 2}
+  - {fileID: 2100000, guid: 3a95d793a35dfc1469446b46be0f16d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
