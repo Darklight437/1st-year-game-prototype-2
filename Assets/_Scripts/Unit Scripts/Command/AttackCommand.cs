@@ -38,8 +38,8 @@ public class AttackCommand : UnitCommand
         map = GameObject.FindObjectOfType<Map>();
 
         //face the target and get the target to face it
-        unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
-        et.unit.GetComponentInChildren<FaceMovement>().directionOverride = (st.pos - et.pos).normalized;
+        //unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
+        //et.unit.GetComponentInChildren<FaceMovement>().directionOverride = (st.pos - et.pos).normalized;
 
         // Attacking the enemy unit Anim
         if (unit.ArtLink != null)

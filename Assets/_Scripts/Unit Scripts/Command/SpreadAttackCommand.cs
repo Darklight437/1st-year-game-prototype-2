@@ -36,7 +36,7 @@ public class SpreadAttackCommand : UnitCommand
     public SpreadAttackCommand(Unit u, VoidFunc scb, VoidFunc fcb, Tiles st, Tiles et) : base(u, scb, fcb, st, et)
     {
         //face the target
-        unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
+        //unit.GetComponentInChildren<FaceMovement>().directionOverride = (et.pos - st.pos).normalized;
 
         //find the map component
         map = GameObject.FindObjectOfType<Map>();
