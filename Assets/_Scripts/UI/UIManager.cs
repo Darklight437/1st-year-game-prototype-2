@@ -15,10 +15,9 @@ public class UIManager : MonoBehaviour
 
     //all the UI elements in a play scene
     public GameObject PauseM = null;
-    public GameObject EndM = null;
     public GameObject TurnScr = null;
     
-
+    
     //the spare rectTransforms that the buttons will sit at
     private Vector3[] ActivePos = new Vector3[5];
     private Vector3 InactivePos;
@@ -29,6 +28,20 @@ public class UIManager : MonoBehaviour
     public GameObject[] Buttons = new GameObject[4];
     private bool[] ButtonsStates = new bool[4];
     public Text DamageText = null;
+    //should only be changed on & off at endgame
+    public GameObject TurnButton = null;
+
+    //the buttons on the winscreen
+    public GameObject[] EndButtons = new GameObject[3];
+
+    //Win screen for blue
+    public GameObject BlueWin;
+    //win screen for red
+    public GameObject RedWin;
+    //int of the winning player 0 blue, 1 red
+    private int WinningPlayer = 2;
+    //timer for Win screen buttons
+    float timer = 0;
 
     // Use this for initialization
     void Start()
@@ -80,11 +93,23 @@ public class UIManager : MonoBehaviour
         }
        else if (currUIState == eUIState.ENDGAME)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            //turn on the buttons after the animation is finished
+            if (timer == 0)
             {
-                currUIState = eUIState.BASE;
-                stateSwitch();
+                timer = 6;
             }
+            if (timer != 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            if (timer < 0)
+            {
+                foreach (GameObject Button in EndButtons)
+                {
+                    Button.SetActive(true);
+                }
+            }
+
         }
     }
 
@@ -105,7 +130,20 @@ public class UIManager : MonoBehaviour
 
             case eUIState.ENDGAME:
                 resetUI();
-                EndM.SetActive(true);
+
+
+
+                if (WinningPlayer == 0)
+                {
+                    Instantiate(BlueWin);
+                }
+                else if (WinningPlayer == 1)
+                {
+                    Instantiate(RedWin);
+                }
+                TurnButton.SetActive(false);
+                
+
                 break;
 
             case eUIState.TURNCHANGE:
@@ -116,6 +154,11 @@ public class UIManager : MonoBehaviour
 
         }
     }
+    [HideInInspector]
+    public void GetWinningPlayer(int playerID)
+    {
+        WinningPlayer = playerID;
+    }
     //turns off all of the ui elements currently active
     public void resetUI()
     {
@@ -123,10 +166,7 @@ public class UIManager : MonoBehaviour
         {
             PauseM.SetActive(false);
         }
-        if (EndM)
-        {
-            EndM.SetActive(false);
-        }
+       
         if (TurnScr)
         {
             TurnScr.SetActive(false);
@@ -139,6 +179,8 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+
     //interprets an enum to set each UI state for right click buttons
     public void ButtonState(eCommandState inComingCommand)
     {

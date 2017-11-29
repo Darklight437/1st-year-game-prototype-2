@@ -1611,6 +1611,7 @@ public class GameManagment : MonoBehaviour
     {
         Debug.Log(playerID.ToString() + "'s King has been slain!");
         //sets the UI to display the victory splashscreen
+        UIManager.GetWinningPlayer(playerID);
         UIManager.currUIState = UIManager.eUIState.ENDGAME;
     }
 
