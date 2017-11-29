@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
 * class King
@@ -17,6 +18,9 @@ public class King : Unit
 
     //the amount of damage boosted when close enough to the king
     public float flatDamageRatio = 0.1f;
+
+    //the UI that shows amount of units around the king
+    public Text buffAmount;
 
     //percentages of king damage addition givenn
     public float[] kingDamageRatios = new float[3] { 0.05f, 0.1f, 0.15f };

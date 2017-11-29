@@ -57,7 +57,7 @@ public class Unit : MonoBehaviour
 
     //the health bar number reference
     public Text hpNum = null;
-
+    
     //image of the king buff
     public SpriteRenderer kingBuff = null;
 
@@ -429,6 +429,11 @@ public class Unit : MonoBehaviour
         else
         {
             kingBuff.gameObject.SetActive(false);
+        }
+
+        if (this is King)
+        {
+            kingBuff.gameObject.SetActive(true);
         }
 
         hpPercent = health / maxHealth;

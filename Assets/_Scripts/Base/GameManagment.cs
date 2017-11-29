@@ -1532,7 +1532,7 @@ public class GameManagment : MonoBehaviour
             Unit unit = activePlayer.units[i];
 
             //if the unit hasn't already been removed
-            if (unit != null)
+            if (unit != null && (unit is King) == false)
             {
                 //reset the multiplier
                 unit.attackMultiplier = 1.0f;
@@ -1565,6 +1565,8 @@ public class GameManagment : MonoBehaviour
         {
             king.attackMultiplier = 1.0f + king.kingDamageRatios[unitsAdjacentToKing - 1];
         }
+
+        king.buffAmount.text = unitsAdjacentToKing.ToString();
     }
 
 
