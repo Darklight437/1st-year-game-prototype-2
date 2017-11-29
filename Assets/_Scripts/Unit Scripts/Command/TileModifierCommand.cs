@@ -88,6 +88,7 @@ public class TileModifierCommand : UnitCommand
                 (endTile.isHealing == false))
             {
                 endTile.IsHealing(true, unit);
+                applied = true;
             }
             else if (modifyType == eModifyType.HEALING)
             {

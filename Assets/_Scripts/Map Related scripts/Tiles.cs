@@ -268,6 +268,8 @@ public class Tiles : MonoBehaviour
         if (isHealing && value != true)
         {
             isHealing = false;
+
+            Debug.Log("CONSUMED");
             
             Destroy(tileMediPack.currMedPack);
             Destroy(tileMediPack.usedHealthMist);
@@ -316,6 +318,7 @@ public class Tiles : MonoBehaviour
         if (value && isHealing != true)
         {
             isHealing = value;
+            Debug.Log("PLACED");
 
             if (isHealing)
             {
@@ -542,7 +545,6 @@ public class Tiles : MonoBehaviour
                 if (trans.tag == "Renderer Que")
                 {
                     trans.GetComponent<Renderer>().material.renderQueue = renderQueTile;
-                    Debug.Log(trans.GetComponent<Renderer>().material.renderQueue);
                 }
             }
         }
@@ -558,7 +560,6 @@ public class Tiles : MonoBehaviour
                 if (trans.tag == "Renderer Que")
                 {
                     trans.GetComponent<Renderer>().material.renderQueue = renderQueTile;
-                    Debug.Log(trans.GetComponent<Renderer>().material.renderQueue);
                 }
             }
         }

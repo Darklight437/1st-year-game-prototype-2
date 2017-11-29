@@ -147,6 +147,14 @@ public class MoveCommand : UnitCommand
                 //this is a trap tile, it could kill the unit
                 if (nextTile.tileType == eTileType.PLACABLETRAP || nextTile.tileType == eTileType.DAMAGE)
                 {
+                    m_timer = 0;
+                    m_finishedWaiting = false;
+
+                    if (unit.ArtLink != null)
+                    {
+                        unit.ArtLink.SetTrigger("TakeDamage");
+                    }
+
                     unit.Defend(GameManagment.stats.trapTileDamage);
 
                     //explosion is required
@@ -157,9 +165,6 @@ public class MoveCommand : UnitCommand
                         ParticleLibrary.explosionSystem.time = 0.0f;
                         ParticleLibrary.explosionSystem.Play();
                     }
-
-                    m_timer = 0;
-                    m_finishedWaiting = false;
 
                     //Stop walking Anim
                     if (unit.ArtLink != null)
