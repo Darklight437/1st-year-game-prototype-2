@@ -49,7 +49,7 @@ public class Tiles : MonoBehaviour
     public PlacableDefenceTile placableDefenceTile;
     public PlacableTrapTile placableTrapTile;
 
-    
+
     //these tile set is used for debbuging purposes
     public DebuggingTile debuggingTile;
 
@@ -92,8 +92,16 @@ public class Tiles : MonoBehaviour
 
     private float elevatedHeight = 0.33f;
 
+    public int index;
+
     //this is the position in the list on the map script where this tile is
-    public int indexPos;
+    public int indexPos
+    {
+        get
+        {
+            return index;
+        }
+    }
 
     //refrence to the map the tile is parented to
     private Map m_myMap;

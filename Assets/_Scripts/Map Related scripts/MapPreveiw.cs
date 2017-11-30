@@ -147,13 +147,13 @@ public class MapPreveiw : MonoBehaviour
         switch (type)
         {
             case eTileType.NORMAL:
-                return new Color(0.75f, 0.6f, 0.5f);
+                return new Color(0.75f, 0.6f, 0.45f);
 
             case eTileType.DAMAGE:
                 return new Color(0, 1, 0);
 
             case eTileType.DEFENSE:
-                return new Color(0.65f, 0.16f, 0.16f);
+                return new Color(0.53f, 0.36f, 0.12f);
 
             case eTileType.IMPASSABLE:
                 return new Color(0.25f, 0.25f, 0.25f);
@@ -165,11 +165,10 @@ public class MapPreveiw : MonoBehaviour
                 return new Color(0, 0, 0);
 
             case eTileType.PLACABLEDEFENSE:
-                return new Color(0.65f, 0.16f, 0.16f);
+                return new Color(0.53f, 0.36f, 0.12f);
 
             case eTileType.PLACABLETRAP:
                 return new Color(0, 1, 0);
-                
         }
 
         Debug.LogError("NOT VALID TYPE PASSED");

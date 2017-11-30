@@ -30,7 +30,7 @@ public class Map : MonoBehaviour
 
         for (int i = 0; i < mapTiles.Count; i++)
         {
-            mapTiles[i].indexPos = i;
+            mapTiles[i].index = i;
         }
 
     }
