@@ -25,7 +25,8 @@ public class MapPreveiw : MonoBehaviour
 
         if (map == null)
         {
-
+            filePath = Application.dataPath + "/StreamingAssets/";
+            maps = Directory.GetFiles(filePath, "*.png");
         }
 
         texture = new Texture2D(0, 0);
