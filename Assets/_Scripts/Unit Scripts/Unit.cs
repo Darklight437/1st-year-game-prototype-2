@@ -107,10 +107,10 @@ public class Unit : MonoBehaviour
         hpBar.transform.parent.gameObject.SetActive(true);
     }
 
-    public void UnitInit()
+    public void UnitInit(Map map)
 	{
 		//get the tile that the unit is standing on
-		Tiles currentTile = GameObject.FindObjectOfType<Map>().GetTileAtPos(transform.position);
+		Tiles currentTile = map.GetTileAtPos(transform.position);
 
 		//set the unit space to this
 		currentTile.unit = this;

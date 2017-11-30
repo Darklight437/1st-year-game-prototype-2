@@ -112,17 +112,38 @@ public class MiniMap : MonoBehaviour
                 {
                     if (gameManagment.players[i].units[u].inSight)
                     {
-                        if (gameManagment.players[i].playerID == 0)
+                        if (m_activeplayer.playerID == 0)
                         {
-                            m_texture.SetPixel((int)(map.width - ((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY)),
-                                                (int)(map.height - ((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX)),
-                                                new Color(0, 0, 1));
+                            if (gameManagment.players[i].playerID == 1)
+                            {
+                                m_texture.SetPixel((int)((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY),
+                                                    (int)((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX),
+                                                    new Color(1, 0, 0));
+                            }
                         }
-                        if (gameManagment.players[i].playerID == 1)
+                        else if(m_activeplayer.playerID == 1)
                         {
-                            m_texture.SetPixel((int)((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY),
-                                                (int)((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX),
-                                                new Color(1, 0, 0));
+                            if (gameManagment.players[i].playerID == 0)
+                            {
+                                if (mapOffsetX == mapOffsetY)
+                                {
+                                    m_texture.SetPixel((int)(map.width - ((gameManagment.players[i].units[u].transform.position.x + 0.5f))),
+                                                        (int)(map.height - ((gameManagment.players[i].units[u].transform.position.z + 0.5f))),
+                                                        new Color(0, 0, 1));
+                                }
+                                else if (mapOffsetX < mapOffsetY)
+                                {
+                                    m_texture.SetPixel((int)(map.width - ((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY)),
+                                                        (int)(map.height - ((gameManagment.players[i].units[u].transform.position.z + 0.5f) - (mapOffsetY * 2))),
+                                                        new Color(0, 0, 1));
+                                }
+                                else if (mapOffsetX > mapOffsetY)
+                                {
+                                    m_texture.SetPixel((int)(map.width - ((gameManagment.players[i].units[u].transform.position.x + 0.5f) - (mapOffsetX * 2))),
+                                                        (int)(map.height - ((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX)),
+                                                        new Color(0, 0, 1));
+                                }
+                            }
                         }
                     }
                 }
@@ -187,11 +208,32 @@ public class MiniMap : MonoBehaviour
     {
         if (swap)
         {
-            for (int i = 0; i < player.units.Count; i++)
+            if (mapOffsetX == mapOffsetY)
             {
-                m_texture.SetPixel((int)(map.width - ((player.units[i].transform.position.x + 0.5f) + mapOffsetY)),
-                            (int)(map.height - ((player.units[i].transform.position.z + 0.5f) + mapOffsetX)),
-                            color);
+                for (int i = 0; i < player.units.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((player.units[i].transform.position.x + 0.5f) + mapOffsetY)),
+                                (int)(map.height - ((player.units[i].transform.position.z + 0.5f) + mapOffsetX)),
+                                color);
+                }
+            }
+            else if (mapOffsetX < mapOffsetY)
+            {
+                for (int i = 0; i < player.units.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((player.units[i].transform.position.x + 0.5f) + mapOffsetY)),
+                                (int)(map.height - ((player.units[i].transform.position.z + 0.5f) - (mapOffsetY * 2))),
+                                color);
+                }
+            }
+            else if (mapOffsetX > mapOffsetY)
+            {
+                for (int i = 0; i < player.units.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((player.units[i].transform.position.x + 0.5f) - (mapOffsetX * 2))),
+                                (int)(map.height - ((player.units[i].transform.position.z + 0.5f) + mapOffsetX)),
+                                color);
+                }
             }
         }
         else
@@ -227,18 +269,54 @@ public class MiniMap : MonoBehaviour
 
         if (m_activeplayer.playerID == 1)
         {
-            for (int i = 0; i < m_sightTiles.Count; i++)
+            if (mapOffsetX == mapOffsetY)
             {
-                m_texture.SetPixel((int)(map.width - ((m_sightTiles[i].transform.position.x + 0.5f)+ mapOffsetY)), 
-                           (int)(map.height - ((m_sightTiles[i].transform.position.z + 0.5f) + mapOffsetX)), 
-                            GetColor(m_sightTiles[i].tileType));
-            }
+                for (int i = 0; i < m_sightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_sightTiles[i].transform.position.x + 0.5f))),
+                               (int)(map.height - ((m_sightTiles[i].transform.position.z + 0.5f))),
+                                GetColor(m_sightTiles[i].tileType));
+                }
 
-            for (int i = 0; i < m_notInSightTiles.Count; i++)
+                for (int i = 0; i < m_notInSightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_notInSightTiles[i].transform.position.x + 0.5f))),
+                               (int)(map.height - ((m_notInSightTiles[i].transform.position.z + 0.5f))),
+                                GetColorTint(m_notInSightTiles[i].tileType));
+                }
+
+            }
+            else if (mapOffsetY > mapOffsetX)
             {
-                m_texture.SetPixel((int)(map.width - ((m_notInSightTiles[i].transform.position.x + 0.5f) + mapOffsetY)),
-                           (int)(map.height - ((m_notInSightTiles[i].transform.position.z + 0.5f) + mapOffsetX)),
-                            GetColorTint(m_notInSightTiles[i].tileType));
+                for (int i = 0; i < m_sightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_sightTiles[i].transform.position.x + 0.5f) + mapOffsetY)),
+                               (int)(map.height - ((m_sightTiles[i].transform.position.z + 0.5f) - (mapOffsetY * 2))),
+                                GetColor(m_sightTiles[i].tileType));
+                }
+
+                for (int i = 0; i < m_notInSightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_notInSightTiles[i].transform.position.x + 0.5f) + mapOffsetY)),
+                               (int)(map.height - ((m_notInSightTiles[i].transform.position.z + 0.5f) - (mapOffsetY * 2))),
+                                GetColorTint(m_notInSightTiles[i].tileType));
+                }
+            }
+            else if (mapOffsetX > mapOffsetY)
+            {
+                for (int i = 0; i < m_sightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_sightTiles[i].transform.position.x + 0.5f) - (mapOffsetX * 2))),
+                               (int)(map.height - ((m_sightTiles[i].transform.position.z + 0.5f) + mapOffsetX)),
+                                GetColor(m_sightTiles[i].tileType));
+                }
+
+                for (int i = 0; i < m_notInSightTiles.Count; i++)
+                {
+                    m_texture.SetPixel((int)(map.width - ((m_notInSightTiles[i].transform.position.x + 0.5f) - (mapOffsetX * 2))),
+                               (int)(map.height - ((m_notInSightTiles[i].transform.position.z + 0.5f) + mapOffsetX)),
+                                GetColorTint(m_notInSightTiles[i].tileType));
+                }
             }
         }
         

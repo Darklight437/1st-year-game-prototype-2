@@ -136,7 +136,7 @@ public class GameManagment : MonoBehaviour
 		{
 			for (int u = 0; u < players[i].units.Count; u++) 
 			{
-				players [i].units [u].UnitInit ();	
+				players [i].units [u].UnitInit(map);	
 			}	
 		}
 
