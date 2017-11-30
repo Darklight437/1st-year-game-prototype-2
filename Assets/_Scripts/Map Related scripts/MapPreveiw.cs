@@ -23,6 +23,11 @@ public class MapPreveiw : MonoBehaviour
         mapOffsetX = 0;
         mapOffsetY = 0;
 
+        if (map == null)
+        {
+
+        }
+
         texture = new Texture2D(0, 0);
         
         if (mapWidth > mapHeight)
@@ -130,7 +135,7 @@ public class MapPreveiw : MonoBehaviour
                 return new Color(0.65f, 0.16f, 0.16f);
 
             case eTileType.IMPASSABLE:
-                return new Color(0.75f, 0.75f, 0.75f);
+                return new Color(0.25f, 0.25f, 0.25f);
 
             case eTileType.NULL:
                 return new Color(0, 0, 0);
