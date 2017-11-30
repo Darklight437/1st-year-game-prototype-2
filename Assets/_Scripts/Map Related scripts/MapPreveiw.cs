@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 
 public class MapPreveiw : MonoBehaviour
 {
@@ -13,23 +15,49 @@ public class MapPreveiw : MonoBehaviour
     int mapOffsetX = 0;
     int mapOffsetY = 0;
 
-    Texture2D texture;
+    private Texture2D m_texture;
+
+    private string m_filePath;
+
+    string[] holder;
+    private List<string> m_maps = new List<string>();
 
     private void Awake()
     {
+        mapOffsetX = 0;
+        mapOffsetY = 0;
+        
+        if (map == null)
+        {
+            m_filePath = Application.dataPath + "/Resources/";
+            holder = Directory.GetFiles(m_filePath + "maps/", "*.prefab");
+
+            for (int i = 0; i < holder.Length; i++)
+            {
+                m_maps.Add(holder[i]);
+            }
+
+            ////////////////////////////////////////////////////////////
+
+            GameObject test = new GameObject();
+
+            for (int i = 0; i < m_maps.Count; i++)
+            {
+                test = Resources.Load(m_maps[i], typeof(GameObject)) as GameObject;
+            }
+
+            //GameObject test2 = test as GameObject;
+
+            map = test.GetComponent<Map>();
+
+            ////////////////////////////////////////////////////////////
+
+        }
+
         mapWidth = map.width;
         mapHeight = map.height;
 
-        mapOffsetX = 0;
-        mapOffsetY = 0;
-
-        if (map == null)
-        {
-            filePath = Application.dataPath + "/StreamingAssets/";
-            maps = Directory.GetFiles(filePath, "*.png");
-        }
-
-        texture = new Texture2D(0, 0);
+        m_texture = new Texture2D(0, 0);
         
         if (mapWidth > mapHeight)
         {
@@ -44,21 +72,21 @@ public class MapPreveiw : MonoBehaviour
         {
             if (mapHeight + (mapOffsetY * 2) != mapWidth)
             {
-                texture.Resize(mapWidth, mapHeight + (mapOffsetY * 2) + 1);
+                m_texture.Resize(mapWidth, mapHeight + (mapOffsetY * 2) + 1);
             }
-            texture.Resize(mapWidth, mapHeight + (mapOffsetY * 2));
+            m_texture.Resize(mapWidth, mapHeight + (mapOffsetY * 2));
         }
         else if (mapWidth < mapHeight)
         {
             if (mapWidth + (mapOffsetX * 2) != mapHeight)
             {
-                texture.Resize(mapWidth + (mapOffsetX * 2) + 1, mapHeight);
+                m_texture.Resize(mapWidth + (mapOffsetX * 2) + 1, mapHeight);
             }
-            texture.Resize(mapWidth + (mapOffsetX * 2), mapHeight);
+            m_texture.Resize(mapWidth + (mapOffsetX * 2), mapHeight);
         }
         else if (mapWidth == mapHeight)
         {
-            texture.Resize(mapWidth, mapHeight);
+            m_texture.Resize(mapWidth, mapHeight);
         }
         else
         {
@@ -67,12 +95,12 @@ public class MapPreveiw : MonoBehaviour
 
         MakeTexture();
 
-        texture.filterMode = FilterMode.Point;
-        texture.wrapMode = TextureWrapMode.Clamp;
+        m_texture.filterMode = FilterMode.Point;
+        m_texture.wrapMode = TextureWrapMode.Clamp;
 
-        texture.Apply();
+        m_texture.Apply();
 
-        mapPreview.GetComponent<Renderer>().material.mainTexture = texture;
+        mapPreview.GetComponent<Image>().material.mainTexture = m_texture;
 
     }
 
@@ -93,18 +121,10 @@ public class MapPreveiw : MonoBehaviour
 
         for (int i = 0; i < map.mapTiles.Count; i++)
         {
-            texture.SetPixel((int)(map.mapTiles[i].transform.position.x + mapOffsetY ), (int)(map.mapTiles[i].transform.position.z + mapOffsetX), GetColor(map.mapTiles[i].tileType));
+            m_texture.SetPixel((int)(map.mapTiles[i].transform.position.x + mapOffsetY ), (int)(map.mapTiles[i].transform.position.z + mapOffsetX), GetColor(map.mapTiles[i].tileType));
         }
 
-        texture.Apply();
-
-        for (int x = 0; x < mapWidth; x++)
-        {
-            for (int y = 0; y < mapHeight; y++)
-            {
-                Debug.Log(texture.GetPixel(x,y));
-            }
-        }
+        m_texture.Apply();
     }
 
     private void SetTexture(int num)
@@ -115,11 +135,11 @@ public class MapPreveiw : MonoBehaviour
         {
             for (int y = 0; y < num; y++)
             {
-                texture.SetPixel(x, y, color);
+                m_texture.SetPixel(x, y, color);
             }
         }
 
-        texture.Apply();
+        m_texture.Apply();
     }
 
     private Color GetColor(eTileType type)
