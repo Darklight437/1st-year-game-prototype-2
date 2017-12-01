@@ -15,6 +15,7 @@ public class DynamicPlayer : BasePlayer
 
     //reference to both types of players to use
     private HumanPlayer m_human;
+
     [HideInInspector]
     public AiPlayer computer;
 
@@ -32,8 +33,6 @@ public class DynamicPlayer : BasePlayer
         m_human.units = units;
         computer.units = units;
 
-        m_human.playerID = playerID;
-        computer.playerID = playerID;
         computer.logicMachine = gameObject.GetComponent<FuzzyLogic>();
 
         //set the difficulty
@@ -80,7 +79,8 @@ public class DynamicPlayer : BasePlayer
     // Update is called once per frame
     new void Update()
     {
-        
+        m_human.playerID = playerID;
+        computer.playerID = playerID;
     }
 
 
