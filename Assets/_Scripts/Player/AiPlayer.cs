@@ -43,7 +43,7 @@ public class AiPlayer : BasePlayer
     public float healingImportance = 1.0f; //scalar for scoring the benefits of placing healing tiles
     public float effortImportance = 1.0f; //scalar for scoring the benefits of stepping on a defensive tile
     public float groupImportance = 1.0f; //scalar for scoring the benefits of moving towards the average group position
-    public float kingBias = 20.0f; //additional points for the flee mechanic and penalty for the attack mechanic for the king only
+    public float kingBias = 20.0f; //additional points for select functions that make the king less aggressive and make the team revolve more around him
 
     // Use this for initialization
     new void Start()

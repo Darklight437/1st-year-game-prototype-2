@@ -440,12 +440,23 @@ public class GameManagment : MonoBehaviour
         foreach (BasePlayer p in players)
         {
 
-            if (p is AiPlayer)
+            if (!p.isHuman)
             {
                 //cast to the true type
-                AiPlayer ap = (AiPlayer)p;
+                AiPlayer ap = p as AiPlayer;
 
-                ap.Reset();
+                if (ap == null)
+                {
+                    //not an ai player
+                    DynamicPlayer dp = p as DynamicPlayer;
+                    dp.computer.Reset();
+                }
+                else
+                {
+                    //is an ai player
+                    ap.Reset();
+                }
+
 
             }
 
