@@ -11,6 +11,8 @@ public class CustomInput : MonoBehaviour
     public List<KeyCode> lefts = new List<KeyCode>();
     public List<KeyCode> rights = new List<KeyCode>();
 
+    public Input Input;
+
     //remember the mouse position accross multiple loops
     private Vector2 m_prevMousePosition = Vector2.zero;
 
@@ -33,6 +35,8 @@ public class CustomInput : MonoBehaviour
 
         keyInput = Vector2.zero;
         mouseInput = Vector2.zero;
+
+        ClaculateAxis();
 
         //iterate through each KeyCode array to determine if at least one is pressed
         for (int i = 0; i < ups.Count; i++)
@@ -86,5 +90,9 @@ public class CustomInput : MonoBehaviour
 
         m_prevMousePosition = mousePosition;
 
+    }
+
+    private void ClaculateAxis()
+    {
     }
 }

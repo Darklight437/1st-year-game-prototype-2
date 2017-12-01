@@ -97,13 +97,13 @@ public class Map : MonoBehaviour
     */
     public Tiles GetTileAtPos(Vector3 pos)
     {
-        Vector3 location = new Vector3(Mathf.RoundToInt(pos.x), 0, Mathf.RoundToInt(pos.z));
+        Vector3 location = new Vector3((int)(pos.x + 0.5f), 0, (int)(pos.z + 0.5f));
 
-        foreach (Tiles tile in mapTiles)
+        for (int i = 0; i < mapTiles.Count; i++)
         {
-            if (tile.pos == location)
+            if (mapTiles[i].pos == location)
             {
-                return tile;
+                return mapTiles[i];
             }
         }
         
