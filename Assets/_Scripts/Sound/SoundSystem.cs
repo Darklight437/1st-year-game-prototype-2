@@ -104,7 +104,10 @@ public class SoundSystem : MonoBehaviour {
     {
         if (walk)
         {
-            idleAwake.Play();
+            if (idleAwake)
+            {
+                idleAwake.Play();
+            }
             walk.Play();
             IsWalking = true;
         }

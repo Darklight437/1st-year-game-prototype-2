@@ -13,38 +13,37 @@ public class NextTurnButton : MonoBehaviour
     public Color Red;
     public Color Blue;
     private GameObject ColorChangers;
-    private Image Panel;
+    private SpriteRender spriteRender;
+
     void Start()
     {
         manager = GameManagment.FindObjectOfType<GameManagment>();
 
         ColorChangers = GameObject.FindGameObjectWithTag("RedVSBlue");
+
         //Put an if on whose turn to determine default UI color
-        Panel = ColorChangers.GetComponent<Image>();
+        spriteRender = ColorChangers.GetComponent<SpriteRender>();
 
         if (manager.turn == 0)
         {
-            Panel.color = Blue;
+            spriteRender.isBlueTeam = true;
         }
         else
         {
-            Panel.color = Red;
-            
+            spriteRender.isBlueTeam = false;
         }
 
     }
 
     void Update()
     {
-
         if (manager.turn == 0)
         {
-            Panel.color = Blue;
+            spriteRender.isBlueTeam = true;
         }
         else
         {
-            Panel.color = Red;
-
+            spriteRender.isBlueTeam = false;
         }
     }
 

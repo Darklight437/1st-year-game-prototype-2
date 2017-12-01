@@ -22,6 +22,8 @@ public class MiniMap : MonoBehaviour
     private List<Tiles> m_sightTiles = new List<Tiles>();
     private List<Tiles> m_notInSightTiles = new List<Tiles>();
 
+    public LayerMask tileLayer;
+
     private void Awake()
     {
         mapOffsetX = 0;
@@ -70,6 +72,19 @@ public class MiniMap : MonoBehaviour
     public void Update()
     {
         SetUpTexture();
+    }
+
+    public void ButtonPress()
+    {
+        Debug.Log("it worked");
+
+        float xPos = Input.mousePosition.x;
+        float yPos = Input.mousePosition.y;
+
+        xPos /= Screen.width;
+        yPos = ((yPos / Screen.height) * map.height);
+
+        Debug.Log(yPos);
     }
 
     public void SetUpTexture()

@@ -212,9 +212,7 @@ public class GameManagment : MonoBehaviour
             UIManager.currUIState = UIManager.eUIState.BASE;
             UIManager.stateSwitch();
         }
-       
-
-
+        
         if (selectedUnit != null)
         {
             if (Input.GetMouseButtonUp(1))
