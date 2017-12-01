@@ -116,9 +116,12 @@ public class MiniMap : MonoBehaviour
                         {
                             if (gameManagment.players[i].playerID == 1)
                             {
-                                m_texture.SetPixel((int)((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY),
-                                                    (int)((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX),
-                                                    new Color(1, 0, 0));
+                                if (gameManagment.players[i].units[u] != null)
+                                {
+                                    m_texture.SetPixel((int)((gameManagment.players[i].units[u].transform.position.x + 0.5f) + mapOffsetY),
+                                                        (int)((gameManagment.players[i].units[u].transform.position.z + 0.5f) + mapOffsetX),
+                                                        new Color(1, 0, 0));
+                                }
                             }
                         }
                         else if(m_activeplayer.playerID == 1)
@@ -161,12 +164,15 @@ public class MiniMap : MonoBehaviour
 
         for (int i = 0; i < m_activeplayer.units.Count; i++)
         {
-            holder2 = GetArea.GetAreaOfAttack(map.GetTileAtPos(m_activeplayer.units[i].transform.position), (int)m_activeplayer.units[i].AOV, map);
-            for (int u = 0; u < holder2.Count; u++)
+            if (m_activeplayer.units[i] != null)
             {
-                if (CheckInSightTiles(holder2[u].indexPos) == false)
+                holder2 = GetArea.GetAreaOfAttack(map.GetTileAtPos(m_activeplayer.units[i].transform.position), (int)m_activeplayer.units[i].AOV, map);
+                for (int u = 0; u < holder2.Count; u++)
                 {
-                    m_sightTiles.Add(holder2[u]);
+                    if (CheckInSightTiles(holder2[u].indexPos) == false)
+                    {
+                        m_sightTiles.Add(holder2[u]);
+                    }
                 }
             }
         }

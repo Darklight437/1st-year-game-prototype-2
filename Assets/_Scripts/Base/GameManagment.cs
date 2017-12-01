@@ -67,7 +67,7 @@ public class GameManagment : MonoBehaviour
     public LayerMask tileLayer;
 
     //scroll wheel value used to see if we scrolled up or down for unit toggle
-    private float m_scroll = 0;
+    public float scroll = 0;
 
     //wait timmer used to put a delay on unit toggle
     private float m_waitTimmer = 0;
@@ -182,11 +182,11 @@ public class GameManagment : MonoBehaviour
     void Update()
     {
         activePlayer.UpdateTurn();
-        
-        m_scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        scroll = Input.GetAxis("Mouse ScrollWheel");
         m_waitTimmer += Time.deltaTime;
 
-        if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(2) || m_scroll != 0) && m_waitTimmer > unitToggleWait)
+        if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(2) || scroll != 0) && m_waitTimmer > unitToggleWait)
         {
             ToggleBetweenActiveUnits();
             m_waitTimmer = 0;
@@ -635,7 +635,7 @@ public class GameManagment : MonoBehaviour
         }
 
         //scrolls "up" the active players unit list
-        if (m_scroll >= 0)
+        if (scroll >= 0)
         {
             //look throught the list of units in the active player until we get to the currently selected unit
             //then begin our search for the next inactive unit

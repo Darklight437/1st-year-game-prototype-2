@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControllerSupportScript : MonoBehaviour
 {
-    public UIManager UIManager;
+    public UIManager UImanager;
 
     public CameraMovement cam;
 
@@ -27,11 +27,20 @@ public class ControllerSupportScript : MonoBehaviour
     public GameObject cursorPrefab;
     public GameObject cursorHighLight;
 
+    public int playerID;
+
+    public float endTurnTimer;
+    public float endTurnWaitTimer;
+
+    public float waitTimer;
+
     public void Start()
     {
         limits = cam.limits;
 
         disableTimer = timeToDisableWaitTime;
+
+        playerID = 0;
         
         cursorHighLight = Instantiate(cursorPrefab, new Vector3(0,0,0), Quaternion.identity);
         cursorHighLight.SetActive(false);
@@ -40,12 +49,27 @@ public class ControllerSupportScript : MonoBehaviour
     public void Update()
     {
         disableTimer += Time.deltaTime;
+        waitTimer += Time.deltaTime;
+
+        if (playerID != gameManagment.activePlayer.playerID)
+        {
+            gameManagment.activePlayer.CalculateKingPosition();
+            hoverOverTile = map.GetTileAtPos(gameManagment.activePlayer.kingPosition);
+            cursorPos = hoverOverTile.pos;
+
+            cursorHighLight.transform.position = hoverOverTile.pos;
+
+            playerID = gameManagment.activePlayer.playerID;
+        }
 
         if (disableTimer > timeToDisableWaitTime)
         {
-            cursorHighLight.SetActive(false);
+            gameManagment.activePlayer.CalculateKingPosition();
             hoverOverTile = map.GetTileAtPos(gameManagment.activePlayer.kingPosition);
             cursorPos = hoverOverTile.pos;
+
+            cursorHighLight.transform.position = hoverOverTile.pos;
+            cursorHighLight.SetActive(false);
         }
         else
         {
@@ -54,58 +78,100 @@ public class ControllerSupportScript : MonoBehaviour
 
         MoveCursor();
         
-        if (Input.GetAxis("LeftTrigger") == 1)
+        if (Input.GetAxis("LeftTrigger") == 1 && waitTimer > 0.5f)
         {
             gameManagment.OnTileSelectedLeftClick(hoverOverTile);
         }
 
-        if (Input.GetAxis("RightTrigger")== 1)
+        if (Input.GetAxis("RightTrigger")== 1 && waitTimer > 0.5f)
         {
             Vector3 vector3 = Camera.main.WorldToScreenPoint(hoverOverTile.pos);
             gameManagment.OnTileSelectedRightClick(hoverOverTile, vector3);
         }
 
         DetectButtonPress();
+
+        if (Input.GetAxis("LeftTrigger") == 1 && Input.GetAxis("RightTrigger") == 1)
+        {
+            endTurnTimer += Time.deltaTime;
+            if (endTurnTimer >= endTurnWaitTimer)
+            {
+                gameManagment.OnNextTurn();
+                waitTimer = 0;
+            }
+        }
+        else
+        {
+            endTurnTimer = 0;
+        }
     }
 
     public void MoveCursor()
     {
 
         float LeftAxis = Input.GetAxis("LeftJoyStickHorizontal");
-
         if (LeftAxis < 0.1f && LeftAxis > -0.1f)
         {
             LeftAxis = 0;
         }
 
-        if (LeftAxis > 0)
-        {
-            cursorPos.x += cursorMoveSpeed * Time.deltaTime;
-            disableTimer = 0;
-        }
-        else if (LeftAxis < 0)
-        {
-            cursorPos.x -= cursorMoveSpeed * Time.deltaTime;
-            disableTimer = 0;
-        }
-
         float UpAxis = Input.GetAxis("LeftJoyStickVertical");
-
         if (UpAxis < 0.1f && UpAxis > -0.1f)
         {
             UpAxis = 0;
         }
 
-        if (UpAxis > 0)
+
+        if (gameManagment.activePlayer.playerID == 0)
         {
-            cursorPos.z -= cursorMoveSpeed * Time.deltaTime;
-            disableTimer = 0;
+            if (LeftAxis > 0)
+            {
+                cursorPos.x += cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+            else if (LeftAxis < 0)
+            {
+                cursorPos.x -= cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+
+            if (UpAxis > 0)
+            {
+                cursorPos.z -= cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+            else if (UpAxis < 0)
+            {
+                cursorPos.z += cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
         }
-        else if (UpAxis < 0)
+        else
         {
-            cursorPos.z += cursorMoveSpeed * Time.deltaTime;
-            disableTimer = 0;
+            if (LeftAxis > 0)
+            {
+                cursorPos.x -= cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+            else if (LeftAxis < 0)
+            {
+                cursorPos.x += cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+
+            if (UpAxis > 0)
+            {
+                cursorPos.z += cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+            else if (UpAxis < 0)
+            {
+                cursorPos.z -= cursorMoveSpeed * Time.deltaTime;
+                disableTimer = 0;
+            }
+
         }
+       
 
         //CLAMP
         if (cursorPos.x < limits.x)
@@ -172,7 +238,7 @@ public class ControllerSupportScript : MonoBehaviour
 
     public void DetectButtonPress()
     {
-        if (UIManager.Buttons[0].GetComponent<RectTransform>().anchoredPosition.x != 10000)
+        if (UImanager.Buttons[0].GetComponent<RectTransform>().anchoredPosition.x != 10000)
         {
             if (Input.GetAxis("AButton") == 1)
             {
@@ -183,7 +249,7 @@ public class ControllerSupportScript : MonoBehaviour
             }
         }
 
-        if (UIManager.Buttons[1].GetComponent<RectTransform>().anchoredPosition.x != 10000)
+        if (UImanager.Buttons[1].GetComponent<RectTransform>().anchoredPosition.x != 10000)
         {
             if (Input.GetAxis("XButton") == 1)
             {
@@ -194,7 +260,7 @@ public class ControllerSupportScript : MonoBehaviour
             }
         }
 
-        if (UIManager.Buttons[2].GetComponent<RectTransform>().anchoredPosition.x != 10000)
+        if (UImanager.Buttons[2].GetComponent<RectTransform>().anchoredPosition.x != 10000)
         {
             if (Input.GetAxis("YButton") == 1)
             {
@@ -205,7 +271,7 @@ public class ControllerSupportScript : MonoBehaviour
             }
         }
 
-        if (UIManager.Buttons[3].GetComponent<RectTransform>().anchoredPosition.x != 10000)
+        if (UImanager.Buttons[3].GetComponent<RectTransform>().anchoredPosition.x != 10000)
         {
             if (Input.GetAxis("BButton") == 1)
             {
@@ -214,6 +280,40 @@ public class ControllerSupportScript : MonoBehaviour
                 disableTimer = 0;
                 return;
             }
+        }
+
+        if (Input.GetAxis("MenuButton") == 1)
+        {
+            UImanager.currUIState = UIManager.eUIState.PAUSEMENU;
+            UImanager.stateSwitch();
+        }
+
+        if (Input.GetAxis("LeftBumper") == 1 && waitTimer > 0.5f)
+        {
+            gameManagment.scroll = -1;
+            gameManagment.ToggleBetweenActiveUnits();
+            disableTimer = 0;
+            waitTimer = 0;
+            
+            hoverOverTile = map.GetTileAtPos(gameManagment.selectedUnit.transform.position);
+            cursorPos = gameManagment.selectedUnit.transform.position;
+            cursorHighLight.transform.position = hoverOverTile.pos;
+
+            return;
+        }
+
+        if (Input.GetAxis("RightBumper") == 1 && waitTimer > 0.5f)
+        {
+            gameManagment.scroll = 1;
+            gameManagment.ToggleBetweenActiveUnits();
+            disableTimer = 0;
+            waitTimer = 0;
+
+            hoverOverTile = map.GetTileAtPos(gameManagment.selectedUnit.transform.position);
+            cursorPos = gameManagment.selectedUnit.transform.position;
+            cursorHighLight.transform.position = hoverOverTile.pos;
+
+            return;
         }
     }
 }
