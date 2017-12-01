@@ -48,7 +48,7 @@ public class Winscreen : MonoBehaviour {
             {
                 Timer = 0;
                 currentFrame++;
-                if (currentFrame >= FrameList.Count)
+                if (currentFrame >= FrameList.Count - 1)
                 {
                     if (isLooping)
                     {

@@ -311,12 +311,14 @@ public class Tiles : MonoBehaviour
                                 tileMediPack.destroyedParticals.transform.rotation),
                                 5);
 
+            /*
             Destroy(Instantiate(tileMediPack.usedSound,
                                 new Vector3(transform.position.x,
                                 0.3f,
                                 transform.position.z),
                                 tileMediPack.usedSound.transform.rotation),
                                 5);
+            */
 
 
 

@@ -339,6 +339,7 @@ public class GameManagment : MonoBehaviour
 
         GetShrinkAreaTiles();
 
+        OnActionFinished();
 
     }
 
@@ -439,14 +440,14 @@ public class GameManagment : MonoBehaviour
         foreach (BasePlayer p in players)
         {
 
-            //if (p is AiPlayer)
-            //{
-            //    //cast to the true type
-            //    AiPlayer ap = (AiPlayer)p;
+            if (p is AiPlayer)
+            {
+                //cast to the true type
+                AiPlayer ap = (AiPlayer)p;
 
-            //    ap.Reset();
+                ap.Reset();
 
-            //}
+            }
 
             //iterate through all units, removing null references
             for (int i = 0; i < p.units.Count; i++)
@@ -1621,7 +1622,7 @@ public class GameManagment : MonoBehaviour
             }
 
             //there is no king because they have been killed
-            if (kingRef == null)
+            if (kingRef == null || kingRef.health <= 0.0f)
             {
                 OnKingKilled(i);
                 return;
@@ -1721,6 +1722,7 @@ public class GameManagment : MonoBehaviour
         //sets the UI to display the victory splashscreen
         UIManager.GetWinningPlayer(playerID);
         UIManager.currUIState = UIManager.eUIState.ENDGAME;
+        UIManager.stateSwitch();
     }
 
 
