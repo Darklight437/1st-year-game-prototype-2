@@ -54,11 +54,26 @@ public class ControllerSupportScript : MonoBehaviour
     public float endTurnTimer;
     public float endTurnWaitTimer;
 
+    //currently selected button
+    public ButtonOverRide selectedButton;
+    //what menu button position we are in;
+    public int selectedButtonMenuPos;
+
+    //refrence to all the menu buttons
+    public InGameMenuSpriteHolder inGameMenuRefrence;
+
     //delay on controler inputs so it does not get spamed
     public float waitTimer;
 
+    public bool menuPress;
+
     public void Start()
     {
+        selectedButton = null;
+        selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
+
+        menuPress = false;
+
         //Get our limits form the camera set up
         limits = cam.limits;
 
@@ -78,6 +93,17 @@ public class ControllerSupportScript : MonoBehaviour
         //increase timers
         disableTimer += Time.deltaTime;
         waitTimer += Time.deltaTime;
+
+        if (menuPress == true && Input.GetAxis("AButton") == 0)
+        {
+            selectedButton.onClick.Invoke();
+
+            selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
+            selectedButton = null;
+            inGameMenuRefrence.cursorActive = false;
+            menuPress = false;
+
+        }
 
         //check if we have swpaed player turns and set cursor to new players king position
         if (playerID != gameManagment.activePlayer.playerID)
@@ -108,39 +134,8 @@ public class ControllerSupportScript : MonoBehaviour
             cursorHighLight.SetActive(true);
         }
 
-        //function to move the cursor
-        MoveCursor();
-        
-        //left click function call
-        if (Input.GetAxis("LeftTrigger") == 1 && waitTimer > 0.5f)
-        {
-            gameManagment.OnTileSelectedLeftClick(hoverOverTile);
-        }
-
-        //right click function call
-        if (Input.GetAxis("RightTrigger")== 1 && waitTimer > 0.5f)
-        {
-            Vector3 vector3 = Camera.main.WorldToScreenPoint(hoverOverTile.pos);
-            gameManagment.OnTileSelectedRightClick(hoverOverTile, vector3);
-        }
-
         //deteck if player has put in any controller inputs
         DetectButtonPress();
-
-        //if player is holding down both trigger for more then the endTurnWaitTimer end current players turn
-        if (Input.GetAxis("LeftTrigger") == 1 && Input.GetAxis("RightTrigger") == 1)
-        {
-            endTurnTimer += Time.deltaTime;
-            if (endTurnTimer >= endTurnWaitTimer)
-            {
-                gameManagment.OnNextTurn();
-                waitTimer = 0;
-            }
-        }
-        else
-        {
-            endTurnTimer = 0;
-        }
     }
 
     /*
@@ -310,6 +305,134 @@ public class ControllerSupportScript : MonoBehaviour
     */
     public void DetectButtonPress()
     {
+        //only run these checks when we do not have the ingame menu open
+        if (UImanager.currUIState != UIManager.eUIState.PAUSEMENU)
+        {
+            //function to move the cursor
+            MoveCursor();
+            //checks for button presses when in game and playing
+            InGameButtonChecks();
+        }
+        else
+        {
+            //checks for button presses when in the menu scene in game
+            InGameMenuButtonCheck();
+        }
+        
+    }
+
+    public void InGameMenuButtonCheck()
+    {
+        //pressing the otions button on the controler opens up the menu
+        if (Input.GetAxis("MenuButton") == 1 && waitTimer >= 0.5f)
+        {
+            UImanager.currUIState = UIManager.eUIState.BASE;
+            UImanager.stateSwitch();
+            disableTimer = 0;
+            waitTimer = 0;
+
+            selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
+            selectedButton = null;
+            inGameMenuRefrence.cursorActive = false;
+        }
+        
+        //scrolls "UP" the menu
+        if (Input.GetAxis("LeftJoyStickVertical") < -0.1f && waitTimer >= 0.25f)
+        {
+            selectedButtonMenuPos -= 1;
+            disableTimer = 0;
+            waitTimer = 0;
+
+            if (selectedButtonMenuPos < 0)
+            {
+                selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
+            }
+
+            if (selectedButtonMenuPos > 0 || selectedButtonMenuPos < inGameMenuRefrence.menuButtons.Length)
+            {
+                selectedButton.cursorSelected = false;
+                selectedButton.cursorClicked = false;
+                selectedButton = inGameMenuRefrence.menuButtons[selectedButtonMenuPos];
+                selectedButton.cursorSelected = true;
+            }
+            else
+            {
+                selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
+            }
+        }
+
+        //scrolls "down" the menu
+        if (Input.GetAxis("LeftJoyStickVertical") > 0.1f && waitTimer >= 0.25f)
+        {
+            selectedButtonMenuPos += 1;
+            disableTimer = 0;
+            waitTimer = 0;
+
+            if (selectedButtonMenuPos > inGameMenuRefrence.menuButtons.Length - 1)
+            {
+                selectedButtonMenuPos = 0;
+            }
+
+            if (selectedButtonMenuPos > 0 || selectedButtonMenuPos < inGameMenuRefrence.menuButtons.Length)
+            {
+                selectedButton.cursorSelected = false;
+                selectedButton.cursorClicked = false;
+                selectedButton = inGameMenuRefrence.menuButtons[selectedButtonMenuPos];
+                selectedButton.cursorSelected = true;
+            }
+            else
+            {
+                selectedButtonMenuPos = 0;
+            }
+        }
+
+        if (Input.GetAxis("AButton") == 1)
+        {
+            selectedButton.cursorClicked = true;
+            menuPress = true;
+        }
+    }
+
+    /*
+    * InGameButtonChecks
+    * public void function
+    * 
+    * this goes and checks to see if we have pressed any buttons on our controller
+    * if those button presses are currently valid to use and activates there functions
+    * as is appropriate while we are playing the game
+    * 
+    * @returns nothing
+    */
+    public void InGameButtonChecks()
+    {
+        //left click function call
+        if (Input.GetAxis("LeftTrigger") == 1 && waitTimer > 0.5f)
+        {
+            gameManagment.OnTileSelectedLeftClick(hoverOverTile);
+        }
+
+        //right click function call
+        if (Input.GetAxis("RightTrigger") == 1 && waitTimer > 0.5f)
+        {
+            Vector3 vector3 = Camera.main.WorldToScreenPoint(hoverOverTile.pos);
+            gameManagment.OnTileSelectedRightClick(hoverOverTile, vector3);
+        }
+
+        //if player is holding down both trigger for more then the endTurnWaitTimer end current players turn
+        if (Input.GetAxis("LeftTrigger") == 1 && Input.GetAxis("RightTrigger") == 1)
+        {
+            endTurnTimer += Time.deltaTime;
+            if (endTurnTimer >= endTurnWaitTimer)
+            {
+                gameManagment.OnNextTurn();
+                waitTimer = 0;
+            }
+        }
+        else
+        {
+            endTurnTimer = 0;
+        }
+
         //if any unit action UI is not at 10000 then it is valid to use
         if (UImanager.Buttons[0].GetComponent<RectTransform>().anchoredPosition.x != 10000)
         {
@@ -360,10 +483,16 @@ public class ControllerSupportScript : MonoBehaviour
         }
 
         //pressing the otions button on the controler opens up the menu
-        if (Input.GetAxis("MenuButton") == 1)
+        if (Input.GetAxis("MenuButton") == 1 && waitTimer > 0.5f)
         {
             UImanager.currUIState = UIManager.eUIState.PAUSEMENU;
             UImanager.stateSwitch();
+            disableTimer = 0;
+            waitTimer = 0;
+
+            selectedButton = inGameMenuRefrence.menuButtons[selectedButtonMenuPos];
+            selectedButton.cursorSelected = true;
+            inGameMenuRefrence.cursorActive = true;
         }
 
         //left bumper toggles through the units in a "backwards" manner
@@ -373,7 +502,7 @@ public class ControllerSupportScript : MonoBehaviour
             gameManagment.ToggleBetweenActiveUnits();
             disableTimer = 0;
             waitTimer = 0;
-            
+
             hoverOverTile = map.GetTileAtPos(gameManagment.selectedUnit.transform.position);
             cursorPos = gameManagment.selectedUnit.transform.position;
             cursorHighLight.transform.position = hoverOverTile.pos;

@@ -135,10 +135,9 @@ public class MapPreveiw : MonoBehaviour
 
     /*
     * SetTexture
-    * public void function
+    * private void function
     * 
     * sets the tecture to be qual to plack before we paint on our map
-    * 
     * 
     * @param int num - the amount we want to loop through painting them texture black
     * @returns nothing
@@ -160,10 +159,10 @@ public class MapPreveiw : MonoBehaviour
     }
 
     /*
-    * SetTexture
-    * public void function
+    * GetColor
+    * private Color function
     * 
-    * this function takes in a tile type thenpasses that into a switch statmeant,
+    * this function takes in a tile type then passes that into a switch statmeant,
     * depending on the tile type passed in it will pas out an apporpriate color
     * 
     * @param eTileType type - the current tile type we wish to paint in to our map preview texture

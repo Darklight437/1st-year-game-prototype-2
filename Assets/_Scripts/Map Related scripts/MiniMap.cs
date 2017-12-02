@@ -3,33 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+* class MiniMap
+* inherits MonoBehaviour
+* 
+* this class is used to read in current infomation
+* on the map related to the active player and create a texture
+* to acuratly display that infomation
+* 
+* author: Callum Dunstone, Academy of Interactive Entertainment, 2017
+*/
 public class MiniMap : MonoBehaviour
 {
+    //refrence to the game map
     public Map map;
     
+    //the object we will be sticking our mini map texture on to
     public RawImage miniMap;
-    public Image miniMapBoarder;
 
+    //the gameManager
     public GameManagment gameManagment;
-
-    public CameraMovement cam;
-
+    
+    //info for the map and any offsets needed
     int mapWidth = 0;
     int mapHeight = 0;
     int mapOffsetX = 0;
     int mapOffsetY = 0;
 
+    //link to the current active player
     private BasePlayer m_activeplayer;
 
+    //the mini map texture we will be making
     private Texture2D m_texture;
 
+    //list of all tiles the player can see
     private List<Tiles> m_sightTiles = new List<Tiles>();
+    //list of all tiles the player can not see
     private List<Tiles> m_notInSightTiles = new List<Tiles>();
-
-    public LayerMask tileLayer;
-
+    
     private void Awake()
     {
+        //set default values
         mapOffsetX = 0;
         mapOffsetY = 0;
 
@@ -38,6 +52,7 @@ public class MiniMap : MonoBehaviour
 
         m_texture = new Texture2D(0, 0);
 
+        //set the offsets dependning on if the map size
         if (mapWidth > mapHeight)
         {
             mapOffsetY = (int)((mapWidth - mapHeight) * 0.5f);
@@ -47,6 +62,7 @@ public class MiniMap : MonoBehaviour
             mapOffsetX = (int)((mapHeight - mapWidth) * 0.5f);
         }
 
+        //set the texture size keeping it a perfect square
         if (mapWidth > mapHeight)
         {
             if (mapHeight + (mapOffsetY * 2) != mapWidth)
@@ -69,62 +85,61 @@ public class MiniMap : MonoBehaviour
         }
         else
         {
+            //we should never reach this point
             Debug.LogError("WHAT THE FUCK??");
         }
     }
 
     public void Update()
     {
+        //always update our texture
         SetUpTexture();
     }
 
-    public void ButtonPress()
-    {
-        Debug.Log("it worked");
-
-        float xPos = Input.mousePosition.x;
-        float yPos = Input.mousePosition.y;
-
-        //(mousepos - button pos) / button size
-
-        xPos = (xPos - ((miniMap.rectTransform.anchoredPosition.x * 2) - 100));
-        xPos = xPos / 100;
-        //xPos = (xPos / mapWidth) * 100;
-        //xPos *= mapWidth - 1;
-        //xPos -= 1;
-
-        //yPos = ((((yPos / Screen.width) * 105) / map.width) * map.width) + (mapOffsetX);
-
-        //Tiles tile = map.GetTileAtPos(new Vector3(xPos, 0, yPos));
-        //cam.Goto(tile.pos, cam.transform.eulerAngles, null);
-
-        Debug.Log(xPos);
-        //Debug.Log(secondXPos);
-        //Debug.Log(yPos);
-
-        gameManagment.uiPressed = true;
-    }
-
+    /*
+    * SetUpTexture
+    * public void function
+    * 
+    * this goes through all the steps to set up our texture
+    * 
+    * @returns nothing
+    */
     public void SetUpTexture()
     {
+        //make sure we are doing this for the right player
         m_activeplayer = gameManagment.activePlayer;
             
+        //add tiles in first
         ApplyTileTint();
 
+        //add in the units
         AddUnits();
 
+        //set up some texture values so it looks decent
         m_texture.filterMode = FilterMode.Point;
         m_texture.wrapMode = TextureWrapMode.Clamp;
 
+        //apply the changes to our texture
         m_texture.Apply();
 
+        //set mini map texture to our custom made texture
         miniMap.texture = m_texture;
     }
 
+    /*
+    * AddUnits
+    * private void function
+    * 
+    * this goes through all units in the scene adding them to 
+    * our mini map texture
+    * 
+    * @returns nothing
+    */
     private void AddUnits()
     {
         Color color;
 
+        //we add in the active player colours first 
         if (m_activeplayer.playerID == 0)
         {
             color = new Color(0, 0, 1);
@@ -137,14 +152,19 @@ public class MiniMap : MonoBehaviour
             AddUnitColor(color, m_activeplayer, true);
         }
 
+        //loop through all remainding players and add in there units
         for (int i = 0; i < gameManagment.players.Count; i++)
         {
+            //make sure the player we are looking at is not the active player
             if (gameManagment.players[i].playerID != m_activeplayer.playerID)
             {
+                //go through that players units
                 for (int u = 0; u < gameManagment.players[i].units.Count; u++)
                 {
+                    //only add in that unit if it is in sight of the active player
                     if (gameManagment.players[i].units[u].inSight)
                     {
+                        //if active player is player one just add in the unit
                         if (m_activeplayer.playerID == 0)
                         {
                             if (gameManagment.players[i].playerID == 1)
@@ -157,6 +177,7 @@ public class MiniMap : MonoBehaviour
                                 }
                             }
                         }
+                        //if it is player two things get a bit more tricky as we need to flip values so player twos appropriate rotation
                         else if(m_activeplayer.playerID == 1)
                         {
                             if (gameManagment.players[i].playerID == 0)
@@ -186,15 +207,26 @@ public class MiniMap : MonoBehaviour
             }
         }
 
+        //apply all changes made to the texture
         m_texture.Apply();
     }
 
+    /*
+    * ApplyTileTint
+    * private void function
+    * 
+    * this starts off the adding of tiles to the texture image
+    * 
+    * @returns nothing
+    */
     private void ApplyTileTint()
     {
+        //first set values to default
         List<Tiles> holder2 = new List<Tiles>();
         m_notInSightTiles.Clear();
         m_sightTiles.Clear();
 
+        //go through and gather all tiles the player can "see"
         for (int i = 0; i < m_activeplayer.units.Count; i++)
         {
             if (m_activeplayer.units[i] != null)
@@ -210,21 +242,35 @@ public class MiniMap : MonoBehaviour
             }
         }
 
+        //set not in sight tiles to be equal to all tiles
         List<Tiles> holder = map.mapTiles;
 
+        //in all the not in sight tiles
         for (int i = 0; i < holder.Count; i++)
         {
             m_notInSightTiles.Add(holder[i]);
         }
 
+        //go through and remove all of the sight tiles from the not in sight tiles
         for (int i = 0; i < m_sightTiles.Count; i++)
         {
             m_notInSightTiles.Remove(m_sightTiles[i]);
         }
 
+        //function to apply the tiles to the texture
         MakeMapTextureOfTiles();
     }
 
+    /*
+    * ApplyTileTint
+    * private bool function
+    * 
+    * goes through all current sight tiles to check if the value passed in
+    * is already in our list or not
+    * 
+    * @param int index - value we are searching for
+    * @returns bool - returns false if it is not in the list
+    */
     private bool CheckInSightTiles(int index)
     {
         if (m_sightTiles.Count == 0)
@@ -243,6 +289,18 @@ public class MiniMap : MonoBehaviour
         return false;
     }
 
+    /*
+    * AddUnitColor
+    * private void function
+    * 
+    * this adds in the units into the texture
+    * 
+    * @param Color color - the color we want to set the units position in the texture to
+    * @param BasePlayer player - the players whos unit colours we are setting
+    * @param bool swap - if we need to invert where we are placing them on the texture or not
+    * 
+    * @returns bool - returns false if it is not in the list
+    */
     private void AddUnitColor(Color color, BasePlayer player, bool swap)
     {
         if (swap)
@@ -284,10 +342,22 @@ public class MiniMap : MonoBehaviour
         }
     }
 
+    /*
+    * MakeMapTextureOfTiles
+    * public void function
+    * 
+    * this goes through all the sight and not in sight tiles and populates the texture with them
+    * in sight tiles have there "default" colouring the same as the map preview colours and not in sight
+    * tiles are all tinted a darker colour
+    * 
+    * @returns bool - returns false if it is not in the list
+    */
     public void MakeMapTextureOfTiles()
     {
+        //start off by seting the hole texture to black
         SetTextureToBlack();
 
+        //if active player one no fancy shit needed just add them in
         if (m_activeplayer.playerID == 0)
         {
             for (int i = 0; i < m_sightTiles.Count; i++)
@@ -306,6 +376,9 @@ public class MiniMap : MonoBehaviour
             }
         }
 
+
+        //if active player is player two we need to invert the times to match up with the camera view
+        //thus we need to make many checks to make sure we place the colours in the right spo
         if (m_activeplayer.playerID == 1)
         {
             if (mapOffsetX == mapOffsetY)
@@ -362,6 +435,15 @@ public class MiniMap : MonoBehaviour
         m_texture.Apply();
     }
 
+    /*
+    * SetTextureToBlack
+    * private void function
+    * 
+    * sets the tecture to be qual to plack before we paint on our map
+    * 
+    * @param int num - the amount we want to loop through painting them texture black
+    * @returns nothing
+    */
     private void SetTextureToBlack()
     {
         Color color = new Color(0, 0, 0);
@@ -377,6 +459,16 @@ public class MiniMap : MonoBehaviour
         m_texture.Apply();
     }
 
+    /*
+    * GetColorTint
+    * private Color function
+    * 
+    * this function takes in a tile type thenpasses that into a switch statmeant,
+    * depending on the tile type passed in it will pas out an apporpriate color
+    * 
+    * @param eTileType type - the current tile type we wish to paint in to our map preview texture
+    * @returns Color - used to paint in our map preview texture
+    */
     private Color GetColorTint(eTileType type)
     {
         switch (type)
@@ -410,6 +502,16 @@ public class MiniMap : MonoBehaviour
         return new Color(0, 0, 0);
     }
 
+    /*
+    * GetColor
+    * private Color function
+    * 
+    * this function takes in a tile type then passes that into a switch statmeant,
+    * depending on the tile type passed in it will pas out an apporpriate color
+    * 
+    * @param eTileType type - the current tile type we wish to paint in to our map preview texture
+    * @returns Color - used to paint in our map preview texture
+    */
     private Color GetColor(eTileType type)
     {
         switch (type)
