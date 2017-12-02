@@ -8,7 +8,11 @@ public class MiniMap : MonoBehaviour
     public Map map;
     
     public RawImage miniMap;
+    public Image miniMapBoarder;
+
     public GameManagment gameManagment;
+
+    public CameraMovement cam;
 
     int mapWidth = 0;
     int mapHeight = 0;
@@ -81,10 +85,24 @@ public class MiniMap : MonoBehaviour
         float xPos = Input.mousePosition.x;
         float yPos = Input.mousePosition.y;
 
-        xPos /= Screen.width;
-        yPos = ((yPos / Screen.height) * map.height);
+        //(mousepos - button pos) / button size
 
-        Debug.Log(yPos);
+        xPos = (xPos - ((miniMap.rectTransform.anchoredPosition.x * 2) - 100));
+        xPos = xPos / 100;
+        //xPos = (xPos / mapWidth) * 100;
+        //xPos *= mapWidth - 1;
+        //xPos -= 1;
+
+        //yPos = ((((yPos / Screen.width) * 105) / map.width) * map.width) + (mapOffsetX);
+
+        //Tiles tile = map.GetTileAtPos(new Vector3(xPos, 0, yPos));
+        //cam.Goto(tile.pos, cam.transform.eulerAngles, null);
+
+        Debug.Log(xPos);
+        //Debug.Log(secondXPos);
+        //Debug.Log(yPos);
+
+        gameManagment.uiPressed = true;
     }
 
     public void SetUpTexture()
