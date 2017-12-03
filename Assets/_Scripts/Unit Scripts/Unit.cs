@@ -248,6 +248,11 @@ public class Unit : MonoBehaviour
         //the armour scalar affects the damage output
         health -= damage * armourScalar;
 
+        if (playerID == 0)
+        {
+            StatisticsTracker.totalDamage += damage * armourScalar;
+        }
+
         Debug.Log(gameObject.name + " was attacked for " + (damage * armourScalar).ToString() + " damage.");
 
         //has the unit died from the hit
@@ -271,6 +276,8 @@ public class Unit : MonoBehaviour
     */
     public virtual void Heal(float points)
     {
+        float prevHealth = health;
+
         //add the points
         health += points;
         
@@ -278,6 +285,11 @@ public class Unit : MonoBehaviour
         if (health > maxHealth)
         {
             health = maxHealth;
+        }
+
+        if (playerID == 0)
+        {
+            StatisticsTracker.totalHealing += health - prevHealth;
         }
 
         Debug.Log(gameObject.name + " was healed for " + points.ToString() + " health.");

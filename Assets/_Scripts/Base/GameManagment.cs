@@ -178,9 +178,17 @@ public class GameManagment : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        StatisticsTracker.gamesPlayed++;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        StatisticsTracker.timeSpentPlaying += Time.deltaTime / 60.0f / 60.0f;
+        AchievementsTracker.CheckAchievements();
+
         activePlayer.UpdateTurn();
 
         scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -428,6 +436,8 @@ public class GameManagment : MonoBehaviour
     */
     public void OnNextTurn()
     {
+        int deathsThisTurn = 0;
+
         Canvas.ForceUpdateCanvases();
         if (transitioning || activePlayer.IsBusy())
         {
@@ -469,6 +479,8 @@ public class GameManagment : MonoBehaviour
                 { 
                     p.units.RemoveAt(i);
                     i--;
+
+                    deathsThisTurn++;
                 }
                 else
                 {
@@ -477,6 +489,11 @@ public class GameManagment : MonoBehaviour
                     unit.hasAttacked = false;                   
                 }
             }
+        }
+
+        if (turn == 0 && deathsThisTurn > StatisticsTracker.mostUnitsDefeatedInASingleTurn)
+        {
+            StatisticsTracker.mostUnitsDefeatedInASingleTurn = deathsThisTurn;
         }
 
         //turn off the action menu
@@ -516,6 +533,8 @@ public class GameManagment : MonoBehaviour
         //set the active player
         activePlayer = players[turn];
         activePlayer.CalculateKingPosition();
+
+        StatisticsTracker.turnsPlayed++;
 
         cam.Goto(activePlayer.kingPosition, cam.transform.eulerAngles + new Vector3(0.0f, 180.0f, 0.0f), OnCameraFinished);
 

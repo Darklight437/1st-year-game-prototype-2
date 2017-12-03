@@ -39,12 +39,7 @@ public class DynamicPlayer : BasePlayer
         SetDifficulty(Settings.aiDifficulty);
 
         //mark the player as either a human or not
-        isHuman = true;
-
-        if (Settings.playingWithAI)
-        {
-            isHuman = false;
-        }
+        isHuman = !Settings.playingWithAI;
     }
 
 

@@ -59,6 +59,11 @@ public class DeathCommand : UnitCommand
         {
             deathTimer = 0.0f;
 
+            if (unit.playerID != 0)
+            {
+                StatisticsTracker.unitsDefeated++;
+            }
+
             successCallback();
             GameObject.Destroy(unit.gameObject);
         }

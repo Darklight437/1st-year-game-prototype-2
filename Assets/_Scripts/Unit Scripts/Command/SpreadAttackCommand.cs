@@ -85,6 +85,9 @@ public class SpreadAttackCommand : UnitCommand
             //get the size of the area tiles list
             int areaSize = area.Count;
 
+            //track the amount of enemies hit
+            int enemiesHit = 0;
+
             //iterate through all of the tiles in the area, applying damage to all
             for (int i = 0; i < areaSize; i++)
             {
@@ -99,9 +102,12 @@ public class SpreadAttackCommand : UnitCommand
                     //manhattan distance
                     int manhattDistance = (int)(relative.x + relative.z);
 
-                    float ratio = 1 - ((float)(manhattDistance) / (float)maxDistance);
+                    //damage fall-off
+                    float ratio = 1 - ((float)(manhattDistance) / (float)(maxDistance + 1.0f));
 
                     unit.Attack(defendingUnit, ratio);
+
+                    enemiesHit++;
 
                 }
 
@@ -115,6 +121,12 @@ public class SpreadAttackCommand : UnitCommand
             ParticleLibrary.explosionSystem.transform.position = endTile.transform.position;
             ParticleLibrary.explosionSystem.time = 0.0f;
             ParticleLibrary.explosionSystem.Play();
+
+            //test if the enemies hit is higher than the most damaged in a single attack record previously
+            if (unit.playerID == 0 && enemiesHit > StatisticsTracker.mostUnitsDamagedWithOneAttack)
+            {
+                StatisticsTracker.mostUnitsDamagedWithOneAttack = enemiesHit;
+            }
 
             applied = true;
         }

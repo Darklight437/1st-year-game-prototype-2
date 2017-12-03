@@ -176,6 +176,10 @@ public class MoveCommand : UnitCommand
                 unit.transform.position = target;
                 m_tilePath.RemoveAt(0);
 
+                if (unit.playerID == 0)
+                {
+                    StatisticsTracker.tilesCrossed++;
+                }
                 
             }
             else

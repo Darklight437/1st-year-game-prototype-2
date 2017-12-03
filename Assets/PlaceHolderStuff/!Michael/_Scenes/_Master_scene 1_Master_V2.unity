@@ -713,7 +713,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 176050609}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8df0fbe93b5393f49ba48d3488826687, type: 3}
   m_Name: 
@@ -722,25 +722,25 @@ MonoBehaviour:
   kingPosition: {x: 0, y: 0, z: 0}
   playerID: 1
   isHuman: 1
-  logicMachine: {fileID: 176050615}
+  logicMachine: {fileID: 0}
   m_idleTimer: 2
   idleTime: 2
   initialThinkTime: 3
   thinkTime: 0.5
-  advanceImportance: 1
-  fleeImportance: 0.8
-  attackImportance: 1
-  healingImportance: 1
-  effortImportance: 0.01
-  groupImportance: 0.5
-  kingBias: 10
+  advanceImportance: 5
+  fleeImportance: 4
+  attackImportance: 100
+  healingImportance: 5
+  effortImportance: 0.5
+  groupImportance: 1
+  kingBias: 1
 --- !u!114 &176050612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 176050609}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8df0fbe93b5393f49ba48d3488826687, type: 3}
   m_Name: 
@@ -749,17 +749,17 @@ MonoBehaviour:
   kingPosition: {x: 0, y: 0, z: 0}
   playerID: 0
   isHuman: 1
-  logicMachine: {fileID: 176050615}
+  logicMachine: {fileID: 0}
   m_idleTimer: 2
   idleTime: 2
   initialThinkTime: 3
   thinkTime: 0.5
-  advanceImportance: 1
-  fleeImportance: 0.1
-  attackImportance: 1
-  healingImportance: 0.1
-  effortImportance: 0
-  groupImportance: 0.4
+  advanceImportance: 5
+  fleeImportance: 1
+  attackImportance: 45
+  healingImportance: 1
+  effortImportance: 1
+  groupImportance: 0.1
   kingBias: 1
 --- !u!114 &176050613
 MonoBehaviour:
@@ -2900,8 +2900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileObj: {fileID: 1485266572742464, guid: 98af3a9fdcada874e9e1bb69049905f2, type: 2}
-  mapLength: 17
-  mapWidth: 28
+  mapLength: 20
+  mapWidth: 20
   world: {fileID: 797344603}
   enablePaint: 0
 --- !u!4 &1046526049

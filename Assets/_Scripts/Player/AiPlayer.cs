@@ -52,6 +52,13 @@ public class AiPlayer : BasePlayer
         isHuman = false;
         manager = Object.FindObjectOfType<GameManagment>();
         map = Object.FindObjectOfType<Map>();
+
+        //the ai player hasn't been assigned a logic machine, it isn't being used
+        if (logicMachine == null)
+        {
+            return;
+        }
+
         logicMachine.input = GetComponent<ManagerInput>() as BaseInput;
 
         //get the size of the players list
@@ -261,7 +268,8 @@ public class AiPlayer : BasePlayer
             //store in a temp variable
             BasePlayer bp = minp.manager.players[i];
 
-            if (bp == this)
+            //check for the same team
+            if (bp.playerID == playerID)
             {
                 continue;
             }
@@ -353,7 +361,7 @@ public class AiPlayer : BasePlayer
             //store in a temp variable
             BasePlayer bp = minp.manager.players[i];
 
-            if (bp == this)
+            if (bp.playerID == playerID)
             {
                 continue;
             }
@@ -434,7 +442,7 @@ public class AiPlayer : BasePlayer
             //store in a temp variable
             BasePlayer bp = minp.manager.players[i];
 
-            if (bp == this)
+            if (bp.playerID == playerID)
             {
                 continue;
             }
@@ -454,7 +462,7 @@ public class AiPlayer : BasePlayer
             }
         }
 
-        return ((float)visibleEnemies / (float)totalEnemies) * advanceImportance;
+        return ((float)visibleEnemies / (float)totalEnemies) * attackImportance;
     }
 
 
@@ -533,7 +541,7 @@ public class AiPlayer : BasePlayer
                 //store in a temp variable
                 BasePlayer bp = minp.manager.players[i];
 
-                if (bp == this)
+                if (bp.playerID == playerID)
                 {
                     continue;
                 }
@@ -617,7 +625,7 @@ public class AiPlayer : BasePlayer
             }
         }
 
-        return lowestRatio;
+        return lowestRatio * healingImportance;
     }
 
 
@@ -723,7 +731,7 @@ public class AiPlayer : BasePlayer
             //store in a temp variable
             BasePlayer bp = minp.manager.players[i];
 
-            if (bp == this)
+            if (bp.playerID == playerID)
             {
                 continue;
             }
