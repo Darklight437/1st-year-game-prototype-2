@@ -59,6 +59,8 @@ public class ControllerSupportScript : MonoBehaviour
     //what menu button position we are in;
     public int selectedButtonMenuPos;
 
+    public GameObject[] actionButtons;
+
     //refrence to all the menu buttons
     public InGameMenuSpriteHolder inGameMenuRefrence;
 
@@ -97,6 +99,11 @@ public class ControllerSupportScript : MonoBehaviour
         if (menuPress == true && Input.GetAxis("AButton") == 0)
         {
             selectedButton.onClick.Invoke();
+            UImanager.currUIState = UIManager.eUIState.BASE;
+            UImanager.stateSwitch();
+
+            selectedButton.cursorClicked = false;
+            selectedButton.cursorSelected = false;
 
             selectedButtonMenuPos = inGameMenuRefrence.menuButtons.Length - 1;
             selectedButton = null;
@@ -127,11 +134,20 @@ public class ControllerSupportScript : MonoBehaviour
 
             cursorHighLight.transform.position = hoverOverTile.pos;
             cursorHighLight.SetActive(false);
+
+            for (int i = 0; i < actionButtons.Length; i++)
+            {
+                actionButtons[i].SetActive(false);
+            }
         }
         else
         {
             //make sure the cursor highlight is active if in use
             cursorHighLight.SetActive(true);
+            for (int i = 0; i < actionButtons.Length; i++)
+            {
+                actionButtons[i].SetActive(true);
+            }
         }
 
         //deteck if player has put in any controller inputs
